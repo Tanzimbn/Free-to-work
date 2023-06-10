@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to work.</title>
+    <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="home_navbar.css">
+    <link rel="stylesheet" href="home_content.css">
+    <link rel="stylesheet" href="post-details.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <nav>
+        <div class="nav_left">
+            <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
+            <ul>
+                <li><i class='bx bxs-home'></i></li>
+                <li><i class='bx bx-list-ul'></i></li>
+                <li><i class='bx bxs-category'></i></li>
+            </ul>
+        </div>
+        <div class="nav_right">
+            <div class="serach_box">
+                <img src="pictures/search-alt-regular-24.png">
+                <input type="text" placeholder="Search">
+            </div>
+            <!-- <div class="create_post">
+                <p>Create post</p>
+            </div> -->
+            <div class="user_icon">
+                <img src="pictures/FB_IMG_1635179825355.jpg" onclick="show_menu()">
+            </div>
+            <div class="login-menu-wrap" id="login-menu">
+                <div class="login-menu">
+
+                    <div class="user-info">
+                        <img src="pictures/FB_IMG_1635179825355.jpg">
+                        <h3>Tanzim Bin Nasir</h3>
+                    </div>
+                    <hr>
+                    <a href="profile.html" class="profile">
+                        <p><i class="fa-regular fa-user"></i> Profile</p>
+                        <span>></span>
+                    </a>
+                    <a href="index.html" class="logout">
+                        <p><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</p>
+                        <span>></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="advertise">
+        <div class="advertise-content">
+            <h2> Get premium account </h2>
+            <br>
+            <p>Join Free2Work++ to get verify your account. You'll get a lot of other perks too!</p>
+            <p>Join before June 30th and unlock 6 new features for the next 3 months.</p>
+        </div>
+        <img src="pictures/001-verify.png">
+    </div>
+    <div class="container">
+        <div class="left_bar">
+            <h2>Filters</h2>
+            <hr style="width: 90%; margin-left: 5%; border-color: rgb(250, 250, 250);">
+            <div class="filter-price">
+                <div class="filter-price-head">
+                    <h3>Price</h3>
+                    <button onclick="clear_price()">Clear</button>
+                </div>
+                <div class="filter-price-body">
+                    <p>Min</p>
+                    <div class="box">
+                        <i class='bx bx-dollar' style="color:black; margin-left: 2px;"></i>
+                        <input type="text" id="filter-price-min" placeholder="0">
+                        <p style="color:black; margin-right: 10px;">BDT</p>
+                    </div>
+                    <p>Max</p>
+                    <div class="box">
+                        <i class='bx bx-dollar' style="color:black; margin-left: 2px;"></i>
+                        <input type="text" id="filter-price-max" placeholder="1000000+">
+                        <p style="color:black; margin-right: 10px;">BDT</p>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-location">
+                <div class="filter-location-head">
+                    <h3>Location</h3>
+                    <button onclick="clear_location()">Clear</button>
+                </div>
+                <div class="filter-location-body">
+                    <p>Division</p>
+                    <div class="divisions">
+                        <i class='bx bxs-location-plus' style="color:black; margin-left: 2px;"></i>
+                        <select name="divisions" id="divisions" onchange="divisionsList();">
+                            <option disabled selected>Select division</option>
+                            <option value="Barishal">Barishal</option>
+                            <option value="Chattogram">Chattogram</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Khulna">Khulna</option>
+                            <option value="Mymensingh">Mymensingh</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Rangpur">Rangpur</option>
+                            <option value="Sylhet">Sylhet</option>
+                        </select>
+                    </div>
+                    <p>District</p>
+                    <div class="district">
+                        <i class='bx bxs-location-plus' style="color:black; margin-left: 2px;"></i>
+                        <select name="" id="distr" onchange="thanaList();">
+                            <option disabled selected>Select division first</option>
+                        </select>
+                    </div>
+                    <p>Thana</p>
+                    <div class="station">
+                        <i class='bx bx-current-location' style="color:black; margin-left: 2px;"></i>
+                        <select name="" id="polic_sta">
+                            <option disabled selected>Select district first</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-category">
+                <div class="filter-category-head">
+                    <h3>Category</h3>
+                    <button onclick="clear_category()">Clear</button>
+                </div>
+                <div class="filter-category-body">
+                    <div class="box">
+                        <i class='bx bx-search-alt-2' style="color:black; margin-left: 2px;"></i>
+                        <input type="text" placeholder="Search Category" id="filter-category"
+                            onkeyup="category_filter()">
+                    </div>
+                    <div class="category-suggest">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main_content">
+            <div class="post">
+                <div class="post-content">
+                    <div class="heading" onclick="show_details()">
+                        <p>Java SpringBoot</p>
+                    </div>
+                    <div class="budget">
+                        <p>Est. budget: $50 - 100 USD</p>
+                        <p>.</p>
+                        <p>Posted 2 hours ago</p>
+                    </div>
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et
+                            dictum
+                            interdum, nisi lorem egestas vitae scel asd asjdal fgoev apefsjds 3wodoii2 di92d jkfsn
+                            djqjqd
+                            qwdqod <span id="dots">...</span><button onclick="see_more()"
+                                id="see_more">more</button><span id="more_details">erisque
+                                enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor
+                                vitae
+                                massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed
+                                ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare
+                                turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros
+                                non
+                                fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <button onclick="see_less()" id="see_less">see less</button><span id="more_details"></span>
+                        </p>
+                    </div>
+                    <div class="post_tag">
+                        <ul>
+                            <li>php</li>
+                            <li>java</li>
+                        </ul>
+                    </div>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Chittagong</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="heading">
+                        <p>Java SpringBoot</p>
+                    </div>
+                    <div class="budget">
+                        <p>Est. budget: $50 - 100 USD</p>
+                        <p>.</p>
+                        <p>Posted 2 hours ago</p>
+                    </div>
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et
+                            dictum
+                            interdum, nisi lorem egestas vitae scel asd asjdal fgoev apefsjds 3wodoii2 di92d jkfsn
+                            djqjqd
+                            qwdqod <span id="dots">...</span><button onclick="see_more()"
+                                id="see_more">more</button><span id="more_details">erisque
+                                enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor
+                                vitae
+                                massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed
+                                ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare
+                                turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros
+                                non
+                                fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <button onclick="see_less()" id="see_less">see less</button><span id="more_details"></span>
+                        </p>
+                    </div>
+                    <div class="post_tag">
+                        <ul>
+                            <li>php</li>
+                            <li>java</li>
+                        </ul>
+                    </div>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Chittagong</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="heading">
+                        <p>Java SpringBoot</p>
+                    </div>
+                    <div class="budget">
+                        <p>Est. budget: $50 - 100 USD</p>
+                        <p>.</p>
+                        <p>Posted 2 hours ago</p>
+                    </div>
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et
+                            dictum
+                            interdum, nisi lorem egestas vitae scel asd asjdal fgoev apefsjds 3wodoii2 di92d jkfsn
+                            djqjqd
+                            qwdqod <span id="dots">...</span><button onclick="see_more()"
+                                id="see_more">more</button><span id="more_details">erisque
+                                enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor
+                                vitae
+                                massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed
+                                ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare
+                                turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros
+                                non
+                                fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <button onclick="see_less()" id="see_less">see less</button><span id="more_details"></span>
+                        </p>
+                    </div>
+                    <div class="post_tag">
+                        <ul>
+                            <li>php</li>
+                            <li>java</li>
+                        </ul>
+                    </div>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Chittagong</p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <div class="heading">
+                        <p>Java SpringBoot</p>
+                    </div>
+                    <div class="budget">
+                        <p>Est. budget: $50 - 100 USD</p>
+                        <p>.</p>
+                        <p>Posted 2 hours ago</p>
+                    </div>
+                    <div class="details">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et
+                            dictum
+                            interdum, nisi lorem egestas vitae scel asd asjdal fgoev apefsjds 3wodoii2 di92d jkfsn
+                            djqjqd
+                            qwdqod <span id="dots">...</span><button onclick="see_more()"
+                                id="see_more">more</button><span id="more_details">erisque
+                                enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor
+                                vitae
+                                massa. Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed
+                                ullamcorper ipsum dignissim ac. In at libero sed nunc venenatis imperdiet sed ornare
+                                turpis. Donec vitae dui eget tellus gravida venenatis. Integer fringilla congue eros
+                                non
+                                fermentum. Sed dapibus pulvinar nibh tempor porta.</span>
+                            <button onclick="see_less()" id="see_less">see less</button><span id="more_details"></span>
+                        </p>
+                    </div>
+                    <div class="post_tag">
+                        <ul>
+                            <li>php</li>
+                            <li>java</li>
+                        </ul>
+                    </div>
+                    <div class="location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Chittagong</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="post_details">
+        <div class="details_overlay"></div>
+        <!-- <div class="details_main"> -->
+        <div class="details_content">
+            <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo itaque officiis? Molestiae
+                numquam
+                saepe impedit eaque, possimus veniam consequuntur earum recusandae? Error asperiores eum culpa
+                beatae
+                id, ipsa sapiente pariatur eos obcaecati, assumenda nostrum, tempora illum quos. Natus explicabo
+                facere
+                minima, blanditiis, non cumque perferendis, veniam ad nulla possimus illum cupiditate distinctio
+                quisquam doloremque fugit culpa consequuntur obcaecati recusandae dignissimos. Necessitatibus,
+                recusandae! Accusantium, similique aspernatur corporis nihil voluptatibus distinctio ut nulla facere
+                vel
+                expedita voluptate quos, harum nemo molestiae repellat fuga culpa a architecto hic. At eos
+                voluptatum
+                iure consequuntur expedita distinctio? Ab hic rem at nisi quo natus.</p>
+        </div>
+        <!-- </div> -->
+    </div>
+
+</body>
+<script src="home.js"></script>
+<script src="location.js"></script>
+
+</html>
