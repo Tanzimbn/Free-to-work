@@ -2,6 +2,13 @@ let login_menu = document.getElementById("login-menu");
 function show_menu() {
     login_menu.classList.toggle("open-menu");
 }
+// pp open
+const toggleMenu = document.querySelector('.menu');
+function menuToggle(){
+    
+    toggleMenu.classList.toggle('active');
+}
+
 // category filter 
 let category = ['Ac repair', 'Appliance repair', 'Electrician', "Driver", "Pickup & Trucks", "Cleaning & Pest Control", "Painting", "Carpentry"];
 const resultbox = document.querySelector(".category-suggest");    
