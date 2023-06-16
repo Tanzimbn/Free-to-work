@@ -3,10 +3,11 @@
     width: 100%;
     position: fixed;
     top: 0;
+    left:100%;
     z-index: 200;
     display: flex;
-    background-color: rgba(0, 0, 0, 0.164);
-    display: none;
+    background-color: #ffffff00;
+    transition: left 0.5s, background-color 1s;
 }
 .details_overlay {
     /* background-color: rgba(0, 0, 0, 0.356); */
@@ -20,15 +21,77 @@
     border-radius: 20px 0px 0px 20px;
     overflow-x:hidden;
     overflow-y:auto;
-    
+    animation-direction: reverse;
+    transition: background-color 0.5s;
 }
-.details_content p {
-    width: 100px;
+.open_details {
+    /* background-color: red; */
+    left: 0%;
+    background-color: rgba(0, 0, 0, 0.164);
+}
+.details_body {
+    margin-top: 1%;
+    min-height: 100%;
+    border: 2px solid rgb(0, 255, 170);
+    border-radius: 10px;
+}
+
+/* left part */
+.details_body_left {
+    width: 70%;
+    min-height: 100vh;
+    border-right: 2px solid rgb(0, 255, 170);
+}
+.details_body_left_head, .details_body_left_body{
+    border-bottom: 2px solid rgb(0, 255, 170);
+    padding: 2%;
+}
+.details_body_left_head .title {
+    font-size: 3rem;
+}
+.details_body_left_head .budget_time, .details_body_left_head .tag, .details_body_left_head .details_location {
+    display: flex;
+    font-size: 1rem;
+}
+.details_body_left_head .budget_time p {
+    margin-top: 1%;
+    margin-right: 3%;
+    color: rgb(118, 118, 118);
+}
+.details_location p, .details_location i {
+    color: #949494;
+    margin: 1% 1% 0% 0%;
+    font-weight: bold;
+}
+.details_body_left_head .tag ul{
+    margin-top: 1%;
+    list-style: none;
+    display: flex;
+}
+.details_body_left_head .tag li {
+    border: 1px solid rgb(20, 224, 173);
+    border-radius: 10px;
+    margin-right: 10%;
+    background-color: aquamarine;
+    padding: 5px 10px 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #404040;
 }
 .details_content span i {
     font-size: x-large;
     color: rgb(0, 255, 170);
+    cursor: pointer;
 }
+.details_body_left_body p{
+    font-size: 1.2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+.comment {
+    padding: 2%;
+}
+/* scroll */
 ::-webkit-scrollbar {
     width: 0.5rem;
 }

@@ -6,11 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free to work.</title>
-    <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="home_navbar.css">
     <link rel="stylesheet" href="home_content.css">
     <link rel="stylesheet" href="post-details.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -28,9 +31,9 @@
                 <img src="pictures/search-alt-regular-24.png">
                 <input type="text" placeholder="Search">
             </div>
-            <!-- <div class="create_post">
-                <p>Create post</p>
-            </div> -->
+            <div class="create_post" onclick="goto_post()">
+                <p>Post</p>
+            </div>
             <div class="user_icon">
                 <img src="pictures/FB_IMG_1635179825355.jpg" onclick="show_menu()">
             </div>
@@ -55,13 +58,21 @@
         </div>
     </nav>
     <div class="advertise">
-        <div class="advertise-content">
-            <h2> Get premium account </h2>
-            <br>
-            <p>Join Free2Work++ to get verify your account. You'll get a lot of other perks too!</p>
-            <p>Join before June 30th and unlock 6 new features for the next 3 months.</p>
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide"><img src="Graphic Patterns.png" alt=""></div>
+                <div class="swiper-slide"><img src="pictures/1.png" alt=""></div>
+                <div class="swiper-slide"><img src="pictures/2.png" alt=""></div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
         </div>
-        <img src="pictures/001-verify.png">
     </div>
     <div class="container">
         <div class="left_bar">
@@ -133,7 +144,7 @@
                     <div class="box">
                         <i class='bx bx-search-alt-2' style="color:black; margin-left: 2px;"></i>
                         <input type="text" placeholder="Search Category" id="filter-category"
-                            onkeyup="category_filter()">
+                            onkeyup="category_filter()" onclick="show_all_category()">
                     </div>
                     <div class="category-suggest">
                     </div>
@@ -296,28 +307,85 @@
     </div>
     <div class="post_details">
         <div class="details_overlay"></div>
-        <!-- <div class="details_main"> -->
-        <div class="details_content">
+        <div class="details_content" id = "details_content">
             <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nemo itaque officiis? Molestiae
-                numquam
-                saepe impedit eaque, possimus veniam consequuntur earum recusandae? Error asperiores eum culpa
-                beatae
-                id, ipsa sapiente pariatur eos obcaecati, assumenda nostrum, tempora illum quos. Natus explicabo
-                facere
-                minima, blanditiis, non cumque perferendis, veniam ad nulla possimus illum cupiditate distinctio
-                quisquam doloremque fugit culpa consequuntur obcaecati recusandae dignissimos. Necessitatibus,
-                recusandae! Accusantium, similique aspernatur corporis nihil voluptatibus distinctio ut nulla facere
-                vel
-                expedita voluptate quos, harum nemo molestiae repellat fuga culpa a architecto hic. At eos
-                voluptatum
-                iure consequuntur expedita distinctio? Ab hic rem at nisi quo natus.</p>
+            <div class="details_body">
+                <div class="details_body_left">
+                    <div class="details_body_left_head">
+                        <div class="title">
+                            <p>Java SpringBoot</p>
+                        </div>
+                        <div class="budget_time">
+                            <p>Est. budget: $50 - 100 USD</p>
+                            <p>Posted 2 hours ago</p>
+                        </div>
+                        <div class="tag">
+                            <ul>
+                                <li>php</li>
+                                <li>java</li>
+                            </ul>
+                        </div>
+                        <div class="details_location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>Chittagong</p>
+                        </div>
+                    </div>
+                    <div class="details_body_left_body">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad officiis iusto omnis enim
+                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
+                            quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
+                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi pariatur
+                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor vel
+                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor vero
+                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam alias
+                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla porro
+                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam alias
+                            eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
+                            necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
+                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit eveniet
+                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae nihil
+                            saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
+                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores ut
+                            distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
+                            minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
+                        </p>
+                    </div>
+                    <div class="comment">
+                        <p>comment section</p>
+                    </div>
+
+                </div>
+                <div class="details_body_right">
+
+                </div>
+
+            </div>
         </div>
-        <!-- </div> -->
     </div>
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="home.js"></script>
 <script src="location.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // autoplay: {
+        //     delay: 3000,
+        //     disableOnInteraction: false,
+        // },
+
+        loop: true,
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
 
 </html>

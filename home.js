@@ -16,6 +16,9 @@ function category_filter() {
     }
     display_category_result(result);
 }
+function show_all_category() {
+    display_category_result(category);
+}
 function display_category_result(result){
     const content = result.map((list)=>{
         return "<li onclick = select_category(this)>" + list + "</li>";
@@ -26,7 +29,6 @@ function select_category(list) {
     inputbox.value = list.innerHTML;
     resultbox.innerHTML = '';
 }
-
 function clear_price() {
     document.getElementById("filter-price-min").value = null;
     document.getElementById("filter-price-max").value = null;
@@ -50,9 +52,14 @@ function see_less() {
     document.getElementById("see_less").style.display = "none";
 }
 function show_details() {
-    document.querySelector(".post_details").style.display = "flex";
+    // document.querySelector(".post_details").style.display = "flex";
+    // document.querySelector(".details_content").style.width = "75%";
+    document.querySelector(".post_details").classList.add("open_details");
 }
 function close_details() {
-    document.querySelector(".post_details").style.display = "none";
+    document.querySelector(".post_details").classList.remove("open_details");
+}
+function goto_post() {
+    window.location.assign("post.html");
 }
 
