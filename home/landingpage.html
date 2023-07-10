@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML CSS Website</title>
+    <link rel="stylesheet" href="landingpage.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar Section -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <a href="landingpage.html" id="navbar__logo">FreeToWork</a>
+        <div class="navbar__toggle" id="mobile-menu">
+          <span class="bar"></span> <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar__menu">
+          <li class="navbar__item">
+            <a href="landingpage.html" class="navbar__links nav_home" onclick="nav_home()">Home</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#TECH" class="navbar__links nav_tech" onclick="nav_tech()">Tech</a>
+          </li>
+          <li class="navbar__item" >
+            <a href="#SERVICES" class="navbar__links nav_jobs" onclick="nav_jobs()">Jobs</a>
+          </li>
+          <li class="navbar__btn"><a href="index.html" class="button">Sign in</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Section -->
+    <div class="main" id="MAIN">
+      <div class="main__container">
+        <div class="main__content">
+          <h1>Introducing FreeToWork</h1>
+          <h2>Bangladesh's Premier Online Job Marketplace </h2>
+          <p>For both Professionals and Non-Professionals.</p>
+          <button class="main__btn"><a href="index.html">Get Started</a></button>
+        </div>
+        <div class="main__img--container">
+          <img id="main__img" src="images/pic1.svg" />
+        </div>
+      </div>
+    </div>
+    <!-- Tech Section -->
+    <section class="about" id="TECH">
+    <div class="container">
+
+    <div class="about-content">
+
+      <div class="about-icon">
+        <ion-icon name="barcode-outline"></ion-icon>
+      </div>
+
+      <h2 class="h2 about-title">How our Technology Works</h2>
+
+      <p class="about-text">
+        Welcome to the Tech section of FreeToWork, the online job marketplace in Bangladesh. Here, we'll explain in simpler terms how our technology makes it easy to find jobs.
+      </p>
+
+      <button class="btn btn-outline">Learn More</button>
+
+    </div>
+
+    <ul class="about-list">
+
+      <li>
+        <div class="about-card">
+
+          <div class="card-icon">
+            <ion-icon name="search-outline"></ion-icon>
+          </div>
+
+          <h3 class="h3 card-title">Convenient Job Posting and Searching</h3>
+
+          <p class="card-text">
+            Our website helps people find local jobs nearby. If you're looking to hire or apply for a job, FreeToWork is the place to be. 
+            Job posters can share details about available positions and tag them under specific categories. This makes it easier for job seekers to browse through and find the jobs that match their interests.
+          </p>
+
+        </div>
+      </li>
+
+      <li>
+        <div class="about-card">
+
+          <div class="card-icon">
+            <ion-icon name="notifications-outline"></ion-icon>
+          </div>
+
+          <h3 class="h3 card-title">Stay Connected with Job Notifications</h3>
+
+          <p class="card-text">
+            To stay connected and receive timely updates, users can sign up using their National Identification (NID) number. We use this information to ensure a safe and trustworthy community. 
+            Once registered, users can turn on the online status button. This enables them to receive notifications about new jobs and updates.
+          </p>
+
+        </div>
+      </li>
+
+      <li>
+        <div class="about-card">
+
+          <div class="card-icon">
+            <ion-icon name="swap-vertical-outline"></ion-icon>
+          </div>
+
+          <h3 class="h3 card-title">Personalize Your Job Search ExperiencePersonalize Your Job Search Experience</h3>
+
+          <p class="card-text">
+            In the newsfeed section, we provide sorting options to personalize your job search experience. 
+            You can filter job listings based on industries, locations, and other relevant factors. This way, you can quickly find the jobs that suit your needs and preferences.
+          </p>
+
+        </div>
+      </li>
+
+      <li>
+        <div class="about-card">
+
+          <div class="card-icon">
+            <ion-icon name="server"></ion-icon>
+          </div>
+
+          <h3 class="h3 card-title"> Embracing Technology for Effortless Job Hunting</h3>
+
+          <p class="card-text">
+            At FreeToWork, we're committed to using technology to make job hunting easier and more efficient.
+             Our platform connects job seekers with employers, helping them discover new opportunities and contribute to Bangladesh's economic growth. Join us today and explore the future of online job marketplaces with FreeToWork.
+          </p>
+
+        </div>
+      </li>
+
+    </ul>
+
+    </div>
+    </section>
+
+    <!-- Services Section -->
+    <!-- <div class="services" id="SERVICES">
+      <h1>What Brings You Here Today?</h1>
+      <button class="pre-btn"><ion-icon class="drag_icon" name="arrow-back-outline"></ion-icon></button>
+      <button class="nxt-btn"><ion-icon class="drag_icon" name="arrow-forward-outline"></ion-icon></button>
+      <div class="services__container"> 
+        <div class="services__card">
+          <h2>In Search of a Reliable Driver?</h2>
+        </div>
+        <div class="services__card">
+          <h2>Require a Competent Cook?</h2>
+        </div>
+        <div class="services__card">
+          <h2>Seeking a Personal Assistant?</h2>
+        </div>
+        <div class="services__card">
+          <h2>Require Software-related Help?</h2>
+        </div>
+      </div>
+    </div> -->
+
+    <!--Sevice Section New-->
+    <section class="product" id="SERVICES"> 
+    <h2 class="product-category">What Brings You Here Today?</h2>
+    <button class="pre-btn"><img src="images/arrow.png" alt=""></button>
+    <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
+    <div class="product-container">
+      <div class="product-card">
+          <div class="product-image">
+              <!-- <span class="discount-tag">50% off</span> -->
+              <img src="images/pic5.jpg" class="product-thumb" alt="">
+              <button class="card-btn">Join Us Today</button>
+          </div>
+          <div class="product-info">
+              <h2 class="product-brand">In Search of a Reliable Driver?</h2>
+              <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+              <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+          </div>
+      </div>
+      <div class="product-card">
+          <div class="product-image">
+              <!-- <span class="discount-tag">50% off</span> -->
+              <img src="images/pic6.jpg" class="product-thumb" alt="">
+              <button class="card-btn">Join Us Today</button>
+          </div>
+          <div class="product-info">
+              <h2 class="product-brand">Require a Competent Cook?</h2>
+              <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+              <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+          </div>
+      </div>
+      <div class="product-card">
+          <div class="product-image">
+              <!-- <span class="discount-tag">50% off</span> -->
+              <img src="images/pic7.jpg" class="product-thumb" alt="">
+              <button class="card-btn">Join Us Today</button>
+          </div>
+          <div class="product-info">
+              <h2 class="product-brand">Seeking a Personal Assistant?</h2>
+              <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+              <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+          </div>
+      </div>
+      <div class="product-card">
+          <div class="product-image">
+              <!-- <span class="discount-tag">50% off</span> -->
+              <img src="images/pic8.jpg" class="product-thumb" alt="">
+              <button class="card-btn">Join Us Today</button>
+          </div>
+          <div class="product-info">
+              <h2 class="product-brand">Require Software-related Help?</h2>
+              <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+              <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+          </div>
+      </div>
+      <div class="product-card">
+        <div class="product-image">
+            <!-- <span class="discount-tag">50% off</span> -->
+            <img src="images/pic9.jpg" class="product-thumb" alt="">
+            <button class="card-btn">Join Us Today</button>
+        </div>
+        <div class="product-info">
+            <h2 class="product-brand">Looking for a Mechanic Nearby</h2>
+            <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+            <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <!-- <span class="discount-tag">50% off</span> -->
+            <img src="images/pic10.jpg" class="product-thumb" alt="">
+            <button class="card-btn">Join Us Today</button>
+        </div>
+        <div class="product-info">
+            <h2 class="product-brand">In need of a Local Electrician</h2>
+            <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+            <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <!-- <span class="discount-tag">50% off</span> -->
+            <img src="images/pic11.jpg" class="product-thumb" alt="">
+            <button class="card-btn">Join Us Today</button>
+        </div>
+        <div class="product-info">
+            <h2 class="product-brand">In search of Medical Assistance?</h2>
+            <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+            <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <!-- <span class="discount-tag">50% off</span> -->
+            <img src="images/pic12.jpg" class="product-thumb" alt="">
+            <button class="card-btn">Join Us Today</button>
+        </div>
+        <div class="product-info">
+            <h2 class="product-brand">Looking for a Professional Cleaner?</h2>
+            <!-- <p class="product-short-description">a short line about the cloth..</p> -->
+            <!-- <span class="price">$20</span><span class="actual-price">$40</span> -->
+        </div>
+    </div>
+      
+    </div>
+    </section>
+    <!--Footer Section NEW-->
+    <footer>
+      <div class="main-content">
+        <div class="left box">
+          <h2>About Us</h2>
+          <div class="content">
+            <p>Welcome to FreeToWork, Bangladesh's premier online job marketplace where your free time translates into easy earnings. Discover nearby job opportunities, earn money, and make the most of your idle moments. Whether you're a student, professional, or seeking extra income, our platform connects you with flexible jobs for financial empowerment. Join us today!</p>
+            <div class="social">
+              <a href="https://www.facebook.com/TANZIMBINNASIR00"><span class="fab fa-facebook-f"></span></a>
+              <a href="https://www.linkedin.com/in/aninda-roy-dhruba-aa0039201/"><span class="fab fa-linkedin"></span></a>
+              <a href="https://www.instagram.com/nafiztalukder/"><span class="fab fa-instagram"></span></a>
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><span class="fab fa-youtube"></span></a>
+            </div>
+          </div>
+        </div>
+        <div class="center box">
+          <h2>Address</h2>
+          <div class="content">
+            <div class="place">
+              <span class="fas fa-map-marker-alt"></span>
+              <span class="text"><a href="https://shorturl.at/eqzJL" style="text-decoration: none;">CUET, Chittagong</a></span>
+            </div>
+            <div class="phone">
+              <span class="fas fa-phone-alt"></span>
+              <span class="text">+880-1712345678</span>
+            </div>
+            <div class="email">
+              <span class="fas fa-envelope"></span>
+              <span class="text">freetowork@gmail.com</span>
+            </div>
+          </div>
+        </div>
+        <div class="right box">
+          <h2>Contact Us</h2>
+          <div class="content">
+            <form action="#">
+              <div class="email">
+                <div class="text">Email *</div>
+                <input type="email" required>
+              </div>
+              <div class="msg">
+                <div class="text">Message *</div>
+                <textarea cols="25" rows="2" required></textarea>
+              </div>
+              <div class="btn">
+                <button type="submit">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <center>
+          <span class="credit">Created By <a href="#">Tanzim, Nafiz, Dhrubo</a> | </span>
+          <span class="far fa-copyright"></span>
+          <span> 2020 All rights reserved.</span>
+        </center>
+      </div>
+    </footer>
+    <script src="landingpage.js"></script>
+  </body>
+  <!--To enable ion-icons -->  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>
