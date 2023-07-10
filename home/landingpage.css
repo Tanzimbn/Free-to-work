@@ -429,7 +429,7 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(17, 17, 17, 0.6) 100%
     ),
-    url('/images/pic5.jpg');
+    url('../images/pic5.jpg');
   background-size: cover;
   position: relative;
   color: #ffffff;
@@ -446,7 +446,7 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(17, 17, 17, 0.9) 100%
     ),
-    url('/images/pic6.jpg');
+    url('../images/pic6.jpg');
 }
 
 .services__card:nth-child(3) {
@@ -455,7 +455,7 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(17, 17, 17, 0.9) 100%
     ),
-    url('/images/pic7.jpg');
+    url('../images/pic7.jpg');
 }
 
 .services__card:nth-child(4) {
@@ -464,7 +464,7 @@
       rgba(0, 0, 0, 0) 0%,
       rgba(17, 17, 17, 0.9) 100%
     ),
-    url('/images/pic8.jpg');
+    url('../images/pic8.jpg');
 }
 
 .services__card h2 {
