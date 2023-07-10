@@ -9,21 +9,64 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    /* background-color: #7474b9; */
-    background-image: url(-4-ans_frontend_assets.webp);
+    height: 100vh;
+    /* background-color: #003333; */
+    background-image: url(pictures/Free\ Vector\ _\ Gradient\ blue\ waves\ background.jpeg);
+    /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
 }
 .container{
     width: 80%;
-    margin: 3% auto;
+    height: 90%;
+    margin: 0% auto;
     display: flex;
-    height: 600px;
     box-shadow: 0 12px 18px rgba(54,176,138,0.005);
     border-radius: 6px;
     background: rgba(255, 255, 255);
 }
+.popup{
+    width: 400px;
+    background: rgba(105, 185, 255, 0.952);
+    border-radius: 6px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px  30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+.open-popup{
+    visibility: visible;
+    top : 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+.popup img{
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+.popup h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.popup button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    color: rgba(105, 108, 255);
+    background: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 .login-link{
-    background-color: rgba(105, 108, 255);
+    background-color: #1a1d86;
    background-image: url('bg-shapes.svg');
    background-position: bottom left;
    background-repeat: no-repeat;
@@ -35,7 +78,7 @@ body{
     padding: 3% 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 .login-form-container{
     width: 70%;
@@ -47,21 +90,23 @@ body{
 .logo{
     font-weight: 600;
     color: #fff;
-    font-size: x-large;
+    font-size: 1.5vw;
+    height: 30%;
 }
-
+.already_member {
+    height: 50%;
+}
 .side-big-heading{
     text-align: center;
     font-weight: 800;
     color: #fff;
-    font-size: 1.7rem;
-    margin: 46% 0 5%;
+    font-size: 2vw;
 }
 .primary-bg-text{
-    margin-top: 10px;
     color: #eff0ff;
     font-weight: 500;
     text-align: center;
+    font-size: 1.2vw;
 }
 .primary-reg-text{
     color: #eff0ffac;
@@ -70,28 +115,37 @@ body{
     padding-top: 50px;
     font-size: small;
 }
-.loginbtn{
+.login_btn {
+    height: 20%;
+    margin-left: 20%;
+}
+a.loginbtn{
     text-decoration: none;
     color: #fff;
     width: 70%;
     font-weight: 500;
+    font-size: 1.2vw;
     display: inline-block;
-    margin: 7% 15%;
     text-align: center;
     border: 2px solid #eff0ff;
     border-radius: 24px;
-    padding: 3% 0;
-    cursor: pointer;
+    padding: 2%;
 }
-.loginbtn:hover{
+a.loginbtn:hover{
     color: #696cff;
     background-color: #fff;
 }
+.form_heading {
+    height: 15%;
+    text-align: center;
+}
 .big-heading{
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 2vw;
     color: #696cff;
-    text-align: left;
+    position: relative;
+    top: 50%;
+    margin: -25px 0 0 -25px;
 }
 .social-media-platform{
     display: flex;
@@ -112,8 +166,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 4% 0;
+    /* margin: 4% 0; */
     width: 70%;
+    height: 15%;
 }
 .progress-bar .stage{
    width: 30%;
@@ -166,33 +221,43 @@ input{
     background-color: #fff;
     color: #84848d;
 }
-.text-fields.fname:after{
+/* .text-fields.fname:after{
+    white-space: nowrap;
     content: 'First name';
     background-color: #fff;
     position: relative;
     padding: 0 4%;
-    left: -197px;
-    width: 334px;
+    left: -72%;
+    width: 100%;
     color: #696cff;
     top: -33px;
-}
+} */
 .text-fields.lname:after{
+    white-space: nowrap;
     content: 'Last name';
     background-color: #fff;
     position: relative;
     padding: 0 4%;
-    left: -197px;
-    width: 332px;
+    left: -72%;
+    width: 100%;
     color: #696cff;
     top: -33px;
 }
+.fname div {
+    position: relative;
+    background-color: #ffffff;
+    color: #4c93e4;
+    white-space: nowrap;
+    padding: 0 5%;
+    top: -30px;
+}
 .text-fields.gender-selection:after{
+    white-space: nowrap;
     content: 'Gender';
     background-color: #fff;
     position: relative;
     padding: 0 4%;
-    left: -195px;
-    width: 150px;
+    left: -72%;
     color: #696cff;
     top: -33px;
 }
@@ -262,6 +327,42 @@ input[type="radio"]{
     color: #696cff;
     top: -33px;
 }
+.text-fields.divisions:after{
+    content: 'Division';
+    background-color: #fff;
+    position: relative;
+    padding: 0 1%;
+    left: -82%;
+    width: 80px;
+    color: #696cff;
+    top: -33px;
+}
+.text-fields.district:after{
+    content: 'District';
+    background-color: #fff;
+    position: relative;
+    padding: 0 1%;
+    left: -85%;
+    width: 80px;
+    color: #696cff;
+    top: -33px;
+}
+.text-fields.station:after{
+    content: 'Station';
+    background-color: #fff;
+    position: relative;
+    padding: 0 1%;
+    left: -84%;
+    width: 80px;
+    color: #696cff;
+    top: -33px;
+}
+select {
+    width: 300px;
+    padding: 2px 5px;
+    margin-left: 4%;
+    border: 0px;
+}
 .text-fields.login_email:after{
     content: 'Email Id';
     background-color: #fff;
@@ -325,3 +426,13 @@ label.tc{
 .login-form-contents .text-fields.password:after{
     left: -294px;
 }
+.javascript-condational-form{overflow: hidden;text-align: center;}
+.javascript-condational-form form{margin-top: 100px;background-color: #4c93e4;display: inline-block;padding: 50px 100px;border-radius: 5px;}
+.javascript-condational-form form label{font-size: 25px;margin-right: 8px;}
+.javascript-condational-form form select{font-size: 20px;min-width: 150px;border: 1px solid #ddd;border-radius: 3px;padding: 5px;color: #666;}
+.javascript-condational-form form select option{font-size: 20px;color: #333;}
+.message{text-align: center;margin-top: 50px;}
+.message h4{font-size: 18px;margin-top: 10px;margin-bottom: 10px;}
+.message h4 a{color:#fff;}
+.message p{font-size: 18px;}
+.message p a{color:#ecf0f1;}

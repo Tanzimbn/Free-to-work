@@ -25,7 +25,6 @@
     transition: background-color 0.5s;
 }
 .open_details {
-    /* background-color: red; */
     left: 0%;
     background-color: rgba(0, 0, 0, 0.164);
 }
@@ -34,6 +33,7 @@
     min-height: 100%;
     border: 2px solid rgb(0, 255, 170);
     border-radius: 10px;
+    display: flex;
 }
 
 /* left part */
@@ -90,6 +90,85 @@
 }
 .comment {
     padding: 2%;
+}
+.comment #comment, .details_body_left_body #details {
+    color: #949494;
+    font-size: 1rem;
+    margin-bottom: 1%;
+}
+/* right part */
+.details_body_right {
+    width: 30%;
+}
+@keyframes example {
+    0%   {border-color:rgb(37, 168, 250); }
+  50%  {border-color:rgb(61, 253, 208); }
+  100% {border-color:rgb(37, 168, 250);; }
+}
+.best_bid #best_bid, .sumbit_bid #sumbit_bid{
+    text-align: center;
+    margin: 5%;
+    padding: 10%;
+    border: 2px solid rgb(173, 236, 221);
+    border-radius: 10px;
+    font-size: 2rem;
+    animation-name: example;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+.best_bid #best_bid {
+    display: flex; 
+    justify-content:center;
+}
+.best_bid #title, .sumbit_bid #title, .bid_list #title{
+    text-align: center;
+    width: 50%;
+    margin-left: 25%;
+    position: relative;
+    top: -2rem;
+    background-color: rgb(255, 255, 255);
+    font-size: 1.4rem;
+}
+.bid_list #title {
+    top: 2rem;
+}
+.bid_list ul {
+    list-style: none;
+    /* height: 80vh; */
+    /* overflow: auto; */
+}
+.bid_list #bid_list {
+    text-align: center;
+    margin: 5%;
+    padding: 5% 2%;
+    border: 2px solid rgb(37, 168, 250);
+    border-radius: 10px;
+}
+.bid_list_cart {
+    border: 2px solid rgb(37, 168, 250);
+    border-radius: 5px;
+    padding: 2%;
+    margin-bottom: 2%;
+    font-size: 1.2rem;
+}
+.sumbit_bid #title {
+    cursor: pointer;
+    width: 50%;
+    margin-left: 25%;
+    border: none;
+    padding: 2px;
+}
+.sumbit_bid #title:hover {
+    color: rgb(61, 253, 208);
+}
+.sumbit_bid input {
+    /* height: 4rem; */
+    font-size: 2rem;
+    overflow: scroll;
+    width: 100%;
+    text-align: center;
+    border: none;
+    outline: none;
 }
 /* scroll */
 ::-webkit-scrollbar {

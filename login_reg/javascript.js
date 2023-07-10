@@ -1,3 +1,6 @@
+function goto_home() {
+    window.location.assign("../home/landingpage.html");
+}
 let signupConent = document.querySelector(".signup-form-container"),
     stagebtn1b = document.querySelector(".stagebtn1b"),
     stagebtn2a = document.querySelector(".stagebtn2a"),

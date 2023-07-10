@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <div class="login-link">
-            <div class="logo">
+            <div class="logo" onclick="goto_home()">
                 <!-- <i class='bx bx-pencil' ></i> -->
                 <span class="text">Free to<br>work.</span>
             </div>
@@ -41,9 +41,10 @@
             </div>
         </form>
 </body>
+<script src = "login.js"></script>
 <script>
     function verify() {
-        window.location.assign("home.html");
+        window.location.assign("../newsfeed/home.html");
         return false;
     }
 </script>

@@ -1,7 +1,3 @@
-let login_menu = document.getElementById("login-menu");
-function show_menu() {
-    login_menu.classList.toggle("open-menu");
-}
 // pp open
 const toggleMenu = document.querySelector('.menu');
 function menuToggle(){

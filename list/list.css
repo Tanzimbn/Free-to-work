@@ -1,0 +1,82 @@
+.checked {
+    color: #19f3cf;
+}
+.unchecked {
+    color: #949494;
+}
+.list_head {
+    display: flex;
+    flex-direction: row;
+    color: #949494;
+    font-size: 1.2rem;
+    padding: 0% 1%;
+    margin-bottom: 2%;
+    text-align:  center;
+}
+.list_profession_title, .list_location_title, .list_contact_title {
+    width: 23%;
+}
+.list_profile_title {
+    width: 31%;
+}
+
+.list_head p {
+    font-family:'Times New Roman', Times, serif;
+}
+.list_items {
+    padding: 0% 1%;
+}
+.list_data {
+    display: flex;
+    flex-direction: row;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 1%;
+    cursor: pointer;
+}
+.list_data:hover {
+    background-color: #dfdede;
+}
+.list_profile {
+    width: 31%;
+    display: flex;
+    flex-direction: row;
+}
+.list_profile img {
+    /* height: 100%; */
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 10%;
+    border: 4px solid #19f3cf;
+}
+.list_profile_info {
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+.list_profile_info div{
+    width: 100%;
+}
+.list_profile_info p {
+    font-family:'Times New Roman', Times, serif;
+    color: #545454;
+}
+#list_profile_name {
+    font-family:serif;
+    font-size: 1.4rem;
+    /* font-weight: bold; */
+    color: #000000;
+    margin-bottom: 5%;
+}
+.list_profession, .list_contact, .list_location {
+    margin: 0% 2%;
+    width: 23%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    font-size: 1.2rem;
+}

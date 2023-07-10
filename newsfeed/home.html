@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="post-details.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="comment.css">
+    <link rel="stylesheet" href="home_footer.css">
 </head>
 
 <body>
@@ -21,14 +23,14 @@
         <div class="nav_left">
             <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
             <ul>
-                <li><i class='bx bxs-home'></i></li>
-                <li><i class='bx bx-list-ul'></i></li>
+                <li><a href="../newsfeed/home.html"><i class='bx bxs-home'></i></a></li>
+                <li><a href="../list/list.html"><i class='bx bx-list-ul'></i></a></li>
                 <li><i class='bx bxs-category'></i></li>
             </ul>
         </div>
         <div class="nav_right">
             <div class="serach_box">
-                <img src="pictures/search-alt-regular-24.png">
+                <img src="../pictures/search-alt-regular-24.png">
                 <input type="text" placeholder="Search">
             </div>
             <div class="create_post" onclick="goto_post()">
@@ -36,24 +38,27 @@
             </div>
             <!-- -------profile-popup-------- -->
             <div class="user_icon">
-                <img src="pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
+                <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
             </div>
             <div class="menu">
-                <h3>Tanzim Bin Nasir<br><span>Website Designer</span></h3>
-                    <ul>
-                        <li><img src="pictures/user1.png" alt="Dp"><a href="#">My profile</a></li>
-                         <li><img src="pictures/logout.png"alt="logout logo"><a href="index.html">Log out</a></li>
-                    </ul>
-             </div>
+                <div class="menu_user_icon">
+                    <img src="../pictures/FB_IMG_1635179825355.jpg">
+                </div>
+                <h3>Aninda Roy Dhruvo<br><span>Website Designer</span></h3>
+                <ul>
+                    <li><img src="../pictures/user1.png" alt="Dp"><a href="#">My profile</a></li>
+                    <li><img src="../pictures/logout.png" alt="logout logo"><a href="../login_reg/index.html">Log out</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <div class="advertise">
         <div class="swiper">
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                <div class="swiper-slide"><img src="Graphic Patterns.png" alt=""></div>
-                <div class="swiper-slide"><img src="pictures/1.png" alt=""></div>
-                <div class="swiper-slide"><img src="pictures/2.png" alt=""></div>
+                <div class="swiper-slide"><img src="../images/@FreeToWork.png" alt=""></div>
+                <div class="swiper-slide"><img src="../pictures/1.png" alt=""></div>
+                <div class="swiper-slide"><img src="../pictures/2.png" alt=""></div>
             </div>
             <!-- If we need pagination -->
             <div class="swiper-pagination"></div>
@@ -142,6 +147,22 @@
             </div>
         </div>
         <div class="main_content">
+            <div class="main_title">
+                <span>Top results </span>
+                <div class="sort">
+                    <div id = 'title'><p>Sort by</p></div>
+                    <div class="sort_value">
+                        <select name="sort_type" id="sort_type">
+                            <option value="Date" selected>Date</option>
+                            <option value="price">Price</option>
+                        </select>
+                        <select name="sort_order" id="sort_order">
+                            <option value="Ascending" selected>Ascending</option>
+                            <option value="Descending">Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="post">
                 <div class="post-content">
                     <div class="heading" onclick="show_details()">
@@ -297,7 +318,7 @@
     </div>
     <div class="post_details">
         <div class="details_overlay"></div>
-        <div class="details_content" id = "details_content">
+        <div class="details_content" id="details_content">
             <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
             <div class="details_body">
                 <div class="details_body_left">
@@ -321,6 +342,7 @@
                         </div>
                     </div>
                     <div class="details_body_left_body">
+                        <p id="details">Details:</p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad officiis iusto omnis enim
                             nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
                             quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
@@ -341,28 +363,187 @@
                         </p>
                     </div>
                     <div class="comment">
-                        <p>comment section</p>
+                        <p id="comment">Comments:</p>
+                        <div class="comment_container opened" id="first-comment">
+                            <div class="comment_card">
+                                <h3 class="comment_title">First</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                <div class="comment_footer">
+                                    <div class="reply" onclick="show(this)">reply</div>
+                                    <div class="show_reply">2 Replies</div>
+                                </div>
+                            </div>
+                            <div class="comment_container" dataset="first-comment" id="first-reply">
+                                <div class="comment_card">
+                                    <h3 class="comment_title">First reply</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <div class="comment_footer">
+                                        <div class="reply" onclick="show(this)">reply</div>
+                                        <div class="show_reply">1 Replies</div>
+                                    </div>
+                                </div>
+                                <div class="comment_container" dataset="first-reply" id="first-first-reply">
+                                    <div class="comment_card">
+                                        <h3 class="comment_title">reply of First reply</h3>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                        </p>
+                                        <div class="comment_footer">
+                                            <div class="reply" onclick="show(this)">reply</div>
+                                            <div class="show_reply">0 Replies</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment_container" dataset="first-comment" id="second-reply">
+                                <div class="comment_card">
+                                    <h3 class="comment_title">Second reply</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <div class="comment_footer">
+                                        <div class="reply" onclick="show(this)">reply</div>
+                                        <div class="show_reply">0 Replies</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment_box">
+                            <form action="">
+                                <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
+                                <input type="submit">
+                            </form>
+                        </div>
                     </div>
 
                 </div>
                 <div class="details_body_right">
+                    <!-- <div class="best_bid">
+                        <div id = 'best_bid'><span>100</span><p style="padding-left: 5px;">BDT</p></div>
+                        <div id = 'value'>
+                            <p id = 'title'>BEST BID</p>
+                        </div>
+                    </div> -->
+                    <div class="sumbit_bid">
+                        <div id='sumbit_bid'>
+                            <input type="number" placeholder="Enter your bid">
+                        </div>
+                        <div id='value'>
+                            <!-- <p id = 'title'>BEST BID</p> -->
+                            <button id='title'>SUBMIT</button>
+                        </div>
+                    </div>
+                    <div class="bid_list">
+                        <div id='list'>
+                            <p id='title'>TOP BIDS</p>
+                        </div>
+                        <div id='bid_list'>
+                            <ul>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Tanzim Bin Nasir</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Nafiz Safa Talukder</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
+                    </div>
                 </div>
 
             </div>
         </div>
     </div>
-
+    <footer>
+        <div class="bottom">
+            <center>
+                <span class="credit">Created By <a href="#">Tanzim, Nafiz, Dhrubo</a> | </span>
+                <span class="far fa-copyright"></span>
+                <span> 2023 All rights reserved.</span>
+            </center>
+        </div>
+    </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="home.js"></script>
-<script src="location.js"></script>
+<script src="../location.js"></script>
+<script src="comment.js"></script>
+<!-- sliding adv -->
 <script>
     const swiper = new Swiper('.swiper', {
-        // autoplay: {
-        //     delay: 3000,
-        //     disableOnInteraction: false,
-        // },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
 
         loop: true,
 
