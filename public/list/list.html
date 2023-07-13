@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to work.</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../newsfeed/home_navbar.css">
+    <link rel="stylesheet" href="../newsfeed/home_content.css">
+    <link rel="stylesheet" href="./list.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <nav>
+        <div class="nav_left">
+            <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
+            <ul>
+                <li><a href="../newsfeed/home.html"><i class='bx bxs-home'></i></a></li>
+                <li><a href="../list/list.html"><i class='bx bx-list-ul'></i></a></li>
+                <li><i class='bx bxs-category'></i></li>
+            </ul>
+        </div>
+        <div class="nav_right">
+            <div class="serach_box">
+                <img src="../pictures/search-alt-regular-24.png">
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="create_post" onclick="goto_post()">
+                <p>Post</p>
+            </div>
+            <!-- -------profile-popup-------- -->
+            <div class="user_icon">
+                <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
+            </div>
+            <div class="menu">
+                <div class="menu_user_icon">
+                    <img src="../pictures/FB_IMG_1635179825355.jpg">
+                </div>
+                <h3>Aninda Roy Dhruvo<br><span>Website Designer</span></h3>
+                <ul>
+                    <li><img src="../pictures/user1.png" alt="Dp"><a href="#">My profile</a></li>
+                    <li><img src="../pictures/logout.png" alt="logout logo"><a href="../login_reg/index.html">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="advertise">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide"><img src="../images/@FreeToWork.png" alt=""></div>
+                <div class="swiper-slide"><img src="../pictures/1.png" alt=""></div>
+                <div class="swiper-slide"><img src="../pictures/2.png" alt=""></div>
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="left_bar">
+            <h2>Filters</h2>
+            <hr style="width: 90%; margin-left: 5%; border-color: rgb(250, 250, 250);">
+            <div class="filter-location">
+                <div class="filter-location-head">
+                    <h3>Location</h3>
+                    <button onclick="clear_location()">Clear</button>
+                </div>
+                <div class="filter-location-body">
+                    <p>Division</p>
+                    <div class="divisions">
+                        <i class='bx bxs-location-plus' style="color:black; margin-left: 2px;"></i>
+                        <select name="divisions" id="divisions" onchange="divisionsList();">
+                            <option disabled selected>Select division</option>
+                            <option value="Barishal">Barishal</option>
+                            <option value="Chattogram">Chattogram</option>
+                            <option value="Dhaka">Dhaka</option>
+                            <option value="Khulna">Khulna</option>
+                            <option value="Mymensingh">Mymensingh</option>
+                            <option value="Rajshahi">Rajshahi</option>
+                            <option value="Rangpur">Rangpur</option>
+                            <option value="Sylhet">Sylhet</option>
+                        </select>
+                    </div>
+                    <p>District</p>
+                    <div class="district">
+                        <i class='bx bxs-location-plus' style="color:black; margin-left: 2px;"></i>
+                        <select name="" id="distr" onchange="thanaList();">
+                            <option disabled selected>Select division first</option>
+                        </select>
+                    </div>
+                    <p>Thana</p>
+                    <div class="station">
+                        <i class='bx bx-current-location' style="color:black; margin-left: 2px;"></i>
+                        <select name="" id="polic_sta">
+                            <option disabled selected>Select district first</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-category">
+                <div class="filter-category-head">
+                    <h3>Category</h3>
+                    <button onclick="clear_category()">Clear</button>
+                </div>
+                <div class="filter-category-body">
+                    <div class="box">
+                        <i class='bx bx-search-alt-2' style="color:black; margin-left: 2px;"></i>
+                        <input type="text" placeholder="Search Category" id="filter-category"
+                            onkeyup="category_filter()" onclick="show_all_category()">
+                    </div>
+                    <div class="category-suggest">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main_content">
+            <div class="main_title">
+                <span>Top results </span>
+                <div class="sort">
+                    <div id = 'title'><p>Sort by Rating</p></div>
+                    <div class="sort_value">
+                        <select name="sort_order" id="sort_order">
+                            <option value="Ascending">Ascending</option>
+                            <option value="Descending" selected>Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="list_head">
+                <div class="list_profile_title"><p>Profiles</p></div>
+                <div class="list_profession_title"><p>Profession</p></div>
+                <div class="list_location_title"><p>Location</p></div>
+                <div class="list_contact_title"><p>Contact</p></div>
+            </div>
+            <div class="list_items">
+                <div class="list_data">
+                    <div class="list_info list_profile">
+                        <img src = "../pictures/FB_IMG_1635179825355.jpg">
+                        <div class="list_profile_info">
+                            <div>
+                                <p id = "list_profile_name">Tanzim Bin Nasir</p>
+                            </div>
+                            <div >
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star unchecked"></span>
+                                <span id="list_profile_rating">(4.5)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_info list_profession">
+                        <p>Developer</p>
+                    </div>
+                    <div class="list_info list_location">
+                        <p>Bakolia, Chattogram</p>
+                    </div>
+                    <div class="list_info list_contact">
+                        <p>01629029974</p>
+                    </div>
+                </div>
+                <div class="list_data">
+                    <div class="list_info list_profile">
+                        <img src = "../pictures/FB_IMG_1635179825355.jpg">
+                        <div class="list_profile_info">
+                            <div>
+                                <p id = "list_profile_name">Nafiz Safa Talukder</p>
+                            </div>
+                            <div >
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span id="list_profile_rating">(5)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_info list_profession">
+                        <p>Developer</p>
+                    </div>
+                    <div class="list_info list_location">
+                        <p>Raozan, Chattogram</p>
+                    </div>
+                    <div class="list_info list_contact">
+                        <p>01715928391</p>
+                    </div>
+                </div>
+                <div class="list_data">
+                    <div class="list_info list_profile">
+                        <img src = "../pictures/FB_IMG_1635179825355.jpg">
+                        <div class="list_profile_info">
+                            <div>
+                                <p id = "list_profile_name">Aninda Roy Dhrubo</p>
+                            </div>
+                            <div >
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star unchecked"></span>
+                                <span id="list_profile_rating">(4.7)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list_info list_profession">
+                        <p>Developer</p>
+                    </div>
+                    <div class="list_info list_location">
+                        <p>Comilla</p>
+                    </div>
+                    <div class="list_info list_contact">
+                        <p>01819335856</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="../newsfeed/home.js"></script>
+<script src = "../location.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // autoplay: {
+        //     delay: 3000,
+        //     disableOnInteraction: false,
+        // },
+
+        loop: true,
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+</script>
+
+</html>

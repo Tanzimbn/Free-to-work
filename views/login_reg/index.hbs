@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../login_reg/style.css">
+    <link rel="stylesheet" href="../login_reg/login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="toast">
+  
+        <div class="toast-content">
+            <i class="fa-solid fa-exclamation check"></i>
+      
+          <div class="message">
+            <span class="text text-1">Error</span>
+            <span class="text text-2">Email or password is wrong!</span>
+          </div>
+        </div>
+        <i class="fa-solid fa-xmark close"></i>
+        <div class="progress"></div>
+    </div>
+    <div class="container">
+        <div class="login-link">
+            <div class="logo" onclick="goto_home()">
+                <!-- <i class='bx bx-pencil' ></i> -->
+                <span class="text">Free to<br>work.</span>
+            </div>
+            <p class="side-big-heading">Welcome!</p>
+            <p class="primary-bg-text">Are you free to work? Join the community and find a job now.</p>
+            <br>
+            <p class="primary-reg-text">If you don't have an account then join with us.</p>
+            <a href="./register" class="loginbtn">Register now</a>
+        </div>
+        <form class="login-form-container" id="login_form">
+            <p class="big-heading">Login</p>
+            <div class="login-form-contents">
+                <div class="text-fields login_email">
+                    <label for="email"><i class='bx bx-envelope'></i></label>
+                    <input type="email" name="email" id="email" placeholder="Enter your email id" required>
+                </div>
+                <div class="text-fields login_password">
+                    <label for="password"><i class='bx bx-lock-alt'></i></label>
+                    <input type="password" name="password" id="password" placeholder="Enter password">
+                </div>
+            </div>
+            <input type="submit" value="Login" class="nextPage">
+            <div class="social-media-platform">
+                <a href="#"><box-icon type='logo' name='google'></box-icon></a>
+            </div>
+        </form>
+</body>
+{{!-- <script src = "./login_reg/verification.js"></script> --}}
+<script src = "./login_reg/login.js"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+</html>
