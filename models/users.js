@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     },
     Station: {
         type: String
+    },
+    category: {
+        type: String,
+        default: ""
     }
 });
 

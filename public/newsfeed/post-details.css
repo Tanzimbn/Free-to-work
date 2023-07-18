@@ -17,7 +17,7 @@
     background-color: rgb(255, 255, 255);
     width: 75%;
     /* height: 100vh; */
-    padding: 2%;
+    padding: 2% 2% 2% 4%;
     border-radius: 20px 0px 0px 20px;
     overflow-x:hidden;
     overflow-y:auto;
@@ -47,7 +47,8 @@
     padding: 2%;
 }
 .details_body_left_head .title {
-    font-size: 3rem;
+    font-size: 2rem;
+    word-break: break-all; 
 }
 .details_body_left_head .budget_time, .details_body_left_head .tag, .details_body_left_head .details_location {
     display: flex;

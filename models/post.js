@@ -18,9 +18,24 @@ const postSchema = new mongoose.Schema({
         type: SchemaTypes.Number
     },
     time: {
-        type: Da
+        type: Date
+    },
+    time_limit: {
+        type: Date
+    },
+    division: {
+        type: String
+    },
+    district: {
+        type: String
+    },
+    station: {
+        type: String
+    },
+    max_bid: {
+        type: SchemaTypes.Number
     }
 });
 
-const postModel = mongoose.model("user", postSchema);
+const postModel = mongoose.model("post", postSchema);
 module.exports = postModel;

@@ -208,7 +208,7 @@ nav {
      color:#ff5d94;
 
 }
- .menu h3 span{
+ .menu h3 #nav_user_category{
     font-size: 14px;
     color: #cecece;
     font-weight: 400;

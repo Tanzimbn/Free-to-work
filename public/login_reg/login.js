@@ -52,29 +52,14 @@ form.addEventListener('submit', async (e) => {
     }
     const response = await fetch("/login", options);
     const data = await response.json();
-    const val = data.message;
-    if(val == "Email or Password is incorrect") {
+    if(data.message == "Email or Password is incorrect") {
         opennoti();
     }
     else {
+        localStorage.setItem('user_id', data.id)
         window.location.assign("./newsfeed");
     }
     
-    // fetch('/login', options)
-    // .then((response) => {
-    //     console.log("achd");
-    //     alert("a");
-    //     return response.json();
-    // })
-    // .then((data) => {
-    //     var result = document.getElementById("results");
-
-    //     result.innerHTML = `<p>Email is </p>`;
-    //     alert("a");
-    //     console.log("asche");
-    // }).catch(function (error) {
-    //     console.error("error");
-    // })
 })
 
 

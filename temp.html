@@ -1,0 +1,11 @@
+var t = new Date();
+t.setSeconds(t.getSeconds() + 3600 * 6);
+console.log(t);
+
+
+// time ago package
+const time_ago = require("javascript-time-ago")
+const loc = require("javascript-time-ago/locale/en")
+time_ago.addDefaultLocale(loc)
+const tm = new time_ago();
+console.log(tm.format(Date.now() - 360 * 60 * 60 * 1000));

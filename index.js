@@ -2,8 +2,16 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
+const session = require("express-session")
 
 const app = express();
+
+// session 
+app.use(session({
+    secret: "cookie_secret",
+    resave: true,
+    saveUninitialized: true
+}));
 // db add
 dotenv.config({ path: './.env'});
 require('./db/conn');
@@ -17,6 +25,7 @@ const filepath = path.join(__dirname, "./public");
 app.use(express.static(filepath));
 // route add
 app.use(require("./routes/auth"));
+
 
 
 app.listen(3000, ()=> {
