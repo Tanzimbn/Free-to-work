@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Post Form</title>
+    <link rel="stylesheet" href="postbox.css">
+</head>
+<body>
+    <div class="post-box">
+        <h2>Job Post Form</h2>
+        <form id="jobPostForm">
+            <label for="jobTitle">Title of the Job:</label>
+            <input type="text" id="jobTitle" required>
+
+            <label for="jobDescription">Description:</label>
+            <textarea id="jobDescription" rows="4" required></textarea>
+
+            <label for="jobBudget">Budget:</label>
+            <input type="text" id="jobBudget" required>
+
+            <label for="jobDeadline">Deadline:</label>
+            <input type="date" id="jobDeadline" required>
+
+            <label for="jobTags">Tags or Category:</label>
+            <input type="text" id="jobTags" required>
+
+            <label for="jobLocation">Location:</label>
+            <input type="text" id="jobLocation" required>
+
+            <button type="submit">Post Job</button>
+        </form>
+    </div>
+    <script src="postbox.js"></script>
+</body>
+</html>
