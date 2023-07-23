@@ -1,0 +1,149 @@
+.profile-container{
+    padding: 20px 15%;
+    color:#626262;
+
+}
+.cover-img{
+    width:100%;
+    border-radius: 6px;
+    margin-bottom: 14px;
+     
+}
+.profile-details{
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+#verified_img{
+    width:24px;
+    height: 24px;
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+
+.pd-row{
+    display: flex;
+    /* align-items: flex-start; */
+}
+.pd-img{
+    width: 100px;
+    margin-right:20px;
+    border-radius: 6px;
+
+}
+.user_name{
+    font-size: 25px;
+    font-weight: 600;
+
+}
+.work_title{
+    font-size: 16px;
+    color: #0e3b75;
+    font-weight: bold;
+    margin-left: 5px;
+}
+.rating{
+    font-size:20px;
+    font-weight: 600;
+    font-family: monospace;
+    display: flex;
+    margin-top: 5px;
+    margin-left: 4px;
+ }
+ #user_rating{
+    margin-left: 10px;
+ }
+.pd-right button{
+    background: #1876f2;
+    border: 0;
+    outline:0;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.pd-right button img{
+    height: 15px;
+    margin-right: 10px;
+}
+.pd-right button:first-child{
+    background-color: #e4e6eb;
+    color: black;
+}
+.profile-info{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;
+
+}
+.info-col{
+    flex-basis: 33%;
+
+}
+.post-col{
+    flex-basis: 65%;
+
+}
+.profile-intro{
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+.profile-intro h3{
+    font-weight: 600;
+    padding-top: 10px;
+
+}
+.profile-intro p{
+    text-align: center;
+    margin: 10px;
+    font-size: 15px;
+
+}
+.profile-intro hr{
+    border: 0;
+    height: 1px;
+    background: #180b3b;
+    margin: 24 0;
+}
+.profile-intro img{
+    width: 18px;
+    height: 18px;
+    margin-right: 6px ;
+}
+.img1{
+    width:16px;
+}
+.profile-intro ul li{
+    list-style: none;
+    font-size: 15px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+
+}
+.main_content h3{
+    padding-top: 15px;
+    padding-left: 13px;
+    color: #1b2028;
+}
+
+/* --------Report------section------ */
+
+.reportsec{
+    background-color: rgb(104, 30, 71);
+    opacity: 0.4;
+    height: 1000px;
+    width: 100%;
+}
+
+

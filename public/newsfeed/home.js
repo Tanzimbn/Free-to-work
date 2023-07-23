@@ -1,20 +1,4 @@
-// async function userinfo () {
-//     let options = {
-//         method: 'POST',
-//         body : JSON.stringify({
-//             id: localStorage.user_id
-//         }),
-//         headers: {
-//             "Content-Type": "application/json;charset=UTF-8"
-//         },
-//     }
-//     const response = await fetch("/user_info", options);
-//     const data = await response.json();
-//     console.log(data)
-//     document.getElementById("nav_user_name").innerHTML = data.fname + data.lname
-//     document.getElementById("nav_user_category").innerHTML = data.category
-// }
-// userinfo()
+
 // pp open
 const toggleMenu = document.querySelector('.menu');
 function menuToggle(){
@@ -80,6 +64,7 @@ function see_less(ev) {
     
 }
 async function detail_load(id) {
+    console.log(id)
     let options = {
         method: 'POST',
         body : JSON.stringify({
@@ -91,13 +76,25 @@ async function detail_load(id) {
     }
     const response = await fetch("/post_detail", options);
     const data = await response.json();
+    const time_limit = data.time_limit.split("T")
+    const time_limit_time = time_limit[1].split(":")
+
     document.getElementById("post_detail_title").innerHTML = data.title
-    document.getElementById("post_detail_time_ago").innerHTML = data.time_ago
-    document.getElementById("post_detail_budget").innerHTML = `Est. budget: ${data.budget}BDT`
+    document.getElementById("post_detail_time_ago").innerHTML = `Time Limit: ${time_limit[0]} (${time_limit_time[0]}:${time_limit_time[1]})`
+    document.getElementById("post_detail_budget").innerHTML = `Est. budget: ${data.budget} BDT`
     document.getElementById("post_detail_category").innerHTML = `${data.category}`
     document.getElementById("post_detail_division").innerHTML = `${data.division}`
-    document.getElementById("post_detail_detail").innerHTML = `${data.detail}`
-
+    document.getElementById("post_detail_detail").innerHTML = data.detail
+    document.getElementById("bid_sumbit").dataset.id = id
+    document.getElementById("best_bidder_name").innerHTML = data.max_bid_user_name
+    if(data.max_bid_user_name == "No bid yet") {
+        document.getElementById("best_bid_value").innerHTML = ""
+        document.getElementById("best_bidder_name").dataset.id = ""
+    }
+    else {
+        document.getElementById("best_bid_value").innerHTML = data.max_bid
+        document.getElementById("best_bidder_name").dataset.id = data.max_bid_user
+    }
 
 }
 function open_detail_late() {
@@ -122,3 +119,11 @@ function logout() {
     return false;
 }
 
+function show_best_bidder(ev) {
+    const id = ev.getAttribute("data-id");
+    if(id == "") return;
+    window.location.assign(`/profile/${id}`);
+}
+function goto_landing() {
+    window.location.assign(`/`);
+}

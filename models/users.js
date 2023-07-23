@@ -33,12 +33,16 @@ const userSchema = new mongoose.Schema({
     district: {
         type: String
     },
-    Station: {
+    station: {
         type: String
     },
     category: {
         type: String,
         default: ""
+    },
+    img : {
+        data: Buffer,
+        contentType:String
     }
 });
 

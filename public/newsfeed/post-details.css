@@ -38,13 +38,19 @@
 
 /* left part */
 .details_body_left {
-    width: 70%;
+    width: 100%;
     min-height: 100vh;
-    border-right: 2px solid rgb(0, 255, 170);
 }
 .details_body_left_head, .details_body_left_body{
     border-bottom: 2px solid rgb(0, 255, 170);
     padding: 2%;
+}
+.details_body_left_head {
+    display: flex;
+    justify-content: space-between;
+}
+.basic_info {
+    width: 50%;
 }
 .details_body_left_head .title {
     font-size: 2rem;
@@ -98,8 +104,8 @@
     margin-bottom: 1%;
 }
 /* right part */
-.details_body_right {
-    width: 30%;
+.sumbit_bid, .best_bid {
+    width: 25%;
 }
 @keyframes example {
     0%   {border-color:rgb(37, 168, 250); }
@@ -112,59 +118,43 @@
     padding: 10%;
     border: 2px solid rgb(173, 236, 221);
     border-radius: 10px;
-    font-size: 2rem;
+    font-size: 1rem;
     animation-name: example;
     animation-duration: 5s;
     animation-iteration-count: infinite;
 }
 .best_bid #best_bid {
-    display: flex; 
+    /* display: flex;  */
     justify-content:center;
 }
-.best_bid #title, .sumbit_bid #title, .bid_list #title{
+.best_bid #best_bid #best_bidder_name {
+    cursor: pointer;
+}
+.best_bid #best_bid #best_bidder_name:hover {
+    color: rgb(0, 255, 170);
+}
+.best_bid #title, .sumbit_bid #bid_sumbit{
     text-align: center;
     width: 50%;
     margin-left: 25%;
     position: relative;
-    top: -2rem;
+    top: -1.5rem;
     background-color: rgb(255, 255, 255);
-    font-size: 1.4rem;
+    font-size: 1rem;
 }
-.bid_list #title {
-    top: 2rem;
-}
-.bid_list ul {
-    list-style: none;
-    /* height: 80vh; */
-    /* overflow: auto; */
-}
-.bid_list #bid_list {
-    text-align: center;
-    margin: 5%;
-    padding: 5% 2%;
-    border: 2px solid rgb(37, 168, 250);
-    border-radius: 10px;
-}
-.bid_list_cart {
-    border: 2px solid rgb(37, 168, 250);
-    border-radius: 5px;
-    padding: 2%;
-    margin-bottom: 2%;
-    font-size: 1.2rem;
-}
-.sumbit_bid #title {
+.sumbit_bid #bid_sumbit {
     cursor: pointer;
     width: 50%;
     margin-left: 25%;
     border: none;
-    padding: 2px;
+    /* padding: 2px; */
 }
-.sumbit_bid #title:hover {
+.sumbit_bid #bid_sumbit:hover {
     color: rgb(61, 253, 208);
 }
 .sumbit_bid input {
-    /* height: 4rem; */
-    font-size: 2rem;
+    height: 2.2rem;
+    font-size: 1rem;
     overflow: scroll;
     width: 100%;
     text-align: center;

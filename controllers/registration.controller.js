@@ -16,7 +16,7 @@ exports.reg_submit = async (req, res) => {
             station: req.body.station
         })
         const register = await new_user.save();
-        console.log("Done");
+        console.log(req.body.station);
         res.send({"message" : "Successfull"});
 
     } catch (error) {

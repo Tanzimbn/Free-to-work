@@ -21,7 +21,7 @@ const postSchema = new mongoose.Schema({
         type: Date
     },
     time_limit: {
-        type: Date
+        type: Date,
     },
     division: {
         type: String
@@ -34,6 +34,14 @@ const postSchema = new mongoose.Schema({
     },
     max_bid: {
         type: SchemaTypes.Number
+    },
+    max_bid_user: {
+        type: String,
+        default: "No bid yet"
+    },
+    max_bid_user_name: {
+        type: String,
+        default: "No bid yet"
     }
 });
 

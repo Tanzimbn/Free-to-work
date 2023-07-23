@@ -28,7 +28,7 @@ exports.post = async (req, res) => {
 
 exports.post_detail = async (req, res) => {
     const allpost = await postModel.find({_id : req.body.id});
-    allpost[0].time_ago = tm.format(allpost[0].time)
+    // allpost[0].time_ago = tm.format(allpost[0].time)
     // data[0].time_ago = tm.format(data[0].time)
     // console.log(allpost)
     res.json(allpost[0])

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to work.</title>
+    <link rel="icon" href="/images/Screenshot 2023-07-22 194839.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/user_profile/home_navbar.css">
+    <link rel="stylesheet" href="/user_profile/profile.css">
+    <link rel="stylesheet" href="/user_profile/content.css">
+    <link rel="stylesheet" href="/newsfeed/post-details.css">
+    <link rel="stylesheet" href="/newsfeed/comment.css">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <!-- --------nav bar------ -->
+     
+    <nav>
+        <div class="nav_left">
+            <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
+            <ul>
+                <li><a href="/newsfeed"><i class='bx bxs-home'></i></a></li>
+                <li><a href="/list"><i class='bx bx-list-ul'></i></a></li>
+                <li><i class='bx bxs-category'></i></li>
+            </ul>
+        </div>
+        <div class="nav_right">
+            <div class="serach_box">
+                <img src="../pictures/search-alt-regular-24.png">
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="create_post" onclick="goto_post()">
+                <p>Post</p>
+            </div>
+            <!-- -------profile-popup-------- -->
+            <div class="user_icon">
+                <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
+            </div>
+            <div class="menu">
+                <div class="menu_user_icon">
+                    <img src="../pictures/FB_IMG_1635179825355.jpg">
+                </div>
+                {{#each user}}
+                <h3><span id = "nav_user_name">{{fname}} {{lname}}</span><br><span id = "nav_user_category">{{category}}</span></h3>
+                {{/each}}
+                <ul>
+                    <li><img src="../pictures/user1.png" alt="Dp"><a href="/profile">My profile</a></li>
+                    <li><img src="../pictures/logout.png" alt="logout logo"><a href="/logout" onclick="logout()">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- ----profile page--- -->
+     
+    <div class="profile-container">
+      <img src="/user_profile/pictures/Green Simple Personal LinkedIn Banner.png" class="cover-img" alt="coverimage">
+      <div class="profile-details">
+        <div class="pd-left">
+            <div class="pd-row">
+                <img src="/user_profile/pictures/amalie-steiness.gif" data-loginId ="{{loginId}}" data-givenId ="{{givenId}}" alt="dp" class="pd-img">
+                <div>
+                    {{#each view_user}}
+                    <h3 class="user_name">{{this.fname}}<span> </span>{{this.lname}} <img src="/user_profile/pictures/verified.png" id="verified_img"></h3>
+                    <p class="work_title">{{this.category}}</p>
+                    <div class="rating">
+                        <p>Ratings:</p>
+                        <p id="user_rating">8.6</p>
+                    </div>
+                    {{/each}}
+                </div>
+                <div>
+                    {{#if MainUser}}
+                    <form action="/edit_user" enctype="multipart/form-data" method="post">
+                        <input type="file" class="admin__input" id="myFile" name="testImage" />
+                        <input class="admin__submit" type="submit" />
+                    </form>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="pd-right">
+            <button type="button"><img src="/user_profile/pictures/review.png">Reviews</button>
+            <button type="button"><img src="/user_profile/pictures/report.png">Report User</button>
+
+        </div>
+      </div>
+      <div class="profile-info">
+        <div class="info-col">
+            <div class="profile-intro">
+                <h3>Bio-</h3>
+                <p>I can be the Digital Marketer you're looking for.</p>
+                <hr>
+                <h3>Details-</h3>
+                <ul>
+                    <li><img src="/user_profile/pictures/work.png" class="img1">Not yet working</li>
+                    <li><img src="/user_profile/pictures/study.png">Student at C.U.E.T</li>
+                    <li><img src="/user_profile/pictures/home.png">lives in Chittagong,Bangladesh</li>
+                    <li><img src="/user_profile/pictures/location.png">From Cumilla,Bangladesh</li>
+                </ul>
+                <hr>
+            </div>
+        </div>
+        <div class="post-col">
+            <div class="main_content">
+                <h3>Recent Posts:</h3>
+                <div class="post">
+                {{#each allpost}} 
+                    {{!-- {{_id}} --}}
+                    <div class="post-content">
+                        <div class="heading">
+                            <p onclick="show_details(this)" data-id="{{id}}">{{title}}</p>
+                            <p><i class="fa-solid fa-trash-can" style="color: #db0f0f;" onclick="delete_post(this)" data-id="{{id}}"></i></p>
+                        </div>
+                        <div class="budget">
+                            <p>Est. budget: {{budget}} BDT</p>
+                            <p>.</p>
+                            <p>Posted : {{time_ago}}</p>
+                        </div>
+                        <div class="details">
+                            <p>{{detail1}}<span id="dots"> ...</span><button onclick="see_more(this)"
+                                    id="see_more">more</button><span id="more_details">{{detail2}}</span>
+                                <button onclick="see_less(this)" id="see_less">see less</button>
+                            </p>
+                        </div>
+                        <div class="post_tag">
+                            <ul>
+                                <li>{{category}}</li>
+                            </ul>
+                        </div>
+                        <div class="location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p>{{division}}</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            </div>
+    
+    
+    
+        </div>
+      </div>
+    </div>
+    <div class="post_details">
+        <div class="details_overlay"></div>
+        <div class="details_content" id="details_content">
+            <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
+            <div class="details_body">
+                <div class="details_body_left">
+                    <div class="details_body_left_head">
+                        <div class="basic_info">
+                            <div class="title">
+                                <span id='post_detail_title'>Java SpringBoot</span>
+                            </div>
+                            <div class="budget_time">
+                                <p id="post_detail_budget">Est. budget: $50 - 100 USD</p>
+                                <p id="post_detail_time_ago">Posted 2 hours ago</p>
+                            </div>
+                            <div class="tag">
+                                <ul>
+                                    <li id="post_detail_category">php</li>
+                                </ul>
+                            </div>
+                            <div class="details_location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p id="post_detail_division">Chittagong</p>
+                            </div>
+                        </div>
+                        <div class="best_bid">
+                            <div id = 'best_bid'>
+                                <p id = "best_bidder_name" data-id = "" onclick="show_best_bidder(this)">Nafiz Safa Talukder</p>
+                                <p><span id = "best_bid_value">100</span> BDT</p>
+                            </div>
+                            <div id = 'value'>
+                                <p id = 'title'>BEST BID</p>
+                            </div>
+                        </div> 
+                        <div class="sumbit_bid">
+                            <div id='sumbit_bid'>
+                                <input type="number" placeholder="Enter your bid">
+                            </div>
+                            <div id='value'>
+                                <button id='title'>SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details_body_left_body">
+                        <p id="details">Details:</p>
+                        <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad
+                            officiis iusto omnis enim
+                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
+                            quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
+                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi pariatur
+                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor vel
+                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor vero
+                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam alias
+                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla porro
+                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam alias
+                            eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
+                            necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
+                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit eveniet
+                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae nihil
+                            saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
+                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores ut
+                            distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
+                            minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
+                        </p>
+                    </div>
+                    <div class="comment">
+                        <p id="comment">Comments:</p>
+                        <div class="comment_container opened" id="first-comment">
+                            <div class="comment_card">
+                                <h3 class="comment_title">First</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                <div class="comment_footer">
+                                    <div class="reply" onclick="show(this)">reply</div>
+                                    <div class="show_reply">2 Replies</div>
+                                </div>
+                            </div>
+                            <div class="comment_container" dataset="first-comment" id="first-reply">
+                                <div class="comment_card">
+                                    <h3 class="comment_title">First reply</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <div class="comment_footer">
+                                        <div class="reply" onclick="show(this)">reply</div>
+                                        <div class="show_reply">1 Replies</div>
+                                    </div>
+                                </div>
+                                <div class="comment_container" dataset="first-reply" id="first-first-reply">
+                                    <div class="comment_card">
+                                        <h3 class="comment_title">reply of First reply</h3>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                        </p>
+                                        <div class="comment_footer">
+                                            <div class="reply" onclick="show(this)">reply</div>
+                                            <div class="show_reply">0 Replies</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment_container" dataset="first-comment" id="second-reply">
+                                <div class="comment_card">
+                                    <h3 class="comment_title">Second reply</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <div class="comment_footer">
+                                        <div class="reply" onclick="show(this)">reply</div>
+                                        <div class="show_reply">0 Replies</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment_box">
+                            <form action="">
+                                <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
+                                <input type="submit">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="/newsfeed/home.js"></script>
+<script src="/user_profile/profile.js"></script>
+<script>
+    
+</script>
+</html>

@@ -23,7 +23,6 @@ nav {
 .logo {
     width: 160px;
     margin-right: 45px;
-    cursor: pointer;
 }
 
 .nav_left,
@@ -49,11 +48,10 @@ nav {
 
 .nav_left i {
     font-size: x-large;
+    color: #1a1d86;
     transition: font-size 0.4s, border-bottom 0.4s;
 }
-.taken {
-    color: red;
-}
+
 .user_icon img {
     height: 100%;
     width: 100%;
@@ -234,7 +232,4 @@ nav {
     display: block;
     position: relative;
     left: 25%;
-}
-::-webkit-search-cancel-button {
-    cursor: pointer;
 }
