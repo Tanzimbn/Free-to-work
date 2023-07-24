@@ -127,3 +127,8 @@ function show_best_bidder(ev) {
 function goto_landing() {
     window.location.assign(`/`);
 }
+
+function show_post_popup() {
+    console.log("as")
+    document.querySelector(".post_popup").classList.remove("open_post_popup");
+}

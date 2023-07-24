@@ -1,8 +1,55 @@
+function open_post() {
+    document.querySelector(".post_popup").classList.remove("post_invisible")
+}
+function close_post_popup() {
+    document.querySelector(".post_popup").classList.add("post_invisible")
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("jobPostForm");
+    form.addEventListener("submit", handleSubmit);
+});
+
+function handleSubmit(event) {
+    event.preventDefault();
+
+    const jobTitle = document.getElementById("jobTitle").value;
+    const jobDescription = document.getElementById("jobDescription").value;
+    const jobBudget = document.getElementById("jobBudget").value;
+    const jobDeadline = document.getElementById("jobDeadline").value;
+    const jobTags = document.getElementById("jobTags").value;
+    const jobLocation = document.getElementById("jobLocation").value;
+
+
+    const postData = {
+        title: jobTitle,
+        description: jobDescription,
+        budget: jobBudget,
+        deadline: jobDeadline,
+        tags: jobTags,
+        location: jobLocation
+    };
+
+    alert(JSON.stringify(postData));
+}
+
+const post_category = document.querySelector("#category_list");    
+function show_all_category() {
+    display_category_result(category);
+}
+function display_category_result(result){
+    const content = result.map((list)=>{
+        return `<option>${list}</option>`;
+    });
+    post_category.innerHTML = content.join('');
+}
+show_all_category();
+
+
 // Division Section select
-function divisionsList() {
-    console.log("asche")
+function post_divisionsList() {
     // get value from division lists
-    var diviList = document.getElementById('divisions').value;
+    var diviList = document.getElementById('post_divisions').value;
 
     // set barishal division districts
     if (diviList == 'Barishal') {
@@ -35,12 +82,12 @@ function divisionsList() {
     }
 
     //  set/send districts name to District lists from division
-    document.getElementById("distr").innerHTML = disctList;
+    document.getElementById("post_distr").innerHTML = disctList;
 }
 
 // Thana Section select
-function thanaList() {
-    var DisList = document.getElementById('distr').value;
+function post_thanaList() {
+    var DisList = document.getElementById('post_distr').value;
     if (DisList == 'Bagerhat') {
         var thanaList = '<option value="">Select One</option><option value="Bagerhat Sadar">Bagerhat Sadar</option><option value="Chitalmari">Chitalmari</option><option value="Fakirhat">Fakirhat</option><option value="Kachua">Kachua</option><option value="Mollahat">Mollahat</option><option value="Mongla">Mongla</option><option value="Morrelganj">Morrelganj</option><option value="Rampal">Rampal</option><option value="Sarankhola">Sarankhola</option><option value="Others">Others</option>';
     }
@@ -238,7 +285,7 @@ function thanaList() {
     }
 
 
-    document.getElementById("polic_sta").innerHTML = thanaList;
+    document.getElementById("post_polic_sta").innerHTML = thanaList;
 }
 function clear_location() {
     let temp = document.getElementById("divisions");

@@ -9,15 +9,18 @@ exports.post = async (req, res) => {
     try {
         var time = new Date();
         const new_post = new postModel({
+            user: req.session.user_id,
             title: req.body.title,
             detail: req.body.detail,
             category: req.body.category,
             budget: req.body.budget,
             time: time,
-            division: req.body.division
+            time_limit: req.body.time,
+            division: req.body.division,
+            district: req.body.district,
+            station: req.body.station
         })
         const post_res = await new_post.save()
-        console.log("Done");
         res.send({"message" : "Success"})
 
     } catch (error) {

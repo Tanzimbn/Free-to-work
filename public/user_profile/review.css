@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.profile-page.review-active{
+    filter: blur(10px);
+    pointer-events: none;
+    user-select: none;
+}
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+span.user-name:hover{
+    color: #103e2b;
+    font-size: 20px;
+}
+.rev_container {
+    font-family:'Poppins', Arial, sans-serif; ;
+    top: 20%;
+    left: 25%;
+    width: 600px;
+    height: 700px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    visibility: hidden;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.rev_container h1 {
+    text-align: center;
+}
+
+.rev_container .reviews {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.rev_container .review {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.rev_container .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.rev_container .user-name {
+    font-size: 16px;
+}
+
+.rev_container .user-rating {
+    font-size: 16px;
+}
+
+.rev_container .user-comment {
+    font-size: 18px;
+}
+
+.rev_container .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+ /* ------------------report section css------------ */
+
+ 
+.rep_container {
+   max-width: 400px;
+   margin: 20px auto;
+   background-color: #ffffff;
+   padding: 20px;
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   position:fixed;
+   top: 20%;
+   left: 38%;
+   z-index: 10000;
+   width: 400px;
+   height: 500px;
+   visibility: hidden;
+   opacity: 0;
+   transition: 0.4s;
+
+}
+
+.rep_container h1 {
+   text-align: center;
+}
+
+.rep_container form {
+   display: flex;
+   flex-direction: column;
+}
+
+.rep_container label {
+   margin-top: 10px;
+   font-weight: bold;
+}
+
+.rep_container input[type="text"],
+select,
+textarea {
+   padding: 10px;
+   margin-bottom: 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}
+.rep_container textarea{
+    max-height: 200px;
+    min-height: 200px;
+    max-width: 94%;
+    min-width: 94%;
+}
+
+.rep_container button {
+   background-color: #007bff;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 4px;
+   cursor: pointer;
+   font-weight: bold;
+}
+
+.rep_container button:hover {
+   background-color: #0056b3;
+}
+.additionalComments{
+    position: fixed;
+}
+
+/* -------------------blur-------- */
+/* .profile-page.review-active
+{
+    filter: blur(20px);
+    pointer-events: none;
+    user-select: none;
+} */
+.rev_container.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+.rep_container.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: .4s;
+}

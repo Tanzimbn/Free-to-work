@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="postbox.css">
     <link rel="stylesheet" href="home_navbar.css">
     <link rel="stylesheet" href="home_content.css">
     <link rel="stylesheet" href="post-details.css">
@@ -26,7 +27,7 @@
             <ul>
                 <li><a href="/newsfeed"><i class='bx bxs-home'></i></a></li>
                 <li><a href="/list"><i class='bx bx-list-ul'></i></a></li>
-                <li><i class="fa-solid fa-bell taken"></i></li>
+                {{!-- <li><i class="fa-solid fa-bell taken"></i></li> --}}
             </ul>
         </div>
         <div class="nav_right">
@@ -34,7 +35,7 @@
                 <img src="../pictures/search-alt-regular-24.png">
                 <input type="search" id = "searchValue" placeholder="Search" onsearch="apply_filter()">
             </div>
-            <div class="create_post" onclick="goto_post()">
+            <div class="create_post" onclick="open_post()">
                 <p>Post</p>
             </div>
             <!-- -------profile-popup-------- -->
@@ -419,6 +420,56 @@
             </div>
         </div>
     </div>
+    <div class="post_popup post_invisible">
+        <div class="post-box">
+            <button id = "post_popup_close" onclick="close_post_popup()">X</button>
+            <h2>Job Post Form</h2>
+            <form id="jobPostForm">
+                <label for="jobTitle">Title of the Job:</label>
+                <input type="text" id="jobTitle" maxlength="200" autocomplete="off" required>
+    
+                <label for="jobDescription">Description:</label>
+                <textarea id="jobDescription" rows="4" autocomplete="off" required></textarea>
+    
+                <label for="jobBudget">Budget:</label>
+                <input type="number" id="jobBudget" autocomplete="off" required>
+    
+                <label for="jobDeadline">Deadline:</label>
+                <input type="datetime-local" name="jobDeadline" id="jobDeadline" ng-model="UIcontroller.JobDataModel.datetime">
+                
+                <label for="jobTags">Tags or Category:</label>
+                <input type="text" id="jobTags" list="category_list" autocomplete="off" required>
+                <datalist id="category_list">
+                </datalist>
+    
+    
+                <label for="divisions">Division:</label>
+                <select name="divisions" id="post_divisions" onchange="post_divisionsList();" required>
+                    <option disabled selected>Select division</option>
+                    <option value="Barishal">Barishal</option>
+                    <option value="Chattogram">Chattogram</option>
+                    <option value="Dhaka">Dhaka</option>
+                    <option value="Khulna">Khulna</option>
+                    <option value="Mymensingh">Mymensingh</option>
+                    <option value="Rajshahi">Rajshahi</option>
+                    <option value="Rangpur">Rangpur</option>
+                    <option value="Sylhet">Sylhet</option>
+                </select>
+    
+                <label for="post_distr">District:</label>
+                <select name="post_distr" id="post_distr" onchange="post_thanaList();" required>
+                    <option disabled selected>Select division first</option>
+                </select>
+    
+                <label for="post_polic_sta">Police station:</label>
+                <select name="post_polic_sta" id="post_polic_sta" required>
+                    <option disabled selected>Select district first</option>
+                </select>
+    
+                <button type="button" onclick="make_post()">Post Job</button>
+            </form>
+        </div>
+    </div>
     <footer>
         <div class="bottom">
             <center>
@@ -435,6 +486,9 @@
 <script src="filter.js"></script>
 <script src="../location.js"></script>
 <script src="comment.js"></script>
+<script src="postbox.js"></script>
+<script src="newpost.js"></script>
+{{!-- <script src="./newsfeed/postbox.js"></script> --}}
 <!-- sliding adv -->
 <script>
     const swiper = new Swiper('.swiper', {

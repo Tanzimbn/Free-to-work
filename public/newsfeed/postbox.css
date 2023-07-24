@@ -1,0 +1,60 @@
+.post_popup {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #83838375;
+    z-index: 200;
+    position: fixed;
+    top: 0;
+    height: 100%;
+}
+.post_invisible {
+    visibility: hidden;
+}
+.post-box {
+    width: 50%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+#post_popup_close {
+    float: right;
+}
+.post-box h2 {
+    text-align: center;
+}
+
+.post-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-box label {
+    margin-top: 5px;
+}
+
+.post-box input, .post-box textarea, .post-box select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.post-box #jobDeadline_date, .post-box #jobDeadline_time {
+    width: 45.5%;
+}
+
+.post-box button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.post-box button:hover {
+    background-color: #45a049;
+}

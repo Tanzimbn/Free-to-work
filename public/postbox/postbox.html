@@ -11,26 +11,55 @@
         <h2>Job Post Form</h2>
         <form id="jobPostForm">
             <label for="jobTitle">Title of the Job:</label>
-            <input type="text" id="jobTitle" required>
+            <input type="text" id="jobTitle" maxlength="200" autocomplete="off" required>
 
             <label for="jobDescription">Description:</label>
-            <textarea id="jobDescription" rows="4" required></textarea>
+            <textarea id="jobDescription" rows="4" autocomplete="off" required></textarea>
 
             <label for="jobBudget">Budget:</label>
-            <input type="text" id="jobBudget" required>
+            <input type="number" id="jobBudget" autocomplete="off" required>
 
             <label for="jobDeadline">Deadline:</label>
-            <input type="date" id="jobDeadline" required>
-
+            <div class="jobDeadline">
+                <input type="date" id="jobDeadline_date" autocomplete="off" required>
+                <input type="time" id="jobDeadline_time" autocomplete="off" required>
+            </div>
+            
             <label for="jobTags">Tags or Category:</label>
-            <input type="text" id="jobTags" required>
+            <input type="text" id="jobTags" list="category_list" autocomplete="off" required>
+            <datalist id="category_list">
+            </datalist>
+            <div class="category-suggest">
+            </div>
 
-            <label for="jobLocation">Location:</label>
-            <input type="text" id="jobLocation" required>
+
+            <label for="jobLocation">Division:</label>
+            <select name="divisions" id="divisions" onchange="divisionsList();" required>
+                <option disabled selected>Select division</option>
+                <option value="Barishal">Barishal</option>
+                <option value="Chattogram">Chattogram</option>
+                <option value="Dhaka">Dhaka</option>
+                <option value="Khulna">Khulna</option>
+                <option value="Mymensingh">Mymensingh</option>
+                <option value="Rajshahi">Rajshahi</option>
+                <option value="Rangpur">Rangpur</option>
+                <option value="Sylhet">Sylhet</option>
+            </select>
+
+            <label for="jobLocation">District:</label>
+            <select name="" id="distr" onchange="thanaList();" required>
+                <option disabled selected>Select division first</option>
+            </select>
+
+            <label for="jobLocation">Police station:</label>
+            <select name="" id="polic_sta" required>
+                <option disabled selected>Select district first</option>
+            </select>
 
             <button type="submit">Post Job</button>
         </form>
     </div>
     <script src="postbox.js"></script>
+    <script src = "../location.js"></script>
 </body>
 </html>

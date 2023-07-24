@@ -33,3 +33,19 @@ function delete_post(ev) {
     // detail_load(id)
     // setTimeout(open_detail_late, 1000);
 }
+
+function ReviewToggle(){
+    // var reviewpop= document.querySelector('.profile-page');
+    // reviewpop.classList.toggle('review-active');
+
+    var closepop= document.querySelector('.rev_container');
+    closepop.classList.toggle('review-active');
+}
+function ReportToggle(){
+    // var reviewpop= document.querySelector('.profile-page');
+    // reviewpop.classList.toggle('review-active');
+
+    var report_pop= document.querySelector('.rep_container');
+    report_pop.classList.toggle('review-active');
+
+}
