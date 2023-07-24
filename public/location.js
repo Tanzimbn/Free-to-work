@@ -1,6 +1,5 @@
 // Division Section select
 function divisionsList() {
-    console.log("asche")
     // get value from division lists
     var diviList = document.getElementById('divisions').value;
 

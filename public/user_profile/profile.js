@@ -35,17 +35,27 @@ function delete_post(ev) {
 }
 
 function ReviewToggle(){
-    // var reviewpop= document.querySelector('.profile-page');
-    // reviewpop.classList.toggle('review-active');
+    var reviewpop= document.querySelector('.profile-page');
+    reviewpop.classList.toggle('review-active');
 
     var closepop= document.querySelector('.rev_container');
     closepop.classList.toggle('review-active');
 }
 function ReportToggle(){
-    // var reviewpop= document.querySelector('.profile-page');
-    // reviewpop.classList.toggle('review-active');
+    var reviewpop= document.querySelector('.profile-page');
+    reviewpop.classList.toggle('review-active');
 
     var report_pop= document.querySelector('.rep_container');
     report_pop.classList.toggle('review-active');
 
+}
+var darkicon = document.getElementById('darkicon');
+darkicon.onclick = function(){
+    document.body.classList.toggle("dark-theme");
+    if(document.body.classList.contains("dark-theme")){
+        darkicon.src = "src/switch-off.png";
+    }
+    else{
+        darkicon.src ="src/switch-on.png";
+    }
 }

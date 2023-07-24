@@ -20,10 +20,10 @@ function category_filter() {
     }
     display_category_result(result);
 }
-function show_all_category() {
-    display_category_result(category);
+function left_show_all_category() {
+    left_display_category_result(category);
 }
-function display_category_result(result){
+function left_display_category_result(result){
     const content = result.map((list)=>{
         return "<li onclick = select_category(this)>" + list + "</li>";
     });
