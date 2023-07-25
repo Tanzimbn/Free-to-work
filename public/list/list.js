@@ -5,6 +5,10 @@ async function list_filter() {
     category = document.getElementById('filter-category').value,
     searchValue = document.getElementById('searchValue').value
     
+    document.querySelector('.list_items').innerHTML = `<div class="loading_gif">
+            <img src="/list/pictures/amalie-steiness.gif">
+        </div>`
+
     let options = {
         method: 'POST',
         body : JSON.stringify({
