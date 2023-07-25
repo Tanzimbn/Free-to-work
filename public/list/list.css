@@ -80,3 +80,11 @@
     align-content: center;
     font-size: 1.2rem;
 }
+
+.loading_gif {
+    display: flex;
+    justify-content: center;
+}
+.loading_gif img{
+    width: 10%;
+}
