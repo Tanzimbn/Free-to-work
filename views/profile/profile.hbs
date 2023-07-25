@@ -160,120 +160,93 @@
             </div>
         </div>
         <div class="post_details">
-            <div class="details_overlay"></div>
-            <div class="details_content" id="details_content">
-                <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
-                <div class="details_body">
-                    <div class="details_body_left">
-                        <div class="details_body_left_head">
-                            <div class="basic_info">
-                                <div class="title">
-                                    <span id='post_detail_title'>Java SpringBoot</span>
-                                </div>
-                                <div class="budget_time">
-                                    <p id="post_detail_budget">Est. budget: $50 - 100 USD</p>
-                                    <p id="post_detail_time_ago">Posted 2 hours ago</p>
-                                </div>
-                                <div class="tag">
-                                    <ul>
-                                        <li id="post_detail_category">php</li>
-                                    </ul>
-                                </div>
-                                <div class="details_location">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    <p id="post_detail_division">Chittagong</p>
-                                </div>
+        <div class="details_overlay"></div>
+        <div class="details_content" id="details_content">
+            <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
+            <div class="details_body">
+                <div class="details_body_left">
+                    <div class="details_body_left_head">
+                        <div class="basic_info">
+                            <div class="title">
+                                <span id='post_detail_title'>Java SpringBoot</span>
                             </div>
-                            <div class="best_bid">
-                                <div id='best_bid'>
-                                    <p id="best_bidder_name" data-id="" onclick="show_best_bidder(this)">Nafiz Safa
-                                        Talukder
-                                    </p>
-                                    <p><span id="best_bid_value">100</span> BDT</p>
-                                </div>
-                                <div id='value'>
-                                    <p id='title'>BEST BID</p>
-                                </div>
+                            <div class="budget_time">
+                                <p id="post_detail_budget">Est. budget: $50 - 100 USD</p>
+                                <p id="post_detail_time_ago">Posted 2 hours ago</p>
                             </div>
-                            <div class="sumbit_bid">
-                                <div id='sumbit_bid'>
-                                    <input type="number" placeholder="Enter your bid">
-                                </div>
-                                <div id='value'>
-                                    <button id='title'>SUBMIT</button>
-                                </div>
+                            <div class="tag">
+                                <ul>
+                                    <li id="post_detail_category">php</li>
+                                </ul>
+                            </div>
+                            <div class="details_location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <p id="post_detail_division">Chittagong</p>
                             </div>
                         </div>
-                        <div class="details_body_left_body">
-                            <p id="details">Details:</p>
-                            <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                                ad
-                                officiis iusto omnis enim
-                                nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis
-                                voluptas
-                                quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
-                                eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi
-                                pariatur
-                                molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor
-                                vel
-                                dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor
-                                vero
-                                omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam
-                                alias
-                                ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla
-                                porro
-                                fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam
-                                alias
-                                eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
-                                necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
-                                accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit
-                                eveniet
-                                accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae
-                                nihil
-                                saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
-                                eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores
-                                ut
-                                distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
-                                minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
-                            </p>
+                        <div class="best_bid">
+                            <div id = 'best_bid'>
+                                <p id = "best_bidder_name" data-id = "" onclick="show_best_bidder(this)">Nafiz Safa Talukder</p>
+                                <p><span id = "best_bid_value">100</span> BDT</p>
+                            </div>
+                            <div id = 'value'>
+                                <p id = 'title'>BEST BID</p>
+                            </div>
+                        </div> 
+                        <div class="sumbit_bid">
+                            <div id='sumbit_bid'>
+                                <input type="number" placeholder="Enter your bid" id = "bid_value">
+                            </div>
+                            <div id='value'>
+                                <button id='bid_sumbit' data-id = "" onclick = "submit_bid(this)">SUBMIT</button>
+                            </div>
                         </div>
-                        <div class="comment">
-                            <p id="comment">Comments:</p>
-                            <div class="comment_container opened" id="first-comment">
+                    </div>
+                    <div class="details_body_left_body">
+                        <p id="details">Details:</p>
+                        <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad
+                            officiis iusto omnis enim
+                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
+                            quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
+                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi pariatur
+                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor vel
+                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor vero
+                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam alias
+                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla porro
+                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam alias
+                            eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
+                            necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
+                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit eveniet
+                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae nihil
+                            saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
+                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores ut
+                            distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
+                            minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
+                        </p>
+                    </div>
+                    <div class="comment">
+                        <p id="comment">Comments:</p>
+                        <div class="comment_container opened" id="first-comment">
+                            <div class="comment_card">
+                                <h3 class="comment_title">First</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                <div class="comment_footer">
+                                    <div class="reply" onclick="show(this)">reply</div>
+                                    <div class="show_reply">2 Replies</div>
+                                </div>
+                            </div>
+                            <div class="comment_container" dataset="first-comment" id="first-reply">
                                 <div class="comment_card">
-                                    <h3 class="comment_title">First</h3>
+                                    <h3 class="comment_title">First reply</h3>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
                                     <div class="comment_footer">
                                         <div class="reply" onclick="show(this)">reply</div>
-                                        <div class="show_reply">2 Replies</div>
+                                        <div class="show_reply">1 Replies</div>
                                     </div>
                                 </div>
-                                <div class="comment_container" dataset="first-comment" id="first-reply">
+                                <div class="comment_container" dataset="first-reply" id="first-first-reply">
                                     <div class="comment_card">
-                                        <h3 class="comment_title">First reply</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
-                                        </p>
-                                        <div class="comment_footer">
-                                            <div class="reply" onclick="show(this)">reply</div>
-                                            <div class="show_reply">1 Replies</div>
-                                        </div>
-                                    </div>
-                                    <div class="comment_container" dataset="first-reply" id="first-first-reply">
-                                        <div class="comment_card">
-                                            <h3 class="comment_title">reply of First reply</h3>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
-                                                harum.
-                                            </p>
-                                            <div class="comment_footer">
-                                                <div class="reply" onclick="show(this)">reply</div>
-                                                <div class="show_reply">0 Replies</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="comment_container" dataset="first-comment" id="second-reply">
-                                    <div class="comment_card">
-                                        <h3 class="comment_title">Second reply</h3>
+                                        <h3 class="comment_title">reply of First reply</h3>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
                                         </p>
                                         <div class="comment_footer">
@@ -283,19 +256,122 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="comment_box">
-                                <form action="">
-                                    <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
-                                    <input type="submit">
-                                </form>
+                            <div class="comment_container" dataset="first-comment" id="second-reply">
+                                <div class="comment_card">
+                                    <h3 class="comment_title">Second reply</h3>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <div class="comment_footer">
+                                        <div class="reply" onclick="show(this)">reply</div>
+                                        <div class="show_reply">0 Replies</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
+                        <div class="comment_box">
+                            <form action="">
+                                <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
+                                <input type="submit">
+                            </form>
+                        </div>
                     </div>
 
                 </div>
+                {{!-- <div class="details_body_right">
+                    
+
+                    <div class="bid_list">
+                        <div id='list'>
+                            <p id='title'>TOP BIDS</p>
+                        </div>
+                        <div id='bid_list'>
+                            <ul>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Tanzim Bin Nasir</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Nafiz Safa Talukder</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bid_list_cart">
+                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
+                                        <span>100BDT</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div> --}}
+
             </div>
         </div>
+    </div>
     </div>
         <div class="rev_container">
             <h1>User Reviews</h1>
@@ -406,6 +482,7 @@
     
 </body>
 <script src="/newsfeed/home.js"></script>
+<script src="/newsfeed/bidding.js"></script>
 <script src="/user_profile/profile.js"></script>
 <script>
 
