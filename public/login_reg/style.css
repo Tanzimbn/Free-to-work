@@ -16,12 +16,14 @@
     --hover2 : #FFDAB9;
     --hover3 : #FFDAB9;
   }
+
+
 body{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80%;
-    background-color: var(--bc2);
+    background-color: rgb(0, 40, 60);;
     /* background-image: url(../pictures/Free\ Vector\ _\ Gradient\ blue\ waves\ background.jpeg); */
     /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
     /* background-image: var(--hover1); */
@@ -31,11 +33,11 @@ body{
     margin: 3% auto;
     display: flex;
     height: 700px;
-    box-shadow: 0 12px 18px rgba(54,176,138,0.005);
+    box-shadow: -1px 0px 15px 11px #1d5c8c5c;
     border-radius: 6px;
     background: var(--bc1);
     position: absolute;
-    top: 40%;
+    top: 43%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -91,18 +93,12 @@ body{
 }
 .signup-form-container{
     width: 70%;
-    padding: 3% 0;
+    padding: 6% 0;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.login-form-container{
-    width: 70%;
-    padding: 10% 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 .logo{
     font-weight: 600;
     color: #fff;
@@ -213,7 +209,7 @@ input{
     outline: none;
     background: inherit;
     /* color: #84848d; */
-    color: white;
+    color: var(--hover2);
     /* background-color: white; */
     width: 200%;
     margin-left: 4%;
@@ -227,9 +223,9 @@ input{
 ::-webkit-datetime-edit-day-field,
 ::-webkit-datetime-edit-year-field,input::placeholder{
     /* background-color: #fff; */
-    color: #84848d;
+    color: #ffdab9
 }
-.text-fields.fname:after{
+/* .text-fields.fname:after{
     content: 'First name';
     background-color: #fadede;
     position: relative;
@@ -272,7 +268,7 @@ input{
     color: black;
     top: -33px;
     text-align: center;
-}
+} */
 .field-heading{
     color: #696cff;
     width: 20%;
@@ -281,8 +277,15 @@ input{
     margin: 0 2%;
     display: flex;
     align-items: center;
-    color: #84848d;
+    color: var(--hover2);
     width: 20%;
+}
+.gender-selection #gender_label {
+    margin: 0 2%;
+    display: flex;
+    align-items: center;
+    color: #84848d;
+    width: 5%;
 }
 input[type="radio"]{
     accent-color: #000000;
@@ -309,7 +312,7 @@ input[type="radio"]{
 .nextPage:hover, .previousPage:hover{
     background-color: var(--hover2);
 }
-.text-fields.phone:after{
+/* .text-fields.phone:after{
     content: 'Phone number';
     background-color: #fadede;
     position: relative;
@@ -363,18 +366,25 @@ input[type="radio"]{
     color: black;
     top: -33px;
     text-align: center;
-}
+} */
 select {
     width: 300px;
-    padding: 2px 5px;
+    padding: 0px 5px;
     margin-left: 4%;
     border: 0px;
-    background-color: #fadede;
+    background-color: inherit;
+    color: var(--hover2);
+    font-size: 1rem;
+    cursor: pointer;
+}
+select option {
+    color: #000000;
+    background-color: var(--hover2);
 }
 
 /* LOGIN PAGE */
 
-.text-fields.login_email:after{
+/* .text-fields.login_email:after{
     content: 'Email Id';
     background-color: #fadede;
     position: relative;
@@ -413,7 +423,7 @@ select {
     content: 'Confirm Password';
     width: 1148px;
     left: -125px;
-}
+} */
 .tc-container input{
     width: 4%;
     margin-left: 4%;
@@ -427,22 +437,16 @@ label.tc{
     margin-left: 4%;
     color: white;
 }
-.login-form-contents{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.blur_active {
+    filter: blur(2px);
 }
-.login-form-contents .text-fields{
-    margin: 3% 2%;
-    width: 70%;
-    padding: 3%;
-}
-.login-form-contents .text-fields.email:after{
+
+/* .login-form-contents .text-fields.email:after{
     left: -323px;
 }
 .login-form-contents .text-fields.password:after{
     left: -294px;
-}
+} */
 .javascript-condational-form{overflow: hidden;text-align: center;}
 .javascript-condational-form form{margin-top: 100px;background-color: #4c93e4;display: inline-block;padding: 50px 100px;border-radius: 5px;}
 .javascript-condational-form form label{font-size: 25px;margin-right: 8px;}

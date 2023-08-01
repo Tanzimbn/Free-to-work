@@ -2,10 +2,14 @@ function openpopup(){
     popup.classList.add("open-popup")
 }
 function verified() {
+    document.querySelector(".toast").classList.add("blur_active")
+    document.querySelector(".container").classList.add("blur_active")
     popup.classList.add("open-popup")
     return false;
 }
 function closepopup() {
+    document.querySelector(".toast").classList.remove("blur_active")
+    document.querySelector(".container").classList.remove("blur_active")
     popup.classList.remove("open-popup");
     window.location.assign("/login");
 }

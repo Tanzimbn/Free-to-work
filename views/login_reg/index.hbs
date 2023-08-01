@@ -16,14 +16,14 @@
 
 <body>
     <div class="toast">
-  
+
         <div class="toast-content">
             <i class="fa-solid fa-exclamation check"></i>
-      
-          <div class="message">
-            <span class="text text-1">Error</span>
-            <span class="text text-2">Email or password is wrong!</span>
-          </div>
+
+            <div class="message">
+                <span class="text text-1">Error</span>
+                <span class="text text-2">Email or password is wrong!</span>
+            </div>
         </div>
         <i class="fa-solid fa-xmark close"></i>
         <div class="progress"></div>
@@ -41,7 +41,7 @@
             <a href="./register" class="loginbtn">Register now</a>
         </div>
         <form class="login-form-container" id="login_form">
-            <p class="big-heading">Login</p>
+            <p class="login-big-heading">Login</p>
             <div class="login-form-contents">
                 <div class="text-fields login_email">
                     <label for="email"><i class='bx bx-envelope'></i></label>
@@ -53,14 +53,15 @@
                 </div>
             </div>
             <input type="submit" value="Login" class="nextPage">
-            <div class="social-media-platform">
+            {{!-- <div class="social-media-platform">
                 <a href="#"><box-icon type='logo' name='google'></box-icon></a>
-            </div>
+            </div> --}}
         </form>
 </body>
-{{!-- <script src = "./login_reg/verification.js"></script> --}}
-<script src = "./login_reg/login.js"></script>
-<script src = "/loginUser.js"></script>
+{{!--
+<script src="./login_reg/verification.js"></script> --}}
+<script src="./login_reg/login.js"></script>
+<script src="/loginUser.js"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 
 </html>

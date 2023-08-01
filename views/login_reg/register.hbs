@@ -75,11 +75,11 @@
                         <div class="text-fields nid">
                             <!-- <input type="date" name="dob" id="dob"> -->
                             <i class='bx bxs-id-card'></i>
-                            <input class="input" id="nid" type="tel" name="nid" placeholder="Enter Number"
+                            <input class="input" id="nid" type="tel" name="nid" placeholder="Enter Nid Number"
                                 autocomplete="off" required>
                         </div>
                         <div class="text-fields gender-selection">
-                            <label for="gender"><i class='bx bx-male-female'></i></label>
+                            <label id = "gender_label" for="gender"><i class='bx bx-male-female'></i></label>
                             <label for="male"><input type="radio" name="gender" id="male">Male</label>
                             <label for="female"><input type="radio" name="gender" id="female" >Female</label>
                         </div>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="text-fields confirmpassword">
                             <label for="confirmpassword"><i class='bx bx-lock-alt'></i></label>
-                            <input type="password" name="confirmpassword" id="confirmpassword" placeholder="password" required> 
+                            <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirm password" required> 
                         </div>
                     </div>
                     <div class="tc-container">
@@ -163,15 +163,16 @@
                     </div>
                 </div>
             </div>
-            <div class="popup" id="popup">
+            
+        </form>
+        
+    </div>
+    <div class="popup" id="popup">
                 <img src = "../pictures/001-check.png">
                 <h2>Thank You!</h2>
                 <p>Your details has been successfully submitted. Thanks!</p>
                 <button type = "button" onclick="closepopup()">OK</button>
             </div>
-        </form>
-        
-    </div>
 </body>
 <script src="login_reg/javascript.js"></script>
 <script src="login_reg/register.js"></script>

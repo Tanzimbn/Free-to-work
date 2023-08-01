@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+:root{
+  --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+  --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --white :#fff;
+  --hover1 : #ff7d7d;
+  --hover2 : #FFDAB9;
+  --hover3 : #FFDAB9;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +23,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f4f7ff;
+  background-color: rgb(0, 40, 60);
   overflow: hidden;
 }
 
@@ -25,6 +38,7 @@ body {
   overflow: hidden;
   transform: translateX(calc(100% + 30px));
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  z-index: 1000;
 }
 
 .toast.active {
@@ -100,6 +114,34 @@ body {
 .progress.active:before {
   animation: progress 2s linear forwards;
 }
+
+.login-big-heading {
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--white);
+  text-align: left;
+  margin-bottom: 5%;
+  
+}
+.login-form-container{
+  width: 70%;
+  padding: 15% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-form-contents{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-form-contents .text-fields{
+  margin: 3% 2%;
+  width: 200%;
+  padding: 10% 3%;
+  margin-bottom: 10%;
+}
+
 
 @keyframes progress {
   100% {
