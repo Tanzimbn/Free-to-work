@@ -1,0 +1,142 @@
+.profile-section {
+    /* max-width:1000px; */
+    margin: 20px auto;
+    background-color: #e6e6e6;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top:5%;
+    left: 34%;
+    z-index: 10000;
+    width: 600px;
+    height: 80%;
+    visibility: hidden;
+    /* opacity: 0; */
+    transition: 0.4s;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+  .profile-section h2 {
+    text-align: center;
+    color: #124230;
+  }
+  .profile-section.close-button {
+    position: absolute;
+    top: 10px;
+    right: 580px;
+    font-size: 28px;
+    cursor: pointer;
+  }
+
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 2px;
+    object-fit: cover;
+    margin-left: 35%;
+    margin-top: 10px;
+  }
+
+  .cover-picture {
+    width: 100%;
+    padding-top: 10px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    margin-right: 20px;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form-group input[type="password"],
+  .form-group textarea {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .form-group input[type="file"] {
+    display: block;
+    margin-top: 5px;
+  }
+
+  .btn-save {
+    padding: 10px 20px;
+    background-color: #18583f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 38%;
+  }
+  .btn-save:hover {
+    background-color: #1b7753;
+  }
+  label {
+    font-size: 14px;
+    color: #0c241b;
+    font-weight: bold;
+  }
+  .profile-section.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition:0.5s;
+  }
+
+.close-button-edit{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
+.pp__submit, .cp__submit{
+  display: none;
+}
+.edit_pp{
+  
+}
+#myFile, #mycoverFile {
+  display: none;
+}
+#choose_pp {
+  padding: 1px;
+  position: absolute;
+  transform: translate(-122%, 380%);
+  background-color: rgba(68, 68, 68, 0.514);
+  color: white;
+  border-radius: 6px;
+}
+#choose_cp {
+  padding: 1px;
+  position: relative;
+  left: 92%;
+  top: -50px;
+  background-color: rgba(68, 68, 68, 0.514);
+  color: white;
+  border-radius: 6px;
+}
+#edit_status {
+  text-align: center;
+  color: red;
+  margin-top: 5%;
+}

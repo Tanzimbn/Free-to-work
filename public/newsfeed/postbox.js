@@ -1,7 +1,19 @@
 function open_post() {
+    document.querySelector("nav").classList.add("blur_active")
+    document.querySelector(".advertise").classList.add("blur_active")
+    document.querySelector(".profile-container").classList.add("blur_active")
+    document.querySelector(".container").classList.add("blur_active")
+    document.querySelector(".post_details").classList.add("blur_active")
+    document.querySelector("footer").classList.add("blur_active")
     document.querySelector(".post_popup").classList.remove("post_invisible")
 }
 function close_post_popup() {
+    document.querySelector("nav").classList.remove("blur_active")
+    document.querySelector(".advertise").classList.remove("blur_active")
+    document.querySelector(".profile-container").classList.remove("blur_active")
+    document.querySelector(".container").classList.remove("blur_active")
+    document.querySelector(".post_details").classList.remove("blur_active")
+    document.querySelector("footer").classList.remove("blur_active")
     document.querySelector(".post_popup").classList.add("post_invisible")
 }
 

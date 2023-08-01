@@ -1,8 +1,20 @@
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% );
+    --bc4 :linear-gradient(120deg, #ebedee 100%, #fdfbfb 0%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc6 :linear-gradient(114.9deg, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 .post_popup {
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: #83838375;
+    
     z-index: 200;
     position: fixed;
     top: 0;
@@ -13,11 +25,14 @@
 }
 .post-box {
     width: 50%;
+    height: 80%;
     margin: 30px auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 5px;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background: var(--bc3);
+    box-shadow: 0 4px 4px grey;
 }
 #post_popup_close {
     float: right;
@@ -47,14 +62,18 @@
 }
 
 .post-box button {
-    padding: 10px;
-    background-color: #4CAF50;
+    padding: 7px;
+    /* background-color: #4c81af; */
+    /* height: 30px; */
+    background: var(--hover3);
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .post-box button:hover {
-    background-color: #45a049;
+    /* background-color: var(--hover2); */
+    transform: scale(1.02);
 }

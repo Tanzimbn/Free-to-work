@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap'); 
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,6 +6,8 @@
   font-family: 'Kumbh Sans', sans-serif;
   /* color: #d9d9d9; */
 }
+
+
 
 .navbar {
   /* background:	#183446; */
@@ -34,23 +37,18 @@
 }
 
 #navbar__logo {
-  /* background-color: #ffffff; */
-  /* background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%); */
-  /* background-size: 100%; */
-  /* -webkit-background-clip: text; */
-  /* -moz-background-clip: text; */
-    /* background-clip: text; */
-  /* -webkit-text-fill-color: transparent; */
-  /* -moz-text-fill-color: transparent; */
   display: flex;
   align-items: center;
   cursor: pointer;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color:white;
-  /* justify-content: center; */
-  /* padding: 0 1rem; */
-  /* height: 100%; */
+  font-weight: bold;
+  /* font-family: 'Poppins'; */
+  /* font-weight: 600;
+  color: #fff;
+  font-size: x-large;
+  cursor: pointer; */
 }
 #navbar__logo:hover{
   /* display:block; */
@@ -814,9 +812,9 @@
     /* margin-top: 100rem; */
   }
 
-  .services__card {
-    /* width: 300px; */
-  }
+  /* .services__card {
+    width: 300px;
+  } */
 }
 
 @media screen and (max-width: 880px) {
@@ -829,9 +827,9 @@
     /* margin-top: 100rem; */
   }
 
-  .services__card {
-    /* width: 300px; */
-  }
+  /* .services__card {
+    width: 300px;
+  } */
 }
 
 
@@ -962,9 +960,9 @@
   color:#0e3669;
 }
 
-.product-brand {
-  /* text-transform: uppercase; */
-}
+/* .product-brand {
+  text-transform: uppercase;
+} */
 
 .product-short-description {
   width: 100%;
@@ -1142,6 +1140,7 @@ footer{
   padding-left: 10px;
   border: 1px solid #222222;
   border-radius: 4px;
+  color: white;
 }
 .right form input:focus, 
 .right form textarea:focus{
@@ -1202,4 +1201,3 @@ footer{
     margin: 5px 0;
   }
 }
-

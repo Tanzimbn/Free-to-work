@@ -1,5 +1,4 @@
 
-
 async function submit_bid (ev) {
 
     let id = ev.getAttribute("data-id")
@@ -21,6 +20,10 @@ async function submit_bid (ev) {
         response = await fetch("/update_bid", new_options);
         data = await response.json();
         if(data.user_id == "-1") return;
+        if(data.user_id == "-2") {
+            alert("Bidding time ended!");
+            return;
+        }
         document.getElementById("best_bidder_name").dataset.id = data.user_id
         document.getElementById("best_bidder_name").innerHTML = document.getElementById('nav_user_name').innerHTML
         document.getElementById("best_bid_value").innerHTML = new_bid

@@ -43,6 +43,18 @@ const userSchema = new mongoose.Schema({
     img : {
         data: Buffer,
         contentType:String
+    },
+    rating : {
+        type: String,
+        default: 0
+    },
+    bio: {
+        type: String,
+        default: ""
+    },
+    mood: {
+        type: Boolean,
+        default: true
     }
 });
 

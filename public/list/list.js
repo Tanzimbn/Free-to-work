@@ -1,3 +1,13 @@
+// popup user image
+// function popupImage() {
+//     let url = localStorage.getItem('image');
+//     let type = localStorage.getItem("imagetype")
+    
+//     document.querySelector(".nav_profile_img").src = `data:${type};base64,${url}`;
+//     document.querySelector(".popup_image").src = `data:${type};base64,${url}`;
+// }
+// popupImage()
+
 async function list_filter() {
     const division = document.getElementById('divisions').value,
     district = document.getElementById('distr').value,
@@ -25,12 +35,19 @@ async function list_filter() {
     const response = await fetch("/list_filter", options);
     const responseJson = await response.json();
     const alluser = responseJson.filterUser
-    console.log(alluser)
+    // console.log(alluser)
     // sort part
-    // const sortdir = document.getElementById('sort_order').value
-    // if(sortdir == "Ascending") {
-    //     alluser.reverse()
-    // }
+    const sortdir = document.getElementById('sort_order').value
+    if(sortdir == "Ascending") {
+        alluser.sort((a, b) => {
+            return a.rating - b.rating
+        })
+    }
+    else {
+        alluser.sort((a, b) => {
+            return b.rating - a.rating
+        })
+    }
 
     //html add
     let alluserhtml = ""
@@ -54,14 +71,13 @@ async function list_filter() {
                     <div>
                         <p id = "list_profile_name">${alluser[i].fname} ${alluser[i].lname}</p>
                     </div>
-                    <div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star unchecked"></span>
-                        <span id="list_profile_rating">(4.5)</span>
-                    </div>
+                    <div>`
+        for(let j = 1; j <= 5; j++) {
+            if(alluser[i].rating >= j) html += `<span class="fa fa-star checked"></span>`
+            else html += `<span class="fa fa-star"></span>`
+        }
+        html += `<span id="list_profile_rating">(${alluser[i].rating})</span>
+                </div>
                 </div>
             </div>
             <div class="list_info list_profession">
@@ -78,7 +94,6 @@ async function list_filter() {
         </div>`
         alluserhtml += html
     }
-    console.log("asche")
     document.querySelector('.list_items').innerHTML = alluserhtml
 }
 list_filter()

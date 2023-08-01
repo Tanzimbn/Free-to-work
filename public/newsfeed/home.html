@@ -17,10 +17,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="comment.css">
     <link rel="stylesheet" href="home_footer.css">
-    
+    <link rel="stylesheet" href="nav_mode.css">
+    <link rel="stylesheet" href="alert.css">
 </head>
 
 <body>
+    <div class="alert_mess">
+        <div class = "alert_mess_box">
+            <p>Free mood is on!</p>
+        </div>
+    </div>
     <nav>
         <div class="nav_left">
             <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
@@ -42,11 +48,15 @@
             <div class="user_icon">
                 <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
             </div>
-            <div class="menu">
+            <div class="menu active">
                 <div class="menu_user_icon">
                     <img src="../pictures/FB_IMG_1635179825355.jpg">
                 </div>
                 <h3>Aninda Roy Dhruvo<br><span>Website Designer</span></h3>
+                <div class="mood">
+                    <input checked type="checkbox" name="checkbox" id = "mood_toggle" onclick="mood_toggle()">
+                    <label for="checkbox" class = "mood_toggle"></label>
+                </div>
                 <ul>
                     <li><img src="../pictures/user1.png" alt="Dp"><a href="#">My profile</a></li>
                     <li><img src="../pictures/logout.png" alt="logout logo"><a href="../login_reg/index.html">Log out</a></li>
@@ -525,62 +535,7 @@
             </div>
         </div>
     </div>
-    <div class="post_popup">
-        <div class="post-box">
-            <button id = "post_popup_close">X</button>
-            <h2>Job Post Form</h2>
-            <form id="jobPostForm">
-                <label for="jobTitle">Title of the Job:</label>
-                <input type="text" id="jobTitle" maxlength="200" autocomplete="off" required>
     
-                <label for="jobDescription">Description:</label>
-                <textarea id="jobDescription" rows="4" autocomplete="off" required></textarea>
-    
-                <label for="jobBudget">Budget:</label>
-                <input type="number" id="jobBudget" autocomplete="off" required>
-    
-                <label for="jobDeadline">Deadline:</label>
-                <div class="jobDeadline">
-                    <input type="date" id="jobDeadline_date" autocomplete="off" required>
-                    <input type="time" id="jobDeadline_time" autocomplete="off" required>
-                </div>
-                
-                
-                <label for="jobTags">Tags or Category:</label>
-                <input type="text" id="jobTags" list="category_list" autocomplete="off" required>
-                <datalist id="category_list">
-                </datalist>
-                <div class="category-suggest">
-                </div>
-    
-    
-                <label for="jobLocation">Division:</label>
-                <select name="divisions" id="divisions" onchange="divisionsList();" required>
-                    <option disabled selected>Select division</option>
-                    <option value="Barishal">Barishal</option>
-                    <option value="Chattogram">Chattogram</option>
-                    <option value="Dhaka">Dhaka</option>
-                    <option value="Khulna">Khulna</option>
-                    <option value="Mymensingh">Mymensingh</option>
-                    <option value="Rajshahi">Rajshahi</option>
-                    <option value="Rangpur">Rangpur</option>
-                    <option value="Sylhet">Sylhet</option>
-                </select>
-    
-                <label for="jobLocation">District:</label>
-                <select name="" id="distr" onchange="thanaList();" required>
-                    <option disabled selected>Select division first</option>
-                </select>
-    
-                <label for="jobLocation">Police station:</label>
-                <select name="" id="polic_sta" required>
-                    <option disabled selected>Select district first</option>
-                </select>
-    
-                <button type="submit">Post Job</button>
-            </form>
-        </div>
-    </div>
     <footer>
         <div class="bottom">
             <center>

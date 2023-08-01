@@ -1,37 +1,51 @@
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% );
+    --bc4 :linear-gradient(120deg, #ebedee 100%, #fdfbfb 0%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc6 :linear-gradient(114.9deg, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 .post_details {
     height: 100vh;
     width: 100%;
     position: fixed;
     top: 0;
-    left:100%;
+    left: 100%;
     z-index: 200;
     display: flex;
-    background-color: #ffffff00;
-    transition: left 0.5s, background-color 1s;
+    /* background-color: #ffffff00; */
+    transition: left 0.5s;
 }
 .details_overlay {
     /* background-color: rgba(0, 0, 0, 0.356); */
-    width: 25%;
+    width: 40%;
 }
 .details_content {
-    background-color: rgb(255, 255, 255);
-    width: 75%;
+    /* background-color: rgb(255, 255, 255); */
+    background: var(--bc3);
+    width: 70%;
     /* height: 100vh; */
     padding: 2% 2% 2% 4%;
-    border-radius: 20px 0px 0px 20px;
+    border-radius: 10px 0px 0px 10px;
     overflow-x:hidden;
     overflow-y:auto;
     animation-direction: reverse;
     transition: background-color 0.5s;
+    box-shadow: -6px 2px 2px rgb(105 105 105 / 54%);
 }
 .open_details {
     left: 0%;
-    background-color: rgba(0, 0, 0, 0.164);
+/*     background-color: rgba(0, 0, 0, 0.164); */
 }
 .details_body {
     margin-top: 1%;
     min-height: 100%;
-    border: 2px solid rgb(0, 255, 170);
+    border: 2px solid rgb(1, 62, 93);
     border-radius: 10px;
     display: flex;
 }
@@ -41,8 +55,11 @@
     width: 100%;
     min-height: 100vh;
 }
-.details_body_left_head, .details_body_left_body{
-    border-bottom: 2px solid rgb(0, 255, 170);
+.details_body_left_head{
+    border-bottom: 2px solid rgb(1, 62, 93);
+    padding: 2%;
+}
+.details_body_left_body {
     padding: 2%;
 }
 .details_body_left_head {
@@ -76,10 +93,10 @@
     display: flex;
 }
 .details_body_left_head .tag li {
-    border: 1px solid rgb(20, 224, 173);
+    border: 1px solid rgb(1, 62, 93);
     border-radius: 10px;
     margin-right: 10%;
-    background-color: aquamarine;
+    background-color: var(--hover2);
     padding: 5px 10px 5px 10px;
     font-size: 0.8rem;
     font-weight: bold;
@@ -87,13 +104,17 @@
 }
 .details_content span i {
     font-size: x-large;
-    color: rgb(0, 255, 170);
+    color: rgb(1, 62, 93);
     cursor: pointer;
 }
 .details_body_left_body p{
     font-size: 1.2rem;
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: 1px;
+}
+.post_detail_detail {
+    white-space: pre-line;   
+    font-size: 1.3rem;
 }
 .comment {
     padding: 2%;
@@ -113,19 +134,21 @@
   100% {border-color:rgb(37, 168, 250);; }
 }
 .best_bid #best_bid, .sumbit_bid #sumbit_bid{
+    background-color: white;
     text-align: center;
     margin: 5%;
     padding: 10%;
-    border: 2px solid rgb(173, 236, 221);
+    border: 2px solid rgb(1, 62, 93);
     border-radius: 10px;
     font-size: 1rem;
-    animation-name: example;
+    /* animation-name: example; */
     animation-duration: 5s;
     animation-iteration-count: infinite;
 }
 .best_bid #best_bid {
     /* display: flex;  */
     justify-content:center;
+    
 }
 .best_bid #best_bid #best_bidder_name {
     cursor: pointer;
@@ -135,12 +158,17 @@
 }
 .best_bid #title, .sumbit_bid #bid_sumbit{
     text-align: center;
-    width: 50%;
-    margin-left: 25%;
+    width:60%;
+    margin-left: 20%;
+    padding: 2%;
     position: relative;
     top: -1.5rem;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
+    background-color: var(--hover3);
     font-size: 1rem;
+    color: white;
+    border-radius: 4px;
+    /* font-weight: bold; */
 }
 .sumbit_bid #bid_sumbit {
     cursor: pointer;
@@ -148,9 +176,11 @@
     margin-left: 25%;
     border: none;
     /* padding: 2px; */
+    transition: 0.2s ease;
 }
 .sumbit_bid #bid_sumbit:hover {
-    color: rgb(61, 253, 208);
+    background-color: var(--hover2);
+    transform: scale(1.02);
 }
 .sumbit_bid input {
     height: 2.2rem;
@@ -163,14 +193,14 @@
 }
 /* scroll */
 ::-webkit-scrollbar {
-    width: 0.5rem;
+    width: 0.0rem;
 }
 ::-webkit-scrollbar-track {
     background-color: rgb(255, 255, 255);
 }
 ::-webkit-scrollbar-thumb {
-    background-color: rgb(111, 241, 189);
-    border-radius: 10px;
+    background-color: rgb(1, 62, 93);
+    border-radius: 3px;
     border: 0.1rem solid transparent;
     background-clip: content-box;
 }

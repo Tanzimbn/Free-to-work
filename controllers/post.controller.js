@@ -1,4 +1,6 @@
+const notiModel = require("../models/notification");
 const postModel = require("../models/post");
+const userModel = require("../models/users");
 const { tm } = require("./allpost.controller");
 // const time_ago = require("javascript-time-ago")
 // const loc = require("javascript-time-ago/locale/en")
@@ -21,6 +23,21 @@ exports.post = async (req, res) => {
             station: req.body.station
         })
         const post_res = await new_post.save()
+
+        const user = await userModel.find()
+        const new_noti = []
+        for(let i = 0; i < user.length; i++) {
+            if(user[i].category == req.body.category && user[i]._id != req.session.user_id && user[i].mood == true) {
+                const temp = new notiModel({
+                    user: user[i]._id,
+                    type: "new post",
+                    postid: post_res._id
+                })
+                new_noti.push(temp)
+            }
+        }
+        const noti_res = await notiModel.insertMany(new_noti)
+        
         res.send({"message" : "Success"})
 
     } catch (error) {
@@ -31,8 +48,6 @@ exports.post = async (req, res) => {
 
 exports.post_detail = async (req, res) => {
     const allpost = await postModel.find({_id : req.body.id});
-    // allpost[0].time_ago = tm.format(allpost[0].time)
-    // data[0].time_ago = tm.format(data[0].time)
-    // console.log(allpost)
+    const ans = await notiModel.updateOne({postid : req.body.id, user: req.session.user_id}, { $set: {unseen:false}});
     res.json(allpost[0])
 }

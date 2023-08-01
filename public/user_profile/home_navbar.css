@@ -18,6 +18,13 @@ nav {
     background-color: #ffffff;
     padding: 15px 3%;
     box-shadow: 0px 1px 10px #999;
+    transition: background-color 0.4s;
+}
+.nav_positive {
+    background-color: rgb(185 255 232);
+}
+.nav_negative {
+    background-color: rgb(255 203 203);
 }
 
 .logo {

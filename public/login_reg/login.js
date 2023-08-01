@@ -57,6 +57,7 @@ form.addEventListener('submit', async (e) => {
     }
     else {
         localStorage.setItem('user_id', data.id)
+        loginUser(data.id)
         window.location.assign("./newsfeed");
     }
     

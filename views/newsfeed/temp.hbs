@@ -18,37 +18,69 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="comment.css">
     <link rel="stylesheet" href="home_footer.css">
+    <link rel="stylesheet" href="notification.css">
+    <link rel="stylesheet" href="nav_mode.css">
+    <link rel="stylesheet" href="alert.css">
 </head>
 
 <body>
-    <nav>
+    <nav class="">
         <div class="nav_left">
             <p class="logo" style="color:#1a1d86" onclick="goto_landing()">Free to<br>work.</p>
             <ul>
-                <li><a href="/newsfeed"><i class='bx bxs-home'></i></a></li>
-                <li><a href="/list"><i class='bx bx-list-ul'></i></a></li>
-                {{!-- <li><i class="fa-solid fa-bell taken"></i></li> --}}
+                <li><i class='bx bxs-home' onclick="gotoNewsfeed()"></i></li>
+                <li><i class='bx bx-list-ul' onclick="gotoList()"></i></li>
+                {{#if unseen}}
+                <li><i class="fa-solid fa-bell taken" onclick="notiToggle()"></i></li>
+                {{else}}
+                <li><i class="fa-solid fa-bell" onclick="notiToggle()"></i></li>
+                {{/if}}
             </ul>
+            <div class="noti">
+                <h3>Notifications</h3>
+                <hr>
+                {{#each noti}}
+                {{#if unseen}}
+                <div class="noti_message unseen" data-id='{{postid}}' onclick="show_details(this);notiseen(this)">
+                    {{type}}</div>
+                {{else}}
+                <div class="noti_message" data-id='{{postid}}' onclick="show_details(this)">{{type}}</div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="alert_mess">
+            <div class="alert_mess_box">
+                <p id="alert_mess">Free mood is on!</p>
+            </div>
         </div>
         <div class="nav_right">
             <div class="serach_box">
                 <img src="../pictures/search-alt-regular-24.png">
-                <input type="search" id = "searchValue" placeholder="Search" onsearch="apply_filter()">
+                <input type="search" id="searchValue" placeholder="Search" onsearch="apply_filter()">
             </div>
             <div class="create_post" onclick="open_post()">
                 <p>Post</p>
             </div>
             <!-- -------profile-popup-------- -->
             <div class="user_icon">
-                <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
+                <img src="/pictures/Noimage.png" alt="dp" class="nav_profile_img" onclick="menuToggle()">
             </div>
             <div class="menu">
                 <div class="menu_user_icon">
-                    <img src="../pictures/FB_IMG_1635179825355.jpg">
+                    <img src="/pictures/Noimage.png" alt="dp" class="popup_image">
                 </div>
                 {{#each user}}
                 <h3><span id="nav_user_name">{{fname}} {{lname}}</span><br><span
                         id="nav_user_category">{{category}}</span></h3>
+                <div class="mood">
+                    {{#if mood}}
+                    <input checked type="checkbox" name="checkbox" id="mood_toggle">
+                    {{else}}
+                    <input type="checkbox" name="checkbox" id="mood_toggle">
+                    {{/if}}
+                    <label for="checkbox" class="mood_toggle" onclick="mood_toggle()"></label>
+                </div>
                 {{/each}}
                 <ul>
                     <li><img src="../pictures/user1.png" alt="Dp"><a href="/profile">My profile</a></li>
@@ -75,6 +107,7 @@
 
         </div>
     </div>
+    <div class="profile-container"></div>
     <div class="container">
         <div class="left_bar">
             <div class="left_bar_title">
@@ -127,14 +160,14 @@
                     <div class="district">
                         <i class='bx bxs-location-plus' style="color:black; margin-left: 2px;"></i>
                         <select name="" id="distr" onchange="thanaList();">
-                            <option value = "" disabled selected>Select division first</option>
+                            <option value="" disabled selected>Select division first</option>
                         </select>
                     </div>
                     <p>Thana</p>
                     <div class="station">
                         <i class='bx bx-current-location' style="color:black; margin-left: 2px;"></i>
                         <select name="" id="polic_sta">
-                            <option value = "" disabled selected>Select district first</option>
+                            <option value="" disabled selected>Select district first</option>
                         </select>
                     </div>
                 </div>
@@ -233,46 +266,58 @@
                             </div>
                         </div>
                         <div class="best_bid">
-                            <div id = 'best_bid'>
-                                <p id = "best_bidder_name" data-id = "" onclick="show_best_bidder(this)">Nafiz Safa Talukder</p>
-                                <p><span id = "best_bid_value">100</span> BDT</p>
-                            </div>
-                            <div id = 'value'>
-                                <p id = 'title'>BEST BID</p>
-                            </div>
-                        </div> 
-                        <div class="sumbit_bid">
-                            <div id='sumbit_bid'>
-                                <input type="number" placeholder="Enter your bid" id = "bid_value">
+                            <div id='best_bid'>
+                                <p id="best_bidder_name" data-id="" onclick="show_best_bidder(this)">Nafiz Safa
+                                    Talukder</p>
+                                <p><span id="best_bid_value">100</span> BDT</p>
                             </div>
                             <div id='value'>
-                                <button id='bid_sumbit' data-id = "" onclick = "submit_bid(this)">SUBMIT</button>
+                                <p id='title'>BEST BID</p>
+                            </div>
+                        </div>
+                        <div class="sumbit_bid">
+                            <div id='sumbit_bid'>
+                                <input type="number" placeholder="Enter your bid" id="bid_value">
+                            </div>
+                            <div id='value'>
+                                <button id='bid_sumbit' data-id="" onclick="submit_bid(this)">SUBMIT</button>
                             </div>
                         </div>
                     </div>
                     <div class="details_body_left_body">
                         <p id="details">Details:</p>
-                        <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad
+                        <span id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
+                            ad
                             officiis iusto omnis enim
-                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
+                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis
+                            voluptas
                             quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
-                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi pariatur
-                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor vel
-                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor vero
-                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam alias
-                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla porro
-                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam alias
+                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi
+                            pariatur
+                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor
+                            vel
+                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor
+                            vero
+                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam
+                            alias
+                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla
+                            porro
+                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam
+                            alias
                             eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
                             necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
-                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit eveniet
-                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae nihil
+                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit
+                            eveniet
+                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae
+                            nihil
                             saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
-                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores ut
+                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores
+                            ut
                             distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
                             minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
-                        </p>
+                        </span>
                     </div>
-                    <div class="comment">
+                    {{!-- <div class="comment">
                         <p id="comment">Comments:</p>
                         <div class="comment_container opened" id="first-comment">
                             <div class="comment_card">
@@ -286,7 +331,8 @@
                             <div class="comment_container" dataset="first-comment" id="first-reply">
                                 <div class="comment_card">
                                     <h3 class="comment_title">First reply</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                    </p>
                                     <div class="comment_footer">
                                         <div class="reply" onclick="show(this)">reply</div>
                                         <div class="show_reply">1 Replies</div>
@@ -295,7 +341,8 @@
                                 <div class="comment_container" dataset="first-reply" id="first-first-reply">
                                     <div class="comment_card">
                                         <h3 class="comment_title">reply of First reply</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
+                                            harum.
                                         </p>
                                         <div class="comment_footer">
                                             <div class="reply" onclick="show(this)">reply</div>
@@ -307,7 +354,8 @@
                             <div class="comment_container" dataset="first-comment" id="second-reply">
                                 <div class="comment_card">
                                     <h3 class="comment_title">Second reply</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                    </p>
                                     <div class="comment_footer">
                                         <div class="reply" onclick="show(this)">reply</div>
                                         <div class="show_reply">0 Replies</div>
@@ -321,11 +369,11 @@
                                 <input type="submit">
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
                 {{!-- <div class="details_body_right">
-                    
+
 
                     <div class="bid_list">
                         <div id='list'>
@@ -420,29 +468,40 @@
             </div>
         </div>
     </div>
+    <footer>
+        <div class="bottom">
+            <center>
+                <span class="credit">Created By <a href="#">Tanzim, Nafiz, Dhrubo</a> | </span>
+                <span class="far fa-copyright"></span>
+                <span> 2023 All rights reserved.</span>
+            </center>
+        </div>
+    </footer>
+
     <div class="post_popup post_invisible">
         <div class="post-box">
-            <button id = "post_popup_close" onclick="close_post_popup()">X</button>
+            <button id="post_popup_close" onclick="close_post_popup()">X</button>
             <h2>Job Post Form</h2>
             <form id="jobPostForm">
                 <label for="jobTitle">Title of the Job:</label>
                 <input type="text" id="jobTitle" maxlength="200" autocomplete="off" required>
-    
+
                 <label for="jobDescription">Description:</label>
                 <textarea id="jobDescription" rows="4" autocomplete="off" required></textarea>
-    
+
                 <label for="jobBudget">Budget:</label>
                 <input type="number" id="jobBudget" autocomplete="off" required>
-    
+
                 <label for="jobDeadline">Deadline:</label>
-                <input type="datetime-local" name="jobDeadline" id="jobDeadline" ng-model="UIcontroller.JobDataModel.datetime">
-                
+                <input type="datetime-local" name="jobDeadline" id="jobDeadline"
+                    ng-model="UIcontroller.JobDataModel.datetime">
+
                 <label for="jobTags">Tags or Category:</label>
                 <input type="text" id="jobTags" list="category_list" autocomplete="off" required>
                 <datalist id="category_list">
                 </datalist>
-    
-    
+
+
                 <label for="divisions">Division:</label>
                 <select name="divisions" id="post_divisions" onchange="post_divisionsList();" required>
                     <option disabled selected>Select division</option>
@@ -455,30 +514,22 @@
                     <option value="Rangpur">Rangpur</option>
                     <option value="Sylhet">Sylhet</option>
                 </select>
-    
+
                 <label for="post_distr">District:</label>
                 <select name="post_distr" id="post_distr" onchange="post_thanaList();" required>
                     <option disabled selected>Select division first</option>
                 </select>
-    
+
                 <label for="post_polic_sta">Police station:</label>
                 <select name="post_polic_sta" id="post_polic_sta" required>
                     <option disabled selected>Select district first</option>
                 </select>
-    
+
                 <button type="button" onclick="make_post()">Post Job</button>
             </form>
         </div>
     </div>
-    <footer>
-        <div class="bottom">
-            <center>
-                <span class="credit">Created By <a href="#">Tanzim, Nafiz, Dhrubo</a> | </span>
-                <span class="far fa-copyright"></span>
-                <span> 2023 All rights reserved.</span>
-            </center>
-        </div>
-    </footer>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="home.js"></script>
@@ -488,7 +539,9 @@
 <script src="comment.js"></script>
 <script src="postbox.js"></script>
 <script src="newpost.js"></script>
-{{!-- <script src="./newsfeed/postbox.js"></script> --}}
+<script src="notification.js"></script>
+{{!--
+<script src="./newsfeed/postbox.js"></script> --}}
 <!-- sliding adv -->
 <script>
     const swiper = new Swiper('.swiper', {

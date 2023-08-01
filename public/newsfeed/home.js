@@ -1,4 +1,15 @@
+// popup user image
+function popupImage() {
+    
+    let url = localStorage.getItem('image');
+    let type = localStorage.getItem("imagetype")
+    
+    if(url == "") return;
 
+    document.querySelector(".nav_profile_img").src = `data:${type};base64,${url}`;
+    document.querySelector(".popup_image").src = `data:${type};base64,${url}`;
+}
+popupImage()
 // pp open
 const toggleMenu = document.querySelector('.menu');
 function menuToggle(){
@@ -18,12 +29,14 @@ function category_filter() {
             return keyword.toLowerCase().includes(input.toLowerCase());
         });    
     }
-    display_category_result(result);
+    left_display_category_result(result);
 }
 function left_show_all_category() {
+    console.log("as")
     left_display_category_result(category);
 }
 function left_display_category_result(result){
+    console.log("asas")
     const content = result.map((list)=>{
         return "<li onclick = select_category(this)>" + list + "</li>";
     });
@@ -64,7 +77,6 @@ function see_less(ev) {
     
 }
 async function detail_load(id) {
-    console.log(id)
     let options = {
         method: 'POST',
         body : JSON.stringify({
@@ -78,13 +90,19 @@ async function detail_load(id) {
     const data = await response.json();
     const time_limit = data.time_limit.split("T")
     const time_limit_time = time_limit[1].split(":")
+    
+    var finalDetail = data.detail.split("\n")
+    var detailHtml = ""
+    for(let i = 0; i < finalDetail.length; i++) {
+        detailHtml += `<p>${finalDetail[i]}</p>`
+    }
 
     document.getElementById("post_detail_title").innerHTML = data.title
     document.getElementById("post_detail_time_ago").innerHTML = `Time Limit: ${time_limit[0]} (${time_limit_time[0]}:${time_limit_time[1]})`
     document.getElementById("post_detail_budget").innerHTML = `Est. budget: ${data.budget} BDT`
     document.getElementById("post_detail_category").innerHTML = `${data.category}`
     document.getElementById("post_detail_division").innerHTML = `${data.division}`
-    document.getElementById("post_detail_detail").innerHTML = data.detail
+    document.getElementById("post_detail_detail").innerHTML = detailHtml
     document.getElementById("bid_sumbit").dataset.id = id
     document.getElementById("best_bidder_name").innerHTML = data.max_bid_user_name
     if(data.max_bid_user_name == "No bid yet") {
@@ -99,6 +117,10 @@ async function detail_load(id) {
 }
 function open_detail_late() {
     document.querySelector(".post_details").classList.add("open_details");
+    document.querySelector("nav").classList.add("blur_active");
+    document.querySelector(".advertise").classList.add("blur_active");
+    document.querySelector(".container").classList.add("blur_active");
+    document.querySelector(".profile-container").classList.add("blur_active");
 }
 function show_details(ev) {
     const id = ev.getAttribute("data-id");
@@ -107,7 +129,11 @@ function show_details(ev) {
     
 }
 function close_details() {
+    document.querySelector("nav").classList.remove("blur_active");
+    document.querySelector(".advertise").classList.remove("blur_active");
+    document.querySelector(".container").classList.remove("blur_active");
     document.querySelector(".post_details").classList.remove("open_details");
+    document.querySelector(".profile-container").classList.remove("blur_active");
 }
 function goto_post() {
     window.location.assign("../post_page/postbox.html");
@@ -127,8 +153,56 @@ function show_best_bidder(ev) {
 function goto_landing() {
     window.location.assign(`/`);
 }
+function gotoNewsfeed() {
+    window.location.assign(`/newsfeed`);
+}
+function gotoList() {
+    window.location.assign(`/list`);
+}
 
 function show_post_popup() {
     console.log("as")
     document.querySelector(".post_popup").classList.remove("open_post_popup");
+}
+function takebreak() {
+    document.querySelector("nav").classList.remove("nav_positive")
+    document.querySelector("nav").classList.remove("nav_negative")
+    document.querySelector(".alert_mess").style.display = "none"
+}
+function alert_mess(mess, state) {
+    document.getElementById("alert_mess").innerHTML = mess
+    if(state == 1) {
+        document.querySelector("nav").classList.add("nav_positive")
+        document.querySelector(".alert_mess").style.display = "inline"
+        setTimeout(takebreak, 1000)
+        
+    }
+    else {
+        document.querySelector("nav").classList.add("nav_negative")
+        document.querySelector(".alert_mess").style.display = "inline"
+        setTimeout(takebreak, 2000)
+    }
+}
+async function mood_toggle() {
+    
+    document.getElementById("mood_toggle").click()
+    
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+            check: document.getElementById("mood_toggle").checked
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/update_mood", options);
+    const data = await response.json();
+    if(document.getElementById("mood_toggle").checked) {
+        alert_mess("Free mood is on!", 1)
+    }
+    else {
+        alert_mess("Work mood on! You won't get any notification of new post.", 0)
+    }
+    
 }

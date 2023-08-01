@@ -293,14 +293,14 @@
         <div class="right box">
           <h2>Contact Us</h2>
           <div class="content">
-            <form action="#">
+            <form action="/feedback" method="POST">
               <div class="email">
                 <div class="text">Email *</div>
-                <input type="email" required>
+                <input type="email" id = "feedback_email" name = "email" required>
               </div>
               <div class="msg">
                 <div class="text">Message *</div>
-                <textarea cols="25" rows="2" required></textarea>
+                <textarea name = "message" cols="25" rows="2" required></textarea>
               </div>
               <div class="btn">
                 <button type="submit">Send</button>

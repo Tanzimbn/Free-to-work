@@ -36,15 +36,46 @@ span.user-name:hover{
     visibility: hidden;
     transition: 0.5s;
     opacity: 0;
+    box-shadow: 1px 1px 10px 0px #212121;
+    border-radius: 15px;
 }
 
 .rev_container h1 {
     text-align: center;
 }
 
+.post_review {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.post_review select {
+    border-radius: 10px;
+}
+.post_review textarea {
+    width: 96%;
+  height: 150px;
+}
+.post_review button {
+    padding: 10px;
+    height: 5%;
+    cursor: pointer;
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+.box_2{
+    display: flex;
+    justify-content: space-between;
+}
+.post_review #review_status {
+    border-radius: 10px;
+    color: rgb(255, 0, 102);
+}
+
 .rev_container .reviews {
-    max-height: 600px;
-    overflow-y: auto;
+    max-height: 50%;
+    overflow-y: scroll;
 }
 
 .rev_container .review {
@@ -80,6 +111,11 @@ span.user-name:hover{
     font-size: 20px;
     cursor: pointer;
 }
+.rev_container.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: .4s;
+}
 
  /* ------------------report section css------------ */
 
@@ -100,7 +136,8 @@ span.user-name:hover{
    visibility: hidden;
    opacity: 0;
    transition: 0.4s;
-
+    box-shadow: 1px 1px 20px 0px #212121;
+   border-radius: 15px;
 }
 
 .rep_container h1 {
@@ -156,13 +193,11 @@ textarea {
     pointer-events: none;
     user-select: none;
 } */
-.rev_container.review-active{
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
-}
 .rep_container.review-active{
     visibility: visible;
     opacity: 1;
     transition: .4s;
+}
+#to {
+    display: none;
 }

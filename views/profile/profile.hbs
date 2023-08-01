@@ -11,11 +11,15 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/user_profile/home_navbar.css">
-    <link rel="stylesheet" href="/user_profile/profile.css">
     <link rel="stylesheet" href="/user_profile/content.css">
     <link rel="stylesheet" href="/user_profile/review.css">
     <link rel="stylesheet" href="/newsfeed/post-details.css">
     <link rel="stylesheet" href="/newsfeed/comment.css">
+    <link rel="stylesheet" href="/user_profile/profile.css">
+    <link rel="stylesheet" href="/user_profile/edit_profile.css">
+    <link rel="stylesheet" href="../newsfeed/notification.css">
+    <link rel="stylesheet" href="../newsfeed/nav_mode.css">
+    <link rel="stylesheet" href="../newsfeed/alert.css">
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -23,54 +27,104 @@
 <body>
     <!-- --------nav bar------ -->
     <div class="profile-page">
-        <nav>
+        <nav class ="">
             <div class="nav_left">
-                <p class="logo" style="color:#1a1d86">Free to<br>work.</p>
+                <p class="logo" style="color:#1a1d86" onclick="goto_landing()">Free to<br>work.</p>
                 <ul>
-                    <li><a href="/newsfeed"><i class='bx bxs-home'></i></a></li>
-                    <li><a href="/list"><i class='bx bx-list-ul'></i></a></li>
-                    <li><i class='bx bxs-category'></i></li>
+                    <li><i class='bx bxs-home' onclick="gotoNewsfeed()"></i></li>
+                    <li><i class='bx bx-list-ul' onclick="gotoList()"></i></li>
+                    {{#if unseen}}
+                    <li><i class="fa-solid fa-bell taken" onclick="notiToggle()"></i></li>
+                    {{else}}
+                    <li><i class="fa-solid fa-bell" onclick="notiToggle()"></i></li>
+                    {{/if}}
                 </ul>
+                <div class="noti">
+                    <h3>Notifications</h3>
+                    <hr>
+                    {{#each noti}}
+                    {{#if unseen}}
+                    <div class="noti_message unseen" data-id='{{postid}}' onclick="show_details(this);notiseen(this)">
+                        {{type}}</div>
+                    {{else}}
+                    <div class="noti_message" data-id='{{postid}}' onclick="show_details(this)">{{type}}</div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+            <div class="alert_mess">
+                <div class="alert_mess_box">
+                    <p id="alert_mess">Free mood is on!</p>
+                </div>
             </div>
             <div class="nav_right">
-                <div class="serach_box">
+                {{!-- <div class="serach_box">
                     <img src="../pictures/search-alt-regular-24.png">
                     <input type="text" placeholder="Search">
-                </div>
-                <div class="create_post" onclick="goto_post()">
+                </div> --}}
+                {{!-- <div class="create_post" onclick="goto_post()">
                     <p>Post</p>
-                </div>
+                </div> --}}
                 <!-- -------profile-popup-------- -->
                 <div class="user_icon">
-                    <img src="../pictures/FB_IMG_1635179825355.jpg" onclick="menuToggle()">
+                    <img src="/pictures/Noimage.png" data-loginId="{{loginId}}" data-givenId="{{givenId}}" alt="dp"
+                        class="nav_profile_img" onclick="menuToggle()">
                 </div>
                 <div class="menu">
+
                     <div class="menu_user_icon">
-                        <img src="../pictures/FB_IMG_1635179825355.jpg">
+                        <img src="/pictures/Noimage.png" alt="dp" class="popup_image">
                     </div>
                     {{#each user}}
                     <h3><span id="nav_user_name">{{fname}} {{lname}}</span><br><span
                             id="nav_user_category">{{category}}</span></h3>
+                    <div class="mood">
+                        {{#if mood}}
+                        <input checked type="checkbox" name="checkbox" id="mood_toggle">
+                        {{else}}
+                        <input type="checkbox" name="checkbox" id="mood_toggle">
+                        {{/if}}
+                        <label for="checkbox" class="mood_toggle" onclick="mood_toggle()"></label>
+                    </div>
                     {{/each}}
                     <ul>
                         <li><img src="../pictures/user1.png" alt="Dp"><a href="/profile">My profile</a></li>
                         <li><img src="../pictures/logout.png" alt="logout logo"><a href="/logout" onclick="logout()">Log
                                 out</a></li>
-                        {{!-- <li> Dark Mode  <img src="src/switch-on.png" class="darkmode" id="darkicon"></li> --}}
+                        {{!-- <li> Dark Mode <img src="src/switch-on.png" class="darkmode" id="darkicon"></li> --}}
                     </ul>
                 </div>
             </div>
         </nav>
+        <div class="advertise"></div>
         <!-- ----profile page--- -->
-
+        <div class="container"></div>
         <div class="profile-container">
-            <img src="/user_profile/pictures/Green Simple Personal LinkedIn Banner.png" class="cover-img"
-                alt="coverimage">
+            <form action="/edit_cover" enctype="multipart/form-data" method="post">
+                <img src="" class="cover-img" alt="coverimage">
+                {{!-- <img src="/list/pictures/amalie-steiness.gif" data-loginId="{{loginId}}"
+                    data-givenId="{{givenId}}" alt="dp" class="pd-img"> --}}
+                {{#if MainUser}}
+                <input type="file" class="admin__input" id="mycoverFile" name="testImage" onchange="edit_cp()" />
+                <label for="mycoverFile" id="choose_cp"> Choose image </label>
+                <input class="cp__submit" type="submit" />
+                {{/if}}
+            </form>
             <div class="profile-details">
                 <div class="pd-left">
                     <div class="pd-row">
-                        <img src="/user_profile/pictures/amalie-steiness.gif" data-loginId="{{loginId}}"
-                            data-givenId="{{givenId}}" alt="dp" class="pd-img">
+                        <div class="edit_pp">
+                            <form action="/edit_user" enctype="multipart/form-data" method="post">
+                                <img src="/list/pictures/amalie-steiness.gif" data-loginId="{{loginId}}"
+                                    data-givenId="{{givenId}}" alt="dp" class="pd-img">
+                                {{#if MainUser}}
+                                <input type="file" class="admin__input" id="myFile" name="testImage"
+                                    onchange="edit_pp()" />
+                                <label for="myFile" id="choose_pp">Choose image</label>
+                                <input class="pp__submit" type="submit" />
+                                {{/if}}
+                            </form>
+                        </div>
                         <div>
                             {{#each view_user}}
                             <h3 class="user_name">{{this.fname}}<span> </span>{{this.lname}} <img
@@ -78,17 +132,9 @@
                             <p class="work_title">{{this.category}}</p>
                             <div class="rating">
                                 <p>Ratings:</p>
-                                <p id="user_rating">8.6</p>
+                                <p id="user_rating">{{this.rating}}</p>
                             </div>
                             {{/each}}
-                        </div>
-                        <div>
-                            {{#if MainUser}}
-                            <form action="/edit_user" enctype="multipart/form-data" method="post">
-                                <input type="file" class="admin__input" id="myFile" name="testImage" />
-                                <input class="admin__submit" type="submit" />
-                            </form>
-                            {{/if}}
                         </div>
                     </div>
                 </div>
@@ -97,30 +143,44 @@
                             src="/user_profile/pictures/review.png">Reviews</button>
                     <button type="button" id="reportbtn" onclick="ReportToggle()"><img
                             src="/user_profile/pictures/report.png">Report User</button>
-
+                    {{#if MainUser}}
+                    <button type="button" id="reportbtn" onclick="editToggle()"><img
+                            src="/user_profile/pictures/edit.png">Edit profile</button>
+                    {{/if}}
 
                 </div>
             </div>
             <div class="profile-info">
                 <div class="info-col">
                     <div class="profile-intro">
+                        {{#each view_user}}
                         <h3>Bio-</h3>
-                        <p>I can be the Digital Marketer you're looking for.</p>
+                        <p id="profile_bio">{{bio}}</p>
                         <hr>
-                        <h3>Details-</h3>
+                        <h3>Details</h3>
                         <ul>
-                            <li><img src="/user_profile/pictures/work.png" class="img1">Not yet working</li>
-                            <li><img src="/user_profile/pictures/study.png">Student at C.U.E.T</li>
-                            <li><img src="/user_profile/pictures/home.png">lives in Chittagong,Bangladesh</li>
-                            <li><img src="/user_profile/pictures/location.png">From Cumilla,Bangladesh</li>
+
+                            <li><i class="fa-regular fa-envelope"></i>&nbsp Email : <span>&nbsp{{email}}</span></li>
+                            <li><i class="fa-solid fa-phone"></i>&nbsp Phone : <span>&nbsp{{phone}}</span></li>
+                            <li><i class="fa-solid fa-map-location-dot"></i>&nbsp Division :
+                                <span>&nbsp{{division}}</span>
+                            </li>
+                            <li><i class="fa-solid fa-location-dot"></i>&nbsp District : <span>&nbsp{{district}}</span>
+                            </li>
+                            <li><i class="fa-solid fa-location-crosshairs"></i>&nbsp Police Station :
+                                <span>&nbsp{{station}}</span>
+                            </li>
+
                         </ul>
                         <hr>
+                        {{/each}}
                     </div>
                 </div>
                 <div class="post-col">
                     <div class="main_content">
                         <h3>Recent Posts:</h3>
                         <div class="post">
+                            {{#if MainUser}}
                             {{#each allpost}}
                             {{!-- {{_id}} --}}
                             <div class="post-content">
@@ -151,6 +211,37 @@
                                 </div>
                             </div>
                             {{/each}}
+                            {{else}}
+                            {{#each allpost}}
+                            {{!-- {{_id}} --}}
+                            <div class="post-content">
+                                <div class="heading">
+                                    <p onclick="show_details(this)" data-id="{{id}}">{{title}}</p>
+                                </div>
+                                <div class="budget">
+                                    <p>Est. budget: {{budget}} BDT</p>
+                                    <p>.</p>
+                                    <p>Posted : {{time_ago}}</p>
+                                </div>
+                                <div class="details">
+                                    <p>{{detail1}}<span id="dots"> ...</span><button onclick="see_more(this)"
+                                            id="see_more">more</button><span id="more_details">{{detail2}}</span>
+                                        <button onclick="see_less(this)" id="see_less">see less</button>
+                                    </p>
+                                </div>
+                                <div class="post_tag">
+                                    <ul>
+                                        <li>{{category}}</li>
+                                    </ul>
+                                </div>
+                                <div class="location">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p>{{division}}</p>
+                                </div>
+                            </div>
+                            {{/each}}
+                            {{/if}}
+
                         </div>
                     </div>
 
@@ -160,93 +251,119 @@
             </div>
         </div>
         <div class="post_details">
-        <div class="details_overlay"></div>
-        <div class="details_content" id="details_content">
-            <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
-            <div class="details_body">
-                <div class="details_body_left">
-                    <div class="details_body_left_head">
-                        <div class="basic_info">
-                            <div class="title">
-                                <span id='post_detail_title'>Java SpringBoot</span>
-                            </div>
-                            <div class="budget_time">
-                                <p id="post_detail_budget">Est. budget: $50 - 100 USD</p>
-                                <p id="post_detail_time_ago">Posted 2 hours ago</p>
-                            </div>
-                            <div class="tag">
-                                <ul>
-                                    <li id="post_detail_category">php</li>
-                                </ul>
-                            </div>
-                            <div class="details_location">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <p id="post_detail_division">Chittagong</p>
-                            </div>
-                        </div>
-                        <div class="best_bid">
-                            <div id = 'best_bid'>
-                                <p id = "best_bidder_name" data-id = "" onclick="show_best_bidder(this)">Nafiz Safa Talukder</p>
-                                <p><span id = "best_bid_value">100</span> BDT</p>
-                            </div>
-                            <div id = 'value'>
-                                <p id = 'title'>BEST BID</p>
-                            </div>
-                        </div> 
-                        <div class="sumbit_bid">
-                            <div id='sumbit_bid'>
-                                <input type="number" placeholder="Enter your bid" id = "bid_value">
-                            </div>
-                            <div id='value'>
-                                <button id='bid_sumbit' data-id = "" onclick = "submit_bid(this)">SUBMIT</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="details_body_left_body">
-                        <p id="details">Details:</p>
-                        <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ad
-                            officiis iusto omnis enim
-                            nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis voluptas
-                            quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
-                            eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi pariatur
-                            molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor vel
-                            dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor vero
-                            omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam alias
-                            ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla porro
-                            fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam alias
-                            eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
-                            necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
-                            accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit eveniet
-                            accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae nihil
-                            saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
-                            eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores ut
-                            distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
-                            minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
-                        </p>
-                    </div>
-                    <div class="comment">
-                        <p id="comment">Comments:</p>
-                        <div class="comment_container opened" id="first-comment">
-                            <div class="comment_card">
-                                <h3 class="comment_title">First</h3>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
-                                <div class="comment_footer">
-                                    <div class="reply" onclick="show(this)">reply</div>
-                                    <div class="show_reply">2 Replies</div>
+            <div class="details_overlay"></div>
+            <div class="details_content" id="details_content">
+                <span class="close-btn" onclick="close_details()"><i class="fa-solid fa-greater-than"></i></span>
+                <div class="details_body">
+                    <div class="details_body_left">
+                        <div class="details_body_left_head">
+                            <div class="basic_info">
+                                <div class="title">
+                                    <span id='post_detail_title'>Java SpringBoot</span>
+                                </div>
+                                <div class="budget_time">
+                                    <p id="post_detail_budget">Est. budget: $50 - 100 USD</p>
+                                    <p id="post_detail_time_ago">Posted 2 hours ago</p>
+                                </div>
+                                <div class="tag">
+                                    <ul>
+                                        <li id="post_detail_category">php</li>
+                                    </ul>
+                                </div>
+                                <div class="details_location">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <p id="post_detail_division">Chittagong</p>
                                 </div>
                             </div>
-                            <div class="comment_container" dataset="first-comment" id="first-reply">
+                            <div class="best_bid">
+                                <div id='best_bid'>
+                                    <p id="best_bidder_name" data-id="" onclick="show_best_bidder(this)">Nafiz Safa
+                                        Talukder</p>
+                                    <p><span id="best_bid_value">100</span> BDT</p>
+                                </div>
+                                <div id='value'>
+                                    <p id='title'>BEST BID</p>
+                                </div>
+                            </div>
+                            <div class="sumbit_bid">
+                                <div id='sumbit_bid'>
+                                    <input type="number" placeholder="Enter your bid" id="bid_value">
+                                </div>
+                                <div id='value'>
+                                    <button id='bid_sumbit' data-id="" onclick="submit_bid(this)">SUBMIT</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="details_body_left_body">
+                            <p id="details">Details:</p>
+                            <p id="post_detail_detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
+                                ad
+                                officiis iusto omnis enim
+                                nobis impedit qui velit provident facilis natus vitae nemo, debitis esse reiciendis
+                                voluptas
+                                quam a recusandae illo, voluptate laudantium culpa minus? Laborum dolores sed alias odit
+                                eligendi modi, esse aut asperiores, ex, vero voluptatem. Esse cumque, alias sequi
+                                pariatur
+                                molestias praesentium officia optio delectus iure adipisci officiis? Doloremque dolor
+                                vel
+                                dignissimos temporibus quas. Reprehenderit minus eligendi mollitia nobis corrupti dolor
+                                vero
+                                omnis excepturi, facilis cupiditate aspernatur vel eum voluptatum explicabo laboriosam
+                                alias
+                                ratione nostrum quae. Quae laudantium architecto asperiores quis incidunt velit nulla
+                                porro
+                                fuga iure sunt natus nesciunt omnis harum libero, repudiandae eveniet quas quisquam
+                                alias
+                                eum temporibus, aspernatur obcaecati eius! Distinctio repellat facilis consequatur culpa
+                                necessitatibus consectetur quam harum eum earum ipsa ratione nemo tempora sit provident,
+                                accusantium, qui rem exercitationem neque nisi inventore odio commodi? Mollitia odit
+                                eveniet
+                                accusantium cumque doloribus quam dicta facilis, vitae suscipit ut, repellat molestiae
+                                nihil
+                                saepe est tempore blanditiis maiores ipsam soluta! Doloremque, perspiciatis beatae culpa
+                                eaque in fugit suscipit, molestias commodi quia earum numquam ad aspernatur, asperiores
+                                ut
+                                distinctio adipisci facilis necessitatibus dignissimos rerum laudantium magnam nihil ex
+                                minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
+                            </p>
+                        </div>
+                        <div class="comment">
+                            <p id="comment">Comments:</p>
+                            <div class="comment_container opened" id="first-comment">
                                 <div class="comment_card">
-                                    <h3 class="comment_title">First reply</h3>
+                                    <h3 class="comment_title">First</h3>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
                                     <div class="comment_footer">
                                         <div class="reply" onclick="show(this)">reply</div>
-                                        <div class="show_reply">1 Replies</div>
+                                        <div class="show_reply">2 Replies</div>
                                     </div>
                                 </div>
-                                <div class="comment_container" dataset="first-reply" id="first-first-reply">
+                                <div class="comment_container" dataset="first-comment" id="first-reply">
                                     <div class="comment_card">
-                                        <h3 class="comment_title">reply of First reply</h3>
+                                        <h3 class="comment_title">First reply</h3>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
+                                        </p>
+                                        <div class="comment_footer">
+                                            <div class="reply" onclick="show(this)">reply</div>
+                                            <div class="show_reply">1 Replies</div>
+                                        </div>
+                                    </div>
+                                    <div class="comment_container" dataset="first-reply" id="first-first-reply">
+                                        <div class="comment_card">
+                                            <h3 class="comment_title">reply of First reply</h3>
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
+                                                harum.
+                                            </p>
+                                            <div class="comment_footer">
+                                                <div class="reply" onclick="show(this)">reply</div>
+                                                <div class="show_reply">0 Replies</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comment_container" dataset="first-comment" id="second-reply">
+                                    <div class="comment_card">
+                                        <h3 class="comment_title">Second reply</h3>
                                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
                                         </p>
                                         <div class="comment_footer">
@@ -256,234 +373,116 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="comment_container" dataset="first-comment" id="second-reply">
-                                <div class="comment_card">
-                                    <h3 class="comment_title">Second reply</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
-                                    <div class="comment_footer">
-                                        <div class="reply" onclick="show(this)">reply</div>
-                                        <div class="show_reply">0 Replies</div>
-                                    </div>
-                                </div>
+                            <div class="comment_box">
+                                <form action="">
+                                    <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
+                                    <input type="submit">
+                                </form>
                             </div>
                         </div>
-                        <div class="comment_box">
-                            <form action="">
-                                <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
-                                <input type="submit">
-                            </form>
-                        </div>
+
                     </div>
+
 
                 </div>
-                {{!-- <div class="details_body_right">
-                    
-
-                    <div class="bid_list">
-                        <div id='list'>
-                            <p id='title'>TOP BIDS</p>
-                        </div>
-                        <div id='bid_list'>
-                            <ul>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Tanzim Bin Nasir</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Nafiz Safa Talukder</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="bid_list_cart">
-                                        <span id='user_name'>Aninda Roy Dhruvo</span><br>
-                                        <span>100BDT</span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                </div> --}}
-
             </div>
         </div>
     </div>
-    </div>
-        <div class="rev_container">
-            <h1>User Reviews</h1>
-            <div class="reviews">
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <div class="review">
-                    <div class="user-info">
-                        <span class="user-name">John Doe</span>
-                        <span class="user-rating">4.5/5</span>
-                    </div>
-                    <div class="user-comment">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ultricies nisi,
-                            vel
-                            dapibus odio gravida in. Fusce a aliquam velit. Phasellus posuere est eget justo fringilla,
-                            eu
-                            finibus nisl consectetur.</p>
-                    </div>
-                </div>
-                <!-- Add more review divs here as needed -->
+    <div class="rev_container">
+        <h1>User Reviews</h1>
+        <div class="post_review">
+            <h4>Give your review</h4>
+            <textarea name="review" id="review_text" placeholder="Enter review here"></textarea>
+            <div class="box_2">
+                <select name="give_rating" id="give_rating">
+                    <option value="" disabled selected>Give rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <div id="review_status"></div>
+                <button type="button" data-id='{{givenId}}' onclick="review_submit(this)">Submit!</button>
             </div>
-            <div class="close-button" onclick="ReviewToggle()">&#10005;</div>
         </div>
-        <div class="rep_container">
-            <h1>Report User</h1>
-            <span class="close" onclick="ReportToggle()">&times;</span>
-            <form id="reportForm" action=" " method="post">
-                <!-- <label for="reportedUser">Reported User:</label>
+        <div class="reviews">
+            {{#each allreview}}
+            <div class="review">
+                <div class="user-info">
+                    <span class="user-name">{{reviewer}}</span>
+                    <span class="user-rating">{{rating}}/5</span>
+                </div>
+                <div class="user-comment">
+                    <p>{{text}}</p>
+                </div>
+            </div>
+            {{/each}}
+
+            <!-- Add more review divs here as needed -->
+        </div>
+        <div class="close-button" onclick="ReviewToggle()">&#10005;</div>
+    </div>
+    <div class="rep_container">
+        <h1>Report User</h1>
+        <span class="close" onclick="ReportToggle()">&times;</span>
+        <form id="reportForm" action="/report" method="post">
+            <!-- <label for="reportedUser">Reported User:</label>
                 <input type="text" id="reportedUser" name="reportedUser" required> -->
 
-                <label for="reportReason">Reason for Report:</label>
-                <select id="reportReason" name="reportReason" required>
-                    <option value="" disabled selected>Select a reason</option>
-                    <option value="misbehavior">Misbehavior</option>
-                    <option value="misleadingInfo">Misleading Information</option>
-                    <option value="fakeInfo">Providing Fake Information</option>
-                </select>
+            <select name="to" id="to">
+                <option value='{{givenId}}' selected>{{givenId}}</option>
+            </select>
+            <label for="reportReason">Reason for Report:</label>
+            <select id="reportReason" name="reportReason" required>
+                <option value="" disabled selected>Select a reason</option>
+                <option value="misbehavior">Misbehavior</option>
+                <option value="misleadingInfo">Misleading Information</option>
+                <option value="fakeInfo">Providing Fake Information</option>
+            </select>
 
-                <label for="additionalComments">Additional Comments:</label>
-                <textarea id="additionalComments" name="additionalComments" rows="4"></textarea>
+            <label for="additionalComments">Additional Comments:</label>
+            <textarea id="additionalComments" name="additionalComments" rows="4" required></textarea>
 
-                <button type="submit">Submit Report</button>
-            </form>
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+    <div class="profile-section">
+        <h2>Edit Profile</h2>
+        <div class="close-button-edit" onclick="editToggle()">&#10005;</div>
+        <div class="form-group">
+            <label for="old-password">old-password:</label>
+            <input type="password" id="old-password" name="old-password" placeholder="Your old password" />
         </div>
-    
+        <div class="form-group">
+            <label for="new-password">new-password:</label>
+            <input type="password" id="new-password" name="new-password" placeholder="Type new password" />
+        </div>
+        <div class="form-group">
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="jobTags">Category:</label>
+            <input type="text" id="jobTags" list="category_list" autocomplete="off">
+            <datalist id="category_list">
+            </datalist>
+        </div>
+        <button class="btn-save" onclick="edit_profile()">Save Changes</button>
+        <div id="edit_status">
+            <p></p>
+        </div>
+
+    </div>
+
 </body>
 <script src="/newsfeed/home.js"></script>
 <script src="/newsfeed/bidding.js"></script>
 <script src="/user_profile/profile.js"></script>
+<script src="/user_profile/review.js"></script>
+<script src="/user_profile/edit_profile.js"></script>
+<script src="/newsfeed/notification.js"></script>
+
 <script>
 
 </script>

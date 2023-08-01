@@ -5,23 +5,39 @@
     box-sizing: border-box;
     font-family: "Poppins",sans-serif;
 }
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #FFDAB9;
+  }
 body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    /* background-color: #003333; */
-    background-image: url(../pictures/Free\ Vector\ _\ Gradient\ blue\ waves\ background.jpeg);
+    width: 80%;
+    background-color: var(--bc2);
+    /* background-image: url(../pictures/Free\ Vector\ _\ Gradient\ blue\ waves\ background.jpeg); */
     /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+    /* background-image: var(--hover1); */
 }
 .container{
-    width: 80%;
+    width: 60%;
     margin: 3% auto;
     display: flex;
     height: 700px;
     box-shadow: 0 12px 18px rgba(54,176,138,0.005);
     border-radius: 6px;
-    background: rgba(255, 255, 255);
+    background: var(--bc1);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .popup{
     width: 400px;
@@ -66,8 +82,8 @@ body{
     cursor: pointer;
 }
 .login-link{
-    background-color: #1a1d86;
-   background-image: url('../pictures/bg-shapes.svg');
+    background-color: var(--bc2);
+   /* background-image: url('../pictures/bg-shapes.svg'); */
    background-position: bottom left;
    background-repeat: no-repeat;
    width: 30%;
@@ -98,7 +114,7 @@ body{
     text-align: center;
     font-weight: 800;
     color: #fff;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     margin: 46% 0 5%;
 }
 .primary-bg-text{
@@ -117,23 +133,25 @@ body{
 a.loginbtn{
     text-decoration: none;
     color: #fff;
+    background-color: #d11f0c;
     width: 70%;
     font-weight: 500;
     display: inline-block;
     margin: 7% 15%;
     text-align: center;
-    border: 2px solid #eff0ff;
-    border-radius: 24px;
+    /* border: 2px solid #eff0ff;  */
+    /* border: 1px solid;  */
+    border-radius: 6px;
     padding: 3% 0;
 }
 a.loginbtn:hover{
-    color: #696cff;
-    background-color: #fff;
+    color: white;
+    background-color: var(--hover2);
 }
 .big-heading{
     font-weight: 900;
     font-size: 2rem;
-    color: #696cff;
+    color: var(--white);
     text-align: left;
 }
 .social-media-platform{
@@ -166,7 +184,7 @@ a.loginbtn:hover{
    flex-direction: column;
 }
 .progress-bar .tool-tip{
-    color: #1a1d86;
+    color: white;
     font-weight: 600;
 }
 .stageno{
@@ -194,7 +212,9 @@ input{
     border: none;
     outline: none;
     background: inherit;
-    color: #84848d;
+    /* color: #84848d; */
+    color: white;
+    /* background-color: white; */
     width: 200%;
     margin-left: 4%;
     font-size: 1rem;
@@ -206,48 +226,52 @@ input{
 ::-webkit-datetime-edit-month-field,
 ::-webkit-datetime-edit-day-field,
 ::-webkit-datetime-edit-year-field,input::placeholder{
-    background-color: #fff;
+    /* background-color: #fff; */
     color: #84848d;
 }
 .text-fields.fname:after{
     content: 'First name';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 4%;
     left: -197px;
     width: 334px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.lname:after{
     content: 'Last name';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 4%;
     left: -197px;
     width: 332px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.gender-selection:after{
     content: 'Gender';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 4%;
     left: -195px;
     width: 150px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.nid:after{
     content: 'Nid Number';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 4%;
     left: -185px;
     width: 400px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .field-heading{
     color: #696cff;
@@ -261,7 +285,7 @@ input{
     width: 20%;
 }
 input[type="radio"]{
-    accent-color: #696cff;
+    accent-color: #000000;
     margin-right: 6%;
 }
 .pagination-btns{
@@ -271,7 +295,7 @@ input[type="radio"]{
     padding: 0 4%;
 }
 .nextPage, .previousPage{
-    background-color: #8789ff;
+    background-color: #d11f0c;
     color: #fff;
     width: 45%;
     cursor: pointer;
@@ -283,93 +307,107 @@ input[type="radio"]{
     outline: none;
 }
 .nextPage:hover, .previousPage:hover{
-    background-color: #696cff;
+    background-color: var(--hover2);
 }
 .text-fields.phone:after{
     content: 'Phone number';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
     left: -165px;
     width: 592px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.email:after{
     content: 'Email Id';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
     left: -203px;
     width: 308px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.divisions:after{
     content: 'Division';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
-    left: -82%;
-    width: 80px;
-    color: #696cff;
+    left: -230px;
+    width: 100px;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.district:after{
     content: 'District';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
-    left: -85%;
-    width: 80px;
-    color: #696cff;
+    left: -225px;
+    width: 100px;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.station:after{
     content: 'Station';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
-    left: -84%;
-    width: 80px;
-    color: #696cff;
+    left: -230px;
+    width: 100px;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 select {
     width: 300px;
     padding: 2px 5px;
     margin-left: 4%;
     border: 0px;
+    background-color: #fadede;
 }
+
+/* LOGIN PAGE */
+
 .text-fields.login_email:after{
     content: 'Email Id';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
     left: -367px;
-    width: 308px;
-    color: #696cff;
     top: -33px;
+    width: 308px;
+    color: black;
+    border-radius: 2px;
+    text-align: center;
 }
 .text-fields.login_password:after{
     content: 'Enter Password';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
     left: -322px;
     width: 511px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    border-radius: 2px;
+    text-align: center;
 }
 .text-fields.password:after, .text-fields.confirmpassword:after{
     content: 'Enter Password';
-    background-color: #fff;
+    background-color: #fadede;
     position: relative;
     padding: 0 1%;
     left: -160px;
     width: 641px;
-    color: #696cff;
+    color: black;
     top: -33px;
+    text-align: center;
 }
 .text-fields.text-fields.confirmpassword:after{
     content: 'Confirm Password';
@@ -379,14 +417,15 @@ select {
 .tc-container input{
     width: 4%;
     margin-left: 4%;
-    accent-color: #696cff;
+    accent-color: #f9f9fb;
 }
 .tc a{
-    text-decoration: none;
-    color: #696cff;
+    text-decoration: underline;
+    color: white;
 }
 label.tc{
     margin-left: 4%;
+    color: white;
 }
 .login-form-contents{
     display: flex;
