@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #de4d2d;
+    --popup : #ccc;
+  }
+
+.profile-page.review-active{
+    filter: blur(10px);
+    pointer-events: none;
+    user-select: none;
+}
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+span.user-name:hover{
+    color: #103e2b;
+    font-size: 20px;
+}
+.rev_container {
+    background-color: var(--popup);
+    padding: 1%;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    overflow-y: auto;
+    top: 7%;
+    left: 35%;
+    width: 30%;
+    height: 86%;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.4s;
+    box-shadow: 1px 1px 20px 0px #000000;
+}
+
+.rev_container h1 {
+    text-align: center;
+    padding: 3%;
+}
+
+.rev_container .reviews {
+    max-height: 600px;
+    overflow-y: auto;
+}
+.adminreport{
+    height: 90%;
+    overflow-y: auto;
+}
+
+.rev_container .review {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--hover1);
+    font-size: 1.2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.rev_container .user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.rev_container .user-name {
+    /* font-size: 16px; */
+}
+
+.rev_container .user-rating {
+    /* font-size: 16px; */
+}
+
+.rev_container .user-comment {
+    /* font-size: 18px; */
+}
+
+.rev_container .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+ /* ------------------report section css------------ */
+
+ 
+.rep_container {
+    background-color: var(--popup);
+    padding: 1%;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    overflow-y: auto;
+    top: 7%;
+    left: 35%;
+    width: 30%;
+    height: 86%;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.4s;
+    box-shadow: 1px 1px 20px 0px #000000;
+}
+
+.rep_container h1, .add_category h1 {
+   text-align: center;
+}
+
+.rep_container form {
+   display: flex;
+   flex-direction: column;
+}
+
+.rep_container label {
+   margin-top: 10px;
+   font-weight: bold;
+}
+
+.rep_container input[type="text"],
+select,
+textarea {
+   padding: 10px;
+   margin-bottom: 20px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+}
+.rep_container textarea{
+    max-height: 200px;
+    min-height: 200px;
+    max-width: 94%;
+    min-width: 94%;
+}
+
+.rep_container button {
+   background-color: var(--hover3);
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 4px;
+   cursor: pointer;
+   font-weight: bold;
+}
+
+.rep_container button:hover {
+   background-color: var(--hover2);
+   color: #000000;
+}
+.additionalComments{
+    position: fixed;
+}
+
+/* -------------------blur-------- */
+/* .profile-page.review-active
+{
+    filter: blur(20px);
+    pointer-events: none;
+    user-select: none;
+} */
+.rev_container.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+.rep_container.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: .4s;
+}
+.add_category.review-active{
+    visibility: visible;
+    opacity: 1;
+    transition: .4s;
+}
+
+/* category */
+.add_category {
+    max-width: 50%;
+   /* margin: 20px auto; */
+   background-color: var(--popup);
+   padding: 20px;
+   border-radius: 15px;
+   position:fixed;
+   overflow-y: auto;
+   top: 8%;
+   left: 33%;
+   width: 35%;
+   height: 84%;
+   visibility: hidden;
+   opacity: 0;
+   transition: 0.4s;
+   box-shadow: 1px 1px 20px 0px #000000;
+}
+.add_category input {
+    width: 80%;
+    padding: 2%;
+    margin-top: 5%;
+    border-radius: 15px;
+    background-color: inherit;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+}
+.add_category input:focus {
+    outline: none;
+}
+.add_category button {
+    width: 10%;
+    background-color: var(--hover3);
+    color: white;
+    padding: 2%;
+    border-radius: 15px;
+    margin-left: 2%;
+    cursor: pointer;
+    border: 0px;
+    box-shadow: 0px 0px 0px 0px #000000;
+}
+.add_category button:hover {
+    background-color: var(--hover2);
+    color: #000000;
+}
+.category-suggest{
+    background-color: inherit;
+    width: 100%;
+    border-radius: 10px;
+    align-items: center;
+    margin-top: 2px;
+}
+.category-suggest ul li{
+    list-style: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: black;
+    /* font-family: monospace; */
+    background-color: var(--hover1);
+    margin-top: 1%;
+    font-size: 1rem;
+}
+.category-suggest ul li:hover{
+    /* background-color: rgb(229, 233, 231); */
+    transform: scale(1.05);
+}
+

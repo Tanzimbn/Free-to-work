@@ -1,0 +1,139 @@
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
+
+
+.profile-container{
+    padding: 20px 15%;
+    color:#626262;
+
+}
+.cover-img{
+    width:100%;
+    border-radius: 6px;
+    margin-bottom: 14px;
+     
+}
+.profile-details{
+    background: var(--primary-color);
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+#verified_img{
+    width:24px;
+    height: 24px;
+    margin-left: 10px;
+    padding-top: 10px;
+}
+
+
+.profile-container{
+    position:fixed;
+    top: 30%;
+    left: 26%;
+}
+
+.pd-right button{
+    background: #1876f2;
+    border: 0;
+    outline:0;
+    height: 70px;
+    width: 180px;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    color: white;
+    border-radius: 3px;
+    margin-left: 10px;
+    cursor: pointer;
+    margin-top: 30px;
+    font-size: large;
+
+}
+.pd-right button img{
+    height: 15px;
+    margin-right: 10px;
+}
+/* .pd-right button:first-child{
+    background-color:va
+    color: var(--secondary-color);
+} */
+.profile-info{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;
+
+}
+.info-col{
+    flex-basis: 33%;
+
+}
+.post-col{
+    flex-basis: 65%;
+
+}
+.profile-intro{
+    background-color: var(--primary-color);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+.profile-intro h3{
+    font-weight: 600;
+    padding-top: 10px;
+
+}
+.profile-intro p{
+    text-align: center;
+    margin: 10px;
+    font-size: 15px;
+
+}
+.profile-intro hr{
+    border: 0;
+    height: 1px;
+    background: var(--secondary-color);
+    margin: 24 0;
+}
+.profile-intro img{
+    width: 18px;
+    height: 18px;
+    margin-right: 6px ;
+}
+.img1{
+    width:16px;
+}
+.profile-intro ul li{
+    list-style: none;
+    font-size: 15px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+
+}
+.main_content h3{
+    padding-top: 15px;
+    padding-left: 13px;
+    color: #1b2028;
+}
+
+/* --------Report------section------ */
+
+.reportsec{
+    background-color: rgb(104, 30, 71);
+    opacity: 0.4;
+    height: 1000px;
+    width: 100%;
+}

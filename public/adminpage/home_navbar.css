@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
+
+body {
+    background-color: rgb(16, 37, 60);
+}
+
+.nav_admin {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    padding: 15px 3%;
+    box-shadow: 0px 1px 10px #999;
+
+}
+.nav_admin p {
+    color: white;
+}
+.nav_admin .logo{
+  margin-left: 830px;
+}
+
+.logo {
+    width: 160px;
+    margin-right: 45px;
+}
+
+.logo{
+   font-size:x-large;
+   font-weight: 1000;
+}
+
+.logout{
+    background-color: var(--hover3);
+    border-radius: 10px;
+    padding: 10px 20px;
+    border: 0px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: white;
+}
+.logout:hover {
+    background-color: var(--hover2);
+    color: black;
+}

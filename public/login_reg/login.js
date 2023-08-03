@@ -52,7 +52,10 @@ form.addEventListener('submit', async (e) => {
     }
     const response = await fetch("/login", options);
     const data = await response.json();
-    if(data.message == "Email or Password is incorrect") {
+    if(data.message == "admin") {
+        window.location.assign("./admin");
+    }
+    else if(data.message == "Email or Password is incorrect") {
         opennoti();
     }
     else {

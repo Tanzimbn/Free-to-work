@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free to work. (Admin)</title>
+    
+    {{!-- <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/adminpage/home_navbar.css">
+    <link rel="stylesheet" href="/adminpage/profile.css">
+    <!-- <link rel="stylesheet" href="content.css"> -->
+    <link rel="stylesheet" href="/adminpage/review.css">
+    <link rel="stylesheet" href="/adminpage/styles.css">
+
+
+    {{!--
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> --}}
+</head>
+
+<body>
+    <div class="profile-page">
+        <!-- --------nav bar------ -->
+
+        <nav class="nav_admin">
+
+            <p class="logo">Free to work.</p>
+            <button class="logout" onclick="logout()">Logout</button>
+        </nav>
+
+        <div class="dashboard">
+            <div class="d_contents">
+                <p>Total Posts</p>
+                <p class="pno">{{totalpost}}</p>
+            </div>
+            <div class="d_contents">
+                <p>Total posts in last 24 hours</p>
+                <p class="pno">{{lastpost}}</p>
+
+            </div>
+            <div class="d_contents">
+                <p>Total No of Users</p>
+                <p class="pno">{{totaluser}}</p>
+
+            </div>
+            <div class="d_contents">
+                <p>Average Bid</p>
+                <p class="pno">{{avgbid}} BDT</p>
+
+            </div>
+            <div class="d_contents"  onclick="ReviewToggle()">
+                <p>Feedbacks</p>
+                <p id = "click_view">click to view</p>
+            </div>
+            <div class="d_contents" onclick="ReportToggle()">
+                <p>User Reports</p>
+                <p id = "click_view">click to view</p>
+            </div>
+            <div class="d_contents" onclick="categoryToggle()">
+                <p>Add category</p>
+                <p id = "click_view">click to view</p>
+            </div>
+        </div>
+        <!-- ----profile page--- -->
+
+    </div>
+
+    </div>
+    <div class="rev_container">
+        <h1>User Feedbacks</h1>
+        <div class="reviews">
+            {{#each feedback}}
+            <div class="review">
+                <div class="user-info">
+                    <span class="user-email">{{email}}</span>
+                </div>
+                <div class="user-comment">
+                    <p>{{message}}</p>
+                </div>
+            </div>
+            {{/each}}
+            <!-- Add more review divs here as needed -->
+        </div>
+        <div class="close-button" onclick="ReviewToggle()">&#10005;</div>
+    </div>
+    <div class="rep_container">
+        <h1>User Reports</h1>
+        <span class="close" onclick="ReportToggle()">&times;</span>
+        <div class="adminreport">
+            <div class="report-container">
+                {{#each report}}
+                <div class="report-item">
+                    <div class="report-details">
+                        <span class="reported-user"><b>Reported User :</b> {{to}}</span>
+                        <span class="reporter-user"><b>Reported By :</b> {{reporter_id}}</span>
+                        <span class="short-reason"><b>Short Reason :</b> {{reason}}</span>
+                    </div>
+                    <div class="elaborate-reason">
+                        <h3>Elaborate Reason:</h3>
+                        <p>{{comments}}</p>
+                    </div>
+                    <div class="accpt_rej">
+                        <button type="button" data-id = {{to}} data-report = {{_id}} onclick="Accept(this)">Accept</button>
+                        <button typr="button" data-report = {{_id}} onclick="Reject(this)">Reject</button>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+
+    </div>
+    <div class="add_category">
+        <h1>Add Category</h1>
+        <span class="close" onclick="categoryToggle()">&times;</span>
+        <div class="box">
+            <i class='bx bx-search-alt-2' style="color:black; margin-left: 2px;"></i>
+            <input type="text" placeholder="Search Category" id="filter-category"
+                onkeyup="category_filter()" onclick="left_show_all_category()" autocomplete="off">
+            <button onclick="add_category()">Add</button>
+        </div>
+        <div class="category-suggest">
+        </div>
+    </div>
+    </div>
+</body>
+<script src="/adminpage/admin.js"></script>
+
+</html>

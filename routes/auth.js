@@ -1,7 +1,7 @@
 const express = require("express");
 const userModel = require("../models/users");
 const { verify_login } = require("../controllers/login.controller");
-const { reg_submit, form1_submit, form2_submit } = require("../controllers/registration.controller");
+const { reg_submit, form1_submit, form2_submit, email_confirmed } = require("../controllers/registration.controller");
 const { showallpost } = require("../controllers/allpost.controller");
 const { post, post_detail } = require("../controllers/post.controller");
 const { find_user } = require("../controllers/user_info");
@@ -17,6 +17,7 @@ const imageModel = require("../models/image");
 const coverModel = require("../models/cover");
 const reportModel = require("../models/reports");
 const { feedback } = require("../controllers/feedback.controller");
+const { admin_data, block_user, report_process, category, allcategory } = require("../controllers/admin.controller");
 
 
 router.get('/', (req, res) => {
@@ -31,6 +32,7 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
     res.render("./login_reg/register.hbs");
 })
+router.get('/admin', admin_data)
 router.get('/newsfeed', showallpost)
 router.get('/logout', (req, res) => {
     delete req.session.user_id
@@ -39,9 +41,10 @@ router.get('/logout', (req, res) => {
 router.get('/profile/:id', show_profile)
 router.get('/profile', own_profile)
 router.get('/list', show_list)
+router.get('/verify/:id', email_confirmed)
 
 
-
+// router.post('/admin_data', admin_data)
 router.post('/feedback', feedback)
 router.post('/login', verify_login)
 router.post('/register', reg_submit)
@@ -91,11 +94,14 @@ router.post('/report', async (req, res) => {
         res.status(400).send(error);
     }
 })
+router.post('/report_process', report_process)
 router.post('/delete_post', delete_post)
 router.post('/update_mood', async (req, res) => {
     const allpost = await userModel.updateOne({_id : req.session.user_id}, { $set: {mood : req.body.check}});
     res.json(allpost)
 })
-
+router.post('/block_user', block_user)
+router.post('/category', category)
+router.post('/allcategory', allcategory)
 
 module.exports = router;

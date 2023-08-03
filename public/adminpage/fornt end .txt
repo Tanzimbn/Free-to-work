@@ -1,0 +1,6 @@
+// total user
+// total post
+// post in last 24 hr
+// avg bid
+// reviews
+// reports - report_reject() - report_accept()

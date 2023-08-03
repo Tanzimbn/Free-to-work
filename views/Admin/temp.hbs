@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Totol User : {{totaluser}}</p>
+    <p>Totol Post : {{totalpost}}</p>
+    <p>Totol Post in last 24hr : {{lastpost}}</p>
+    <p>avg. bid : {{avgbid}}</p>
+
+    <h3>Reports</h3>
+    {{#each report}}
+    <p>{{reporter_id}}</p>
+    <p>{{to}}</p>
+    <p>{{reason}}</p>
+    <p>{{comments}}</p>
+    <br>
+    {{/each}}
+
+    <h3>feedbacks</h3>
+    {{#each feedback}}
+    <p>{{email}}</p>
+    <p>{{message}}</p>
+    <br>
+    {{/each}}
+</body>
+</html>

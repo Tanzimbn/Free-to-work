@@ -1,0 +1,82 @@
+:root{
+  --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+  --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --white :#fff;
+  --hover1 : #ff7d7d;
+  --hover2 : #FFDAB9;
+  --hover3 : #d11f0c;
+}
+
+.report-container {
+  margin-top: 20px;
+}
+
+.report-item {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #ff7d7d;
+}
+
+.report-details span {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+  /* font-family: ; */
+}
+
+.elaborate-reason {
+  margin-top: 10px;
+}
+
+.elaborate-reason h3 {
+  margin-top: 0;
+}
+/* ------------------------dashboard---------------------- */
+.dashboard{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.d_contents{
+  height:200px;
+  margin: 30px 30px 10px 10px;
+  background-color: var(--bc1);
+  border-radius: 15px;
+  transition: transform .2s;
+  cursor: pointer;
+  box-shadow: 0px 0px 8px 0px #f2f2f282;
+}
+.d_contents:hover {
+  transform: scale(1.1);
+  background-color: rgba(6, 119, 180, 0.495);
+}
+.d_contents p{
+  margin: 20px 20px 20px 20px;
+  font-size: x-large;
+  color: var(--hover2);
+  text-align: center;
+
+}
+#click_view {
+  font-size: medium;
+  color: gray;
+}
+.pno{
+  text-align: center;
+}
+.accpt_rej{
+  display: flex;
+  align-items: center;
+  margin-left:150px;
+
+}
+.accpt_rej button{
+  margin-left: 30px;
+}
+::-webkit-scrollbar {
+  width: 0.0rem;
+}
