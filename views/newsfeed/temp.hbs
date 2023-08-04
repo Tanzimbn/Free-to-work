@@ -181,7 +181,7 @@
                     <div class="box">
                         <i class='bx bx-search-alt-2' style="color:black; margin-left: 2px;"></i>
                         <input type="text" placeholder="Search Category" id="filter-category"
-                            onkeyup="category_filter()" onclick="left_show_all_category()">
+                            onkeyup="category_filter()" onclick="left_show_all_category()" autocomplete="off">
                     </div>
                     <div class="category-suggest">
                     </div>
@@ -494,7 +494,7 @@
 
                 <label for="jobDeadline">Deadline:</label>
                 <input type="datetime-local" name="jobDeadline" id="jobDeadline"
-                    ng-model="UIcontroller.JobDataModel.datetime">
+                    ng-model="UIcontroller.JobDataModel.datetime" required>
 
                 <label for="jobTags">Tags or Category:</label>
                 <input type="text" id="jobTags" list="category_list" autocomplete="off" required>
@@ -525,7 +525,7 @@
                     <option disabled selected>Select district first</option>
                 </select>
 
-                <button type="button" onclick="make_post()">Post Job</button>
+                <button type="submit">Post Job</button>
             </form>
         </div>
     </div>

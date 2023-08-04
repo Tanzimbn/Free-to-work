@@ -18,7 +18,26 @@ function menuToggle(){
 }
 
 // category filter 
-let category = ['Ac repair', 'Appliance repair', 'Electrician', "Driver", "Pickup & Trucks", "Cleaning & Pest Control", "Painting", "Carpentry"];
+let category = [];
+
+async function load_category() {
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/allcategory", options);
+    const data = await response.json();
+    
+    for(let i = 0; i < data.length; i++) {
+        category.push(data[i].value)
+    }
+}
+load_category()
+
 const resultbox = document.querySelector(".category-suggest");    
 const inputbox = document.getElementById("filter-category");
 function category_filter() {
@@ -32,11 +51,10 @@ function category_filter() {
     left_display_category_result(result);
 }
 function left_show_all_category() {
-    console.log("as")
     left_display_category_result(category);
 }
 function left_display_category_result(result){
-    console.log("asas")
+    
     const content = result.map((list)=>{
         return "<li onclick = select_category(this)>" + list + "</li>";
     });

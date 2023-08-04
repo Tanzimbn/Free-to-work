@@ -17,43 +17,59 @@ function close_post_popup() {
     document.querySelector(".post_popup").classList.add("post_invisible")
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("jobPostForm");
-    form.addEventListener("submit", handleSubmit);
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     const form = document.getElementById("jobPostForm");
+//     form.addEventListener("submit", handleSubmit);
+// });
 
-function handleSubmit(event) {
-    event.preventDefault();
+// function handleSubmit(event) {
+//     event.preventDefault();
 
-    const jobTitle = document.getElementById("jobTitle").value;
-    const jobDescription = document.getElementById("jobDescription").value;
-    const jobBudget = document.getElementById("jobBudget").value;
-    const jobDeadline = document.getElementById("jobDeadline").value;
-    const jobTags = document.getElementById("jobTags").value;
-    const jobLocation = document.getElementById("jobLocation").value;
+//     const jobTitle = document.getElementById("jobTitle").value;
+//     const jobDescription = document.getElementById("jobDescription").value;
+//     const jobBudget = document.getElementById("jobBudget").value;
+//     const jobDeadline = document.getElementById("jobDeadline").value;
+//     const jobTags = document.getElementById("jobTags").value;
+//     const jobLocation = document.getElementById("jobLocation").value;
 
 
-    const postData = {
-        title: jobTitle,
-        description: jobDescription,
-        budget: jobBudget,
-        deadline: jobDeadline,
-        tags: jobTags,
-        location: jobLocation
-    };
+//     const postData = {
+//         title: jobTitle,
+//         description: jobDescription,
+//         budget: jobBudget,
+//         deadline: jobDeadline,
+//         tags: jobTags,
+//         location: jobLocation
+//     };
 
-    alert(JSON.stringify(postData));
-}
+//     alert(JSON.stringify(postData));
+// }
 
 const post_category = document.querySelector("#category_list");    
 function show_all_category() {
     display_category_result(category);
 }
-function display_category_result(result){
-    const content = result.map((list)=>{
-        return `<option>${list}</option>`;
-    });
-    post_category.innerHTML = content.join('');
+async function display_category_result(cat){
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/allcategory", options);
+    const data = await response.json();
+    
+    let html = ""
+    for(let i = 0; i < data.length; i++) {
+        html += `<option>${data[i].value}</option>`
+    }
+    
+    // const content = result.map((list)=>{
+    //     return `<option>${list}</option>`;
+    // });
+    post_category.innerHTML = html;
 }
 show_all_category();
 

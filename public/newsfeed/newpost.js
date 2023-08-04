@@ -1,4 +1,8 @@
-async function make_post() {
+const form = document.getElementById("jobPostForm");
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
     const jobTitle = document.getElementById("jobTitle").value;
     const jobDescription = document.getElementById("jobDescription").value;
     const jobBudget = document.getElementById("jobBudget").value;
@@ -23,9 +27,10 @@ async function make_post() {
             "Content-Type": "application/json;charset=UTF-8"
         },
     }
-    console.log(jobDescription)
+    
     const response = await fetch("/post", options);
     const data = await response.json();
     apply_filter();
     close_post_popup();
-}
+
+})

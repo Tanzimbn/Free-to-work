@@ -27,10 +27,11 @@ exports.post = async (req, res) => {
         const user = await userModel.find()
         const new_noti = []
         for(let i = 0; i < user.length; i++) {
+            let noti = 'You have a new post to see " ' + req.body.title + ' "'
             if(user[i].category == req.body.category && user[i]._id != req.session.user_id && user[i].mood == true) {
                 const temp = new notiModel({
                     user: user[i]._id,
-                    type: "new post",
+                    type: noti,
                     postid: post_res._id
                 })
                 new_noti.push(temp)
