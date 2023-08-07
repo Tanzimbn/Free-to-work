@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>FreeToWork</title>
+    <link rel="icon" href="/images/Screenshot 2023-07-22 194839.png" type="image/icon type">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,7 +33,7 @@
         <div class="login-link">
             <div class="logo" onclick="goto_home()">
                 <!-- <i class='bx bx-pencil' ></i> -->
-                <span class="text">Free to<br>work.</span>
+                <span class="text">FreeToWork.</span>
             </div>
             <p class="side-big-heading">Welcome!</p>
             <p class="primary-bg-text">Are you free to work? Join the community and find a job now.</p>
@@ -50,13 +51,32 @@
                 <div class="text-fields login_password">
                     <label for="password"><i class='bx bx-lock-alt'></i></label>
                     <input type="password" name="password" id="password" placeholder="Enter password">
+                    <i id = "password_hide" class="fa-solid fa-eye-slash" style="color: #FFDAB9; cursor:pointer" onclick="show_password()"></i>
                 </div>
             </div>
             <input type="submit" value="Login" class="nextPage">
+            <div class="forget_password" onclick="forgetPasswordToggle()">
+                <p>Forgot password ?</p>
+            </div>
             {{!-- <div class="social-media-platform">
                 <a href="#"><box-icon type='logo' name='google'></box-icon></a>
             </div> --}}
         </form>
+    </div>
+    <div class="forget_password_popup">
+        <h1 id = "heading">FreeToWork</h1>
+        <h3>Reset your password</h3>
+        <span class="close" onclick="forgetPasswordToggle()">&times;</span>
+        <div class="detail">
+            <p>Enter your FreeToWork email address so we can reset your password.</p>
+        </div>
+        <div class="box">
+            <form class = "change_password_form">
+                <input type="email" placeholder="Enter Email" id="change_password" autocomplete="off" required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
 </body>
 {{!--
 <script src="./login_reg/verification.js"></script> --}}

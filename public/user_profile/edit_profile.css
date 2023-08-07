@@ -1,26 +1,26 @@
 .profile-section {
     /* max-width:1000px; */
     margin: 20px auto;
-    background-color: #e6e6e6;
+    background-color: #fdfbfb;
     padding: 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 0.5px solid black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px 0px #212121;
     position: fixed;
-    top:5%;
+    top:10%;
     left: 34%;
     z-index: 10000;
     width: 600px;
-    height: 80%;
+    height: 68%;
     visibility: hidden;
     /* opacity: 0; */
-    transition: 0.4s;
+/*     transition: 0.4s; */
     overflow-x: auto;
     overflow-y: auto;
   }
   .profile-section h2 {
     text-align: center;
-    color: #124230;
+    color: #000000;
   }
   .profile-section.close-button {
     position: absolute;
@@ -79,10 +79,10 @@
 
   .btn-save {
     padding: 10px 20px;
-    background-color: #18583f;
+    background-color: rgb(223, 4, 4);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
     margin-left: 38%;
   }
@@ -112,9 +112,9 @@
 .pp__submit, .cp__submit{
   display: none;
 }
-.edit_pp{
+/* .edit_pp{
   
-}
+} */
 #myFile, #mycoverFile {
   display: none;
 }

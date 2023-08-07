@@ -6,18 +6,14 @@ const notiModel = require("../models/notification");
 time_ago.addDefaultLocale(loc)
 const tm = new time_ago();
 
-exports.showallpost = async (req, res) => {
+exports.loadUserData = async (req, res) => {
     const allpost = await postModel.find({});
     allpost.sort((a, b) => {
         return b.time.getTime() - a.time.getTime()
     })
     const user = await userModel.find({_id : req.session.user_id});
 
-    for (let i = 0; i < allpost.length; i++) {
-        allpost[i].detail1 = allpost[i].detail.substring(0, 100)
-        allpost[i].detail2 = allpost[i].detail.substring(100)
-        allpost[i].time_ago = tm.format(allpost[i].time)
-    }
+    
 
     const noti = await notiModel.find({"user" : req.session.user_id})
     noti.reverse()
@@ -26,7 +22,20 @@ exports.showallpost = async (req, res) => {
         unseen = unseen || noti[i].unseen
     }
 
-    res.render("./newsfeed/temp.hbs", { allpost, user, noti, unseen });
+    res.render("./newsfeed/temp.hbs", { user, noti, unseen });
+}
+
+exports.showallpost = async (req, res) => {
+    const allpost = await postModel.find({});
+    allpost.sort((a, b) => {
+        return b.time.getTime() - a.time.getTime()
+    })
+
+    const time_ago = [], detail1 = [], detail2 = []
+    for (let i = 0; i < allpost.length; i++) {
+        time_ago.push(tm.format(allpost[i].time))
+    }
+    res.send({time_ago, allpost});
 }
 
 exports.tm = tm

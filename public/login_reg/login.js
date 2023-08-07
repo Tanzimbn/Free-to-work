@@ -17,9 +17,16 @@ closeIcon.addEventListener("click", () => {
     clearTimeout(timer1);
     clearTimeout(timer2);
 });
-function opennoti() {
+function opennoti(mess, state) {
     
-
+    document.querySelector(".text-2").innerHTML = mess
+    if(state == "1") {
+        document.querySelector(".toast-content i").classList.remove("fa-exclamation")
+        document.querySelector(".toast-content i").classList.add("fa-check")
+        document.querySelector(".text-1").innerHTML = "Success"
+    }
+    
+    
     toast.classList.add("active");
     progress.classList.add("active");
   
@@ -29,8 +36,11 @@ function opennoti() {
   
     timer2 = setTimeout(() => {
       progress.classList.remove("active");
+      document.querySelector(".text-1").innerHTML = "Error"
+      document.querySelector(".fa-solid").classList.add("fa-exclamation")
+      document.querySelector(".toast-content i").classList.remove("fa-check")
     }, 2300);
-
+    
 
 }
 
@@ -56,7 +66,7 @@ form.addEventListener('submit', async (e) => {
         window.location.assign("./admin");
     }
     else if(data.message == "Email or Password is incorrect") {
-        opennoti();
+        opennoti(data.message, 0);
     }
     else {
         localStorage.setItem('user_id', data.id)
@@ -67,3 +77,43 @@ form.addEventListener('submit', async (e) => {
 })
 
 
+function forgetPasswordToggle() {
+    document.querySelector('.container').classList.toggle('review-active');
+
+    document.querySelector('.forget_password_popup').classList.toggle('review-active');
+}
+
+document.querySelector('.change_password_form').addEventListener('submit', async function(e) {
+    e.preventDefault()
+    let email =  document.getElementById('change_password').value;
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+            email : email
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/change_password", options);
+    let message = await response.json()
+    opennoti(message.message, message.state)
+    if(message.state == "1")
+    forgetPasswordToggle()
+})
+
+function show_password() {
+    
+    if(document.getElementById("password").type == "text") {
+        document.getElementById("password").type = "password"
+        document.getElementById("password_hide").classList.remove("fa-eye")
+        document.getElementById("password_hide").classList.add("fa-eye-slash")
+    }
+    else {
+        document.getElementById("password").type = "text"
+        document.getElementById("password_hide").classList.add("fa-eye")
+        document.getElementById("password_hide").classList.remove("fa-eye-slash")
+    }
+
+    
+}

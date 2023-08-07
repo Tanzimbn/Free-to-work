@@ -26,12 +26,12 @@
 <body>
     <nav class="">
         <div class="nav_left">
-            <p class="logo" style="color:#1a1d86" onclick="goto_landing()">Free to<br>work.</p>
+            <p class="logo" onclick="goto_landing()">FreeToWork.</p>
             <ul>
                 <li><i class='bx bxs-home' onclick="gotoNewsfeed()"></i></li>
                 <li><i class='bx bx-list-ul' onclick="gotoList()"></i></li>
                 {{#if unseen}}
-                <li><i class="fa-solid fa-bell taken" onclick="notiToggle()"></i></li>
+                <li><i class="fa-solid fa-bell" style="color: rgb(231, 120, 120);" onclick="notiToggle()"></i></li>
                 {{else}}
                 <li><i class="fa-solid fa-bell" onclick="notiToggle()"></i></li>
                 {{/if}}
@@ -94,9 +94,10 @@
         <div class="swiper">
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                <div class="swiper-slide"><img src="../images/@FreeToWork.png" alt=""></div>
-                <div class="swiper-slide"><img src="../pictures/1.png" alt=""></div>
-                <div class="swiper-slide"><img src="../pictures/2.png" alt=""></div>
+                <div class="swiper-slide"><img src="../images/4.png" alt=""></div>
+                <div class="swiper-slide"><img src="../images/2.png" alt=""></div>
+                <div class="swiper-slide"><img src="../images/3.png" alt=""></div>
+                <div class="swiper-slide"><img src="../images/1.png" alt=""></div>
             </div>
             <!-- If we need pagination -->
             <div class="swiper-pagination"></div>
@@ -208,8 +209,8 @@
                 </div>
             </div>
             <div class="post">
-                {{#each allpost}}
-                {{!-- {{_id}} --}}
+                {{!-- {{#each allpost}}
+                
                 <div class="post-content">
                     <div class="heading" onclick="show_details(this)" data-id="{{id}}">
                         <p>{{title}}</p>
@@ -235,7 +236,10 @@
                         <p>{{division}}</p>
                     </div>
                 </div>
-                {{/each}}
+                {{/each}} --}}
+            </div>
+            <div class="load_more" onclick="load_more_post()">
+                <span><b>Load more</b></span>
             </div>
         </div>
 
@@ -533,6 +537,7 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script src="home.js"></script>
+<script src="allpost.js"></script>
 <script src="bidding.js"></script>
 <script src="filter.js"></script>
 <script src="../location.js"></script>

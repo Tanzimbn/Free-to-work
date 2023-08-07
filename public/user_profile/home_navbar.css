@@ -7,6 +7,17 @@
 body {
     background-color: #efefef;
 }
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 
 nav {
     position: sticky;
@@ -15,22 +26,34 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ffffff;
-    padding: 15px 3%;
-    box-shadow: 0px 1px 10px #999;
-    transition: background-color 0.4s;
+    /* background-color: #07075b; */
+    background: var(--bc1);
+    padding: 15px 15%;
+    /* box-shadow: 0px 1px 10px #999; */
+    transition: background 0.9s;
 }
 .nav_positive {
-    background-color: rgb(185 255 232);
+    background: rgb(185 255 232);
 }
 .nav_negative {
-    background-color: rgb(255 203 203);
+    background: rgb(255 203 203);
 }
 
 .logo {
     width: 160px;
     margin-right: 45px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    /* background: white; */
+    /* text-decoration: underline; */
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
+.logo:hover {
+    color:#a19090 ;
+    transition: all 0.3s ease;
+  }
 
 .nav_left,
 .nav_right {
@@ -41,11 +64,15 @@ nav {
 .nav_left ul li {
     list-style: none;
     display: inline-block;
-    width: 28px;
+    width: 20px;
     margin: 0 15px;
     list-style-position: inside;
     cursor: pointer;
+    /* background: white; */
 }
+/* .nav_left ul li i{
+    color: white;
+} */
 
 .nav_left ul li i:hover {
     font-size: xx-large;
@@ -55,17 +82,21 @@ nav {
 
 .nav_left i {
     font-size: x-large;
-    color: #1a1d86;
     transition: font-size 0.4s, border-bottom 0.4s;
+    color: white
 }
-
+.taken {
+    color: red;
+}
 .user_icon img {
-    height: 100%;
-    width: 100%;
+    height: 120%;
+    width: 120%;
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
-    border: 4px solid rgb(74, 245, 171);
+    /* border: 4px solid rgb(255, 255, 255); */
+    box-shadow: 0 2px 4px grey;
+    transition: 0.3s ease;
 }
 
 .user_icon {
@@ -74,21 +105,27 @@ nav {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    background: #ffffff;
-    padding: 0px;
+    /* background: #ffffff; */
+    padding: 5px;
+    transition: 0.3s ease;
+}
+
+.user_icon:hover {
+   transform: scale(1.2);
 }
 
 .serach_box {
-    background-color: #efefef;
-    width: 350px;
-    border-radius: 20px;
+    background-color: white;
+    width: 300px;
+    height: 37px;
+    border-radius: 35px;
     display: flex;
     align-items: center;
     padding: 0 15px;
 }
 
 .serach_box img {
-    width: 20px;
+    width: 22px;
 }
 
 .serach_box input {
@@ -97,72 +134,81 @@ nav {
     padding: 10px;
     outline: none;
     border: 0;
+    font-size: 0.90rem;
+    /* text-align: center; */
 }
 
 /* advertise */
 .advertise {
     display: flex;
-    margin: 5px 2%;
-    height: 50vh;
-    background-color: #000000;
+    margin: 30px 10%; /* contracts */
+    height: 35vh;
+    /* background-color: #000000; */
     /* background-image: url(-4-ans_frontend_assets.webp); */
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 35px;
 }
 .swiper {
     width: 100%;
     height: 100%;
+    margin-top: 5px;
+    border-radius: 35px;
 }
 .swiper-slide img {
     width: 100%;
     height: 100%;
     /* object-fit: cover; */
-    border-radius: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px grey inset;
 }
 .swiper .swiper-button-prev, .swiper .swiper-button-next {
-    color: rgb(74, 245, 171);
+    color: white;
 }
 .swiper .swiper-pagination-bullet-active {
-    background-color: rgb(74, 245, 171);
+    background-color: white;
 }
 
 .create_post {
-    background-color: rgb(74, 245, 171);
+    background-color: var(--hover3);
     margin: 0px 0px 0px 10px;
-    border-radius: 10px;
+    border-radius: 35px;
     width: 100px;
     padding: 7px;
     text-align: center;
     color: #ffffff;
     cursor: pointer;
+    box-shadow: 0 2px 4px grey;
+    transition: 0.3s ease;
 }
 .create_post:hover {
-    background-color: rgb(17, 249, 149);
+    background-color: var(--hover2);
+    /* transform: scale(1.05); */
 }
 
 /* ------profile popup----- */
 .menu{
     position: absolute;
     top: 72px;
-    right: 22px;
+    right: 14%;
     padding: 10px 20px;
     background:#fff;
     width: 200px;
     box-sizing: 0 5px 25px rgba(0,0,0,0.1);
     border-radius: 15px;
     transition: 0.5s;
-    border:2px solid black;
+    /* border:2px solid black; */
     font-family: Poppins;
     visibility: hidden;
     opacity:0;
+    box-shadow: -1px 0px 15px 4px rgb(105 105 105 / 54%);
 
 }
 .menu h3{
     width: 100%;
     text-align: center;
     font-size: 18px;
-    padding: 20px 0;
+    padding: 15px 0px 10px 0px;
     font-weight: 500;
     font-size: 18px;
     color: #555;
@@ -173,14 +219,14 @@ nav {
  .menu::before{
     content:'';
     position:absolute;
-    top: -13px;
+    top: -8px;
     right: 28px;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     background: #fff;
     transform: rotate(45deg);
-    border-top: 2px solid black;
-    border-left: 2px solid black;
+    /* border-top: 2px solid black;
+    border-left: 2px solid black; */
 }
 .menu ul{
     list-style: none;
@@ -212,7 +258,8 @@ nav {
     transition: 0.5s;
 }
  .menu ul li:hover a{
-     color:#ff5d94;
+     /* color:#ff5d94; */
+     color:var(--hover3);
 
 }
  .menu h3 #nav_user_category{
@@ -229,14 +276,20 @@ nav {
 .menu li {
     margin-bottom: 3%;
 }
+.menu_user_icon {
+    display: flex;
+    justify-content: center;
+}
 .menu_user_icon img {
     height: 5rem;
     width: 5rem;
     object-fit: cover;
     border-radius: 50%;
     cursor: pointer;
-    border: 4px solid rgb(74, 245, 171);
+    /* border: 4px solid rgb(74, 245, 171); */
     display: block;
-    position: relative;
-    left: 25%;
+    box-shadow: 0 2px 4px grey;
+}
+::-webkit-search-cancel-button {
+    cursor: pointer;
 }

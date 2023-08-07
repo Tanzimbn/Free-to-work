@@ -29,7 +29,7 @@
     <div class="profile-page">
         <nav class ="">
             <div class="nav_left">
-                <p class="logo" style="color:#1a1d86" onclick="goto_landing()">Free to<br>work.</p>
+                <p class="logo" onclick="goto_landing()">FreeToWork.</p>
                 <ul>
                     <li><i class='bx bxs-home' onclick="gotoNewsfeed()"></i></li>
                     <li><i class='bx bx-list-ul' onclick="gotoList()"></i></li>
@@ -139,13 +139,17 @@
                     </div>
                 </div>
                 <div class="pd-right">
+                    
+                    {{#if MainUser}}
+                    <button type="button" id="reviewbtn" onclick="ReviewToggle()"><img
+                            src="/user_profile/pictures/review.png">Reviews</button>
+                    <button type="button" id="reportbtn" onclick="editToggle()"><img
+                            src="/user_profile/pictures/edit.png">Edit profile</button>
+                    {{else}}
                     <button type="button" id="reviewbtn" onclick="ReviewToggle()"><img
                             src="/user_profile/pictures/review.png">Reviews</button>
                     <button type="button" id="reportbtn" onclick="ReportToggle()"><img
                             src="/user_profile/pictures/report.png">Report User</button>
-                    {{#if MainUser}}
-                    <button type="button" id="reportbtn" onclick="editToggle()"><img
-                            src="/user_profile/pictures/edit.png">Edit profile</button>
                     {{/if}}
 
                 </div>
@@ -327,59 +331,7 @@
                                 minima? Saepe temporibus deleniti, facilis enim necessitatibus atque nisi.
                             </p>
                         </div>
-                        <div class="comment">
-                            <p id="comment">Comments:</p>
-                            <div class="comment_container opened" id="first-comment">
-                                <div class="comment_card">
-                                    <h3 class="comment_title">First</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.</p>
-                                    <div class="comment_footer">
-                                        <div class="reply" onclick="show(this)">reply</div>
-                                        <div class="show_reply">2 Replies</div>
-                                    </div>
-                                </div>
-                                <div class="comment_container" dataset="first-comment" id="first-reply">
-                                    <div class="comment_card">
-                                        <h3 class="comment_title">First reply</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
-                                        </p>
-                                        <div class="comment_footer">
-                                            <div class="reply" onclick="show(this)">reply</div>
-                                            <div class="show_reply">1 Replies</div>
-                                        </div>
-                                    </div>
-                                    <div class="comment_container" dataset="first-reply" id="first-first-reply">
-                                        <div class="comment_card">
-                                            <h3 class="comment_title">reply of First reply</h3>
-                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus,
-                                                harum.
-                                            </p>
-                                            <div class="comment_footer">
-                                                <div class="reply" onclick="show(this)">reply</div>
-                                                <div class="show_reply">0 Replies</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="comment_container" dataset="first-comment" id="second-reply">
-                                    <div class="comment_card">
-                                        <h3 class="comment_title">Second reply</h3>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, harum.
-                                        </p>
-                                        <div class="comment_footer">
-                                            <div class="reply" onclick="show(this)">reply</div>
-                                            <div class="show_reply">0 Replies</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="comment_box">
-                                <form action="">
-                                    <textarea name="message" placeholder="write comment" id="comment_text"></textarea>
-                                    <input type="submit">
-                                </form>
-                            </div>
-                        </div>
+                        
 
                     </div>
 
@@ -451,7 +403,7 @@
         <h2>Edit Profile</h2>
         <div class="close-button-edit" onclick="editToggle()">&#10005;</div>
         <div class="form-group">
-            <label for="old-password">old-password:</label>
+            <label for="old-password">old-password: <span style="color: #db0f0f;"> *</span></label>
             <input type="password" id="old-password" name="old-password" placeholder="Your old password" />
         </div>
         <div class="form-group">

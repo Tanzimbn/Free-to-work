@@ -1,10 +1,10 @@
 
 function edit_pp() {
-    console.log("asche")
+    
     document.querySelector('.pp__submit').click()
 }
 function edit_cp() {
-    console.log("asche")
+   
     document.querySelector('.cp__submit').click()
 }
 async function edit_profile() {
@@ -27,7 +27,7 @@ async function edit_profile() {
     let bio = document.querySelector("#bio").value
     let cat = document.querySelector("#jobTags").value
 
-    if(nps != "" && ops != data[0].password) {
+    if(ops != data[0].password) {
         document.querySelector("#edit_status").innerHTML = "<p>Password is Wrong!</p>"
         setTimeout(function(){
             document.querySelector("#edit_status").innerHTML="";
@@ -36,7 +36,7 @@ async function edit_profile() {
     }
 
     if(nps == "") nps = data[0].password
-    if(bio == "") nps = data[0].bio
+    if(bio == "") bio = data[0].bio
     if(cat == "") cat = data[0].category
 
     document.querySelector("#profile_bio").innerHTML = bio
@@ -59,16 +59,37 @@ async function edit_profile() {
     const ndata = await nresponse.json();
     document.querySelector("#edit_status").innerHTML="";
     editToggle()
+
+    document.querySelector("#new-password").value = ""
+    document.querySelector("#old-password").value = ""
+    document.querySelector("#bio").value = ""
+    document.querySelector("#jobTags").value = ""
 }
 
 const post_category = document.querySelector("#category_list");    
 function show_all_category() {
     display_category_result(category);
 }
-function display_category_result(result){
-    const content = result.map((list)=>{
-        return `<option>${list}</option>`;
-    });
-    post_category.innerHTML = content.join('');
+async function display_category_result(result){
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/allcategory", options);
+    const data = await response.json();
+    
+    let html = ""
+    for(let i = 0; i < data.length; i++) {
+        html += `<option>${data[i].value}</option>`
+    }
+    
+    // const content = result.map((list)=>{
+    //     return `<option>${list}</option>`;
+    // });
+    post_category.innerHTML = html;
 }
 show_all_category();

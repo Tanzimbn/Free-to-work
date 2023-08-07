@@ -33,6 +33,7 @@ body {
 }
 .nav_admin p {
     color: white;
+    cursor: pointer;
 }
 .nav_admin .logo{
   margin-left: 830px;

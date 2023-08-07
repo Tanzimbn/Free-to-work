@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration form</title>
+    <title>FreeToWork</title>
+    <link rel="icon" href="/images/Screenshot 2023-07-22 194839.png" type="image/icon type">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -32,7 +33,7 @@
         <div class="login-link">
             <div class="logo" onclick="goto_home()">
                 <!-- <i class='bx bx-pencil' ></i> -->
-                <span class="text">Free to<br>work.</span>
+                <span class="text">FreeToWork.</span>
             </div>
             <p class="side-big-heading">Already a member ?</p>
             <p class="primary-bg-text">To keep track on your dashboard please login with your personal info</p>
@@ -145,6 +146,7 @@
                         <div class="text-fields password">
                             <label for="password"><i class='bx bx-lock-alt'></i></label>
                             <input type="password" name="password" id="password" placeholder="password" required>
+                            <i id = "password_hide" class="fa-solid fa-eye-slash" style="color: #FFDAB9; cursor:pointer" onclick="show_password()"></i>
                         </div>
                         <div class="text-fields confirmpassword">
                             <label for="confirmpassword"><i class='bx bx-lock-alt'></i></label>
@@ -154,7 +156,7 @@
                     <div class="tc-container">
                         <label for="tc" class="tc">
                             <input type="checkbox" name="tc" id="tc" required>
-                            By submiting your details, you agree to the <a href="#"> terms and conditions. </a>
+                            By submiting your details, you agree to the <a href="https://www.termsandconditionsgenerator.com/live.php?token=zdVLylWQhNopnkTOQSCjmuucF6ocSoJk"> terms and conditions. </a>
                         </label>
                     </div>
                     <div class="pagination-btns">

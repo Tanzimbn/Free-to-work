@@ -90,22 +90,13 @@ function ReportToggle(){
 
 }
 function editToggle(){
-    var reviewpop= document.querySelector('.profile-page');
-    reviewpop.classList.toggle('review-active');
 
     var report_pop= document.querySelector('.profile-section');
     report_pop.classList.toggle('review-active');
+    console.log("asa")
+    var reviewpop= document.querySelector('.profile-page');
+    reviewpop.classList.toggle('review-active');
 
 }
 
 
-var darkicon = document.getElementById('darkicon');
-// darkicon.onclick = function(){
-//     document.body.classList.toggle("dark-theme");
-//     if(document.body.classList.contains("dark-theme")){
-//         darkicon.src = "src/switch-off.png";
-//     }
-//     else{
-//         darkicon.src ="src/switch-on.png";
-//     }
-// }

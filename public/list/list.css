@@ -1,5 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto&display=swap');
+/* *{
+    font-family: 'Roboto';
+} */
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% );
+    --bc4 :linear-gradient(120deg, #ebedee 100%, #fdfbfb 0%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc6 :linear-gradient(114.9deg, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 .checked {
-    color: #19f3cf;
+    color: #e5240f;
 }
 .unchecked {
     color: #949494;
@@ -9,9 +25,10 @@
     flex-direction: row;
     color: #949494;
     font-size: 1.2rem;
-    padding: 0% 40px;
+    padding: 0% 5px;
     margin-bottom: 2%;
     text-align:  center;
+    margin-right: 75px;
 }
 .list_profession_title, .list_location_title, .list_contact_title {
     width: 23%;
@@ -21,7 +38,8 @@
 }
 
 .list_head p {
-    font-family:'Times New Roman', Times, serif;
+    /* font-family:'Times New Roman', Times, serif; */
+    color: black;
 }
 .list_items {
     padding: 0% 1%;
@@ -29,8 +47,8 @@
 .list_data {
     display: flex;
     flex-direction: row;
-    background-color: #f1f1f1;
-    border-radius: 5px;
+    background-color: #fdfbfb;
+    border-radius: 35px;
     padding: 20px;
     margin-bottom: 1%;
     cursor: pointer;
@@ -49,7 +67,7 @@
     width: 100px;
     object-fit: cover;
     border-radius: 10%;
-    border: 4px solid #19f3cf;
+    border: 4px solid #f3e7dc;
 }
 .list_profile_info {
     margin-left: 5%;
@@ -62,11 +80,11 @@
     width: 100%;
 }
 .list_profile_info p {
-    font-family:'Times New Roman', Times, serif;
+    /* font-family:'Times New Roman', Times, serif; */
     color: #545454;
 }
 #list_profile_name {
-    font-family:serif;
+    /* font-family:serif; */
     font-size: 1.4rem;
     /* font-weight: bold; */
     color: #000000;
@@ -76,9 +94,14 @@
     margin: 0% 2%;
     width: 23%;
     display: grid;
-    justify-content: center;
+    /* justify-content: center; */
     align-content: center;
     font-size: 1.2rem;
+}
+
+.list_profession {
+    /* justify-content: center; */
+    margin-left: 85px;
 }
 
 .loading_gif {
@@ -87,4 +110,32 @@
 }
 .loading_gif img{
     width: 10%;
+}
+.left_bar{
+    background: var(--bc1);
+    /* background-color: rgb(0, 40, 60); */
+    flex-basis: 25%;
+    /* position: sticky; */
+    /* top: 100px; */
+    align-self: flex-start;
+    /* height: 700px; */
+    /* overflow: auto; */
+    border-radius: 35px;
+    min-height: 500px;
+}
+.load_more {
+    border-radius: 10px;
+    margin: 2%;
+    background: var(--hover2);
+    padding: 1%;
+    
+    text-align: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 1s, margin 1s, color .5s;
+}
+.load_more:hover {
+    background: var(--hover1);
+    margin: 1%;
+    color: #fdfbfb;
 }

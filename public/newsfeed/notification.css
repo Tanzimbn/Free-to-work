@@ -1,3 +1,15 @@
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% );
+    --bc4 :linear-gradient(120deg, #ebedee 100%, #fdfbfb 0%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc6 :linear-gradient(114.9deg, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 .noti{
     position: absolute;
     top: 72px;
@@ -21,14 +33,14 @@
     opacity: 1;
 }
 .noti h3{
-    color: gray;
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 .noti_message {
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
-    background-color: rgb(184 246 219);
+    background-color: #ffe8d4;
     cursor: pointer;
     font-size: 1rem;
     font-family: 'Courier New', Courier, monospace;
@@ -50,4 +62,7 @@
 }
 .blur_active {
     filter: blur(2px);
+}
+.taken {
+    color: #d11f0c;
 }

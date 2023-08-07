@@ -3,7 +3,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Kumbh Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   /* color: #d9d9d9; */
 }
 
@@ -438,21 +438,21 @@
 .about h1 { 
   font-size: var(--fs-1);
   color: var(--independence);
-  font-family: var(--ff-mulish);
+  font-family: 'Poppins';
   line-height: 1.2; 
 }
 
 .about h2 { 
   font-size: 3rem; 
   color: var(--independence);
-  font-family: var(--ff-mulish);
+  font-family: 'Poppins';
   line-height: 1.2;
 }
 
 .about h3 { 
   font-size: 1.5rem;
   color: var(--independence);
-  font-family: var(--ff-mulish);
+  font-family: 'Poppins';
   line-height: 1.2; 
 }
 

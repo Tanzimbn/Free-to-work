@@ -41,6 +41,10 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+.logo .text:hover {
+    color:#a19090 ;
+    transition: all 0.3s ease;
+  }
 .popup{
     width: 400px;
     background: rgba(105, 185, 255, 0.952);

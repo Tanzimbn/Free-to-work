@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #d11f0c;
+  }
 .profile-page.review-active{
     filter: blur(10px);
     pointer-events: none;
@@ -42,16 +53,21 @@ span.user-name:hover{
 
 .rev_container h1 {
     text-align: center;
+    margin-bottom: 15px;
 }
 
 .post_review {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    /* border: 1px solid #ccc;
+    border-radius: 5px; */
     padding: 10px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .post_review select {
     border-radius: 10px;
+    margin-top: -3px;
+    background: rgb(223, 4, 4);
+    color: white;
+    border: none;
 }
 .post_review textarea {
     width: 96%;
@@ -61,8 +77,10 @@ span.user-name:hover{
     padding: 10px;
     height: 5%;
     cursor: pointer;
-    background-color: aquamarine;
+    background-color: rgb(223, 4, 4);
     border-radius: 10px;
+    color: white;
+    border: none;
 }
 .box_2{
     display: flex;
@@ -123,7 +141,7 @@ span.user-name:hover{
 .rep_container {
    max-width: 400px;
    margin: 20px auto;
-   background-color: #ffffff;
+   background-color: #fdfbfb;
    padding: 20px;
    border-radius: 5px;
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -159,6 +177,7 @@ select,
 textarea {
    padding: 10px;
    margin-bottom: 20px;
+   margin-top: 10px;
    border: 1px solid #ccc;
    border-radius: 4px;
 }
@@ -170,7 +189,7 @@ textarea {
 }
 
 .rep_container button {
-   background-color: #007bff;
+   background-color: rgb(223, 4, 4);
    color: #fff;
    border: none;
    padding: 10px 20px;
@@ -179,9 +198,9 @@ textarea {
    font-weight: bold;
 }
 
-.rep_container button:hover {
+/* .rep_container button:hover {
    background-color: #0056b3;
-}
+} */
 .additionalComments{
     position: fixed;
 }

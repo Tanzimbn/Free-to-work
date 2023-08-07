@@ -1,5 +1,8 @@
 const toggleMenu = document.querySelector('.menu');
 
+function gotohome() {
+  window.location.href = "/";
+}
 function logout() {
   window.location.href = "/";
 }

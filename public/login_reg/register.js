@@ -50,3 +50,19 @@ form.addEventListener('submit', async (e) => {
     const data = await response.json();
     verified();
 })
+
+function show_password() {
+    
+    if(document.getElementById("password").type == "text") {
+        document.getElementById("password").type = "password"
+        document.getElementById("password_hide").classList.remove("fa-eye")
+        document.getElementById("password_hide").classList.add("fa-eye-slash")
+    }
+    else {
+        document.getElementById("password").type = "text"
+        document.getElementById("password_hide").classList.add("fa-eye")
+        document.getElementById("password_hide").classList.remove("fa-eye-slash")
+    }
+
+    
+}
