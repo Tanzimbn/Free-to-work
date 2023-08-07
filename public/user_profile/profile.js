@@ -1,10 +1,4 @@
 async function img() {
-    let url = localStorage.getItem('image');
-    let type = localStorage.getItem("imagetype")
-    if(url != "") {
-        document.querySelector(".nav_profile_img").src = `data:${type};base64,${url}`;
-        document.querySelector(".popup_image").src = `data:${type};base64,${url}`;
-    }
     
     let givenId = document.querySelector(".pd-img").getAttribute('data-givenId')
     let options = {
@@ -24,9 +18,13 @@ async function img() {
         }, ''));
         // let html = `<img src = "data:${responseJson[0].img.contentType};base64,${val}" alt="dp" class="pd-img">`;
         document.querySelector(".pd-img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
+        document.querySelector(".nav_profile_img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
+        document.querySelector(".popup_image").src = `data:${responseJson[0].img.contentType};base64,${val}`;
     }
     else {
         document.querySelector(".pd-img").src = "../pictures/Noimage.png";
+        document.querySelector(".nav_profile_img").src = `../pictures/Noimage.png`;
+        document.querySelector(".popup_image").src = `../pictures/Noimage.png`;
     }
     
 }
@@ -72,6 +70,7 @@ async function delete_post(ev) {
         let givenid = document.querySelector(".pd-img").getAttribute('data-givenId')
         window.location.replace(`/profile/${givenid}`);
     }
+    
 }
 
 function ReviewToggle(){

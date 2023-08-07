@@ -104,6 +104,34 @@ function load_more_post() {
     }
 }
 
+async function update_allpost() {
+    const price_min = "",
+    price_max = "",
+    division = "",
+    district = "",
+    station = "",
+    category = "",
+    searchValue = ""
+    
+    let options = {
+        method: 'POST',
+        body : JSON.stringify({
+            price_min: price_min,
+            price_max: price_max,
+            division: division,
+            district: district,
+            station: station,
+            category: category,
+            searchValue : searchValue.toLowerCase()
+        }),
+        headers: {
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+    }
+    const response = await fetch("/post_filter", options);
+    allpostData = await response.json();
+    
+}
 
 apply_filter()
 

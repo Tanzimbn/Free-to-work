@@ -26,6 +26,7 @@ exports.admin_data = async (req, res) => {
         }
     }
     avgbid = avgbid / totalbid
+    avgbid = avgbid.toFixed(3)
 
     res.render("./Admin/admin.hbs", { totaluser, totalpost, lastpost, avgbid, report, feedback });
     // console.log(review)

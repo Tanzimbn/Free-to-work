@@ -19,7 +19,10 @@ async function submit_bid (ev) {
         }
         response = await fetch("/update_bid", new_options);
         data = await response.json();
-        if(data.user_id == "-1") return;
+        if(data.user_id == "-1") {
+            alert("You can't bid in your own post!");
+            return;
+        }
         if(data.user_id == "-2") {
             alert("Bidding time ended!");
             return;
