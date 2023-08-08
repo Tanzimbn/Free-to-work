@@ -111,18 +111,18 @@
 .category-suggest{
     background-color: var(--hover2);
     width: 95%;
-    /* border-radius: 10px; */
+    border-radius: 12px;
     align-items: center;
     margin-top: 1%;
     margin-left: 5%;
 }
 .category-suggest ul li{
     list-style: none;
-    /* border-radius: 10px; */
+    border-radius: 12px;
     padding: 1px 2%;
     cursor: pointer;
     color: black;
-    font-family: monospace;
+    
     
 }
 .category-suggest ul li:hover{

@@ -1,7 +1,7 @@
 // popup user image
 function popupImage() {
     
-    let url = localStorage.getItem('image');
+    let url = localStorage.getItem("image");
     let type = localStorage.getItem("imagetype")
     
     if(url == "") return;
@@ -35,6 +35,7 @@ async function load_category() {
     for(let i = 0; i < data.length; i++) {
         category.push(data[i].value)
     }
+    category.sort()
 }
 load_category()
 
@@ -159,6 +160,7 @@ function goto_post() {
 
 function logout() {
     localStorage.removeItem('user_id')
+    localStorage.removeItem('image')
     window.location.assign("/login");
     return false;
 }

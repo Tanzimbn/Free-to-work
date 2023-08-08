@@ -69,8 +69,8 @@ form.addEventListener('submit', async (e) => {
         opennoti(data.message, 0);
     }
     else {
-        localStorage.setItem('user_id', data.id)
-        loginUser(data.id)
+        localStorage.setItem('user_id', data.userdata.id)
+        loginUser(data.userdata)
         window.location.assign("./newsfeed");
     }
     

@@ -41,6 +41,7 @@ async function edit_profile() {
 
     document.querySelector("#profile_bio").innerHTML = bio
     document.querySelector(".work_title").innerHTML = cat
+    document.querySelector("#nav_user_category").innerHTML = cat
     
     let edited = {
         method: 'POST',
@@ -65,6 +66,7 @@ async function edit_profile() {
     document.querySelector("#bio").value = ""
     document.querySelector("#jobTags").value = ""
 }
+
 
 const post_category = document.querySelector("#category_list");    
 function show_all_category() {

@@ -29,7 +29,7 @@
     /* background-color: rgb(255, 255, 255); */
     background: var(--bc3);
     width: 70%;
-    /* height: 100vh; */
+    /* height: 96%; */
     padding: 2% 2% 2% 4%;
     border-radius: 10px 0px 0px 10px;
     overflow-x:hidden;
@@ -44,7 +44,7 @@
 }
 .details_body {
     margin-top: 1%;
-    min-height: 100%;
+    min-height: 90%;
     border: 2px solid rgb(1, 62, 93);
     border-radius: 10px;
     display: flex;
@@ -53,7 +53,7 @@
 /* left part */
 .details_body_left {
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
 }
 .details_body_left_head{
     border-bottom: 2px solid rgb(1, 62, 93);

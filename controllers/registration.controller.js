@@ -23,7 +23,7 @@ exports.reg_submit = async (req, res) => {
         })
         const register = await new_user.save();
 
-        let verify_email = `http://localhost:3000/verify/${register._id}`;
+        let verify_email = `https://freetowork.onrender.com/verify/${register._id}`;
         
         let config = {
             service : 'gmail',
@@ -159,7 +159,7 @@ exports.reg_submit = async (req, res) => {
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                       <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
-                          <a href="http://localhost:3000/" target="_blank" style="display: inline-block;">
+                          <a href="https://freetowork.onrender.com/" target="_blank" style="display: inline-block;">
                             <!-- <h2>FreeToWork</h2> -->
                             <img src='https://i.postimg.cc/CRMhY4xB/Screenshot-2023-07-22-194839.png' border='0'
                               alt='Screenshot-2023-07-22-194839' />

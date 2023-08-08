@@ -18,7 +18,7 @@ exports.verify_login = async (req, res) => {
             if(ans == "") res.json({message:"Email or Password is incorrect"});
             else {
                 req.session.user_id = ans[0]._id
-                res.json({message:"correct", id : ans[0]._id});
+                res.json({message:"correct", userdata : ans[0]});
             }
         }
     } catch (error) {

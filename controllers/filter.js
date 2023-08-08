@@ -26,7 +26,7 @@ exports.post_filter = async (req, res) => {
         if(req.body.category != "" && req.body.category != post[i].category) {
             continue;
         }
-        if(req.body.searchValue != "" && post[i].title.toLowerCase().search(req.body.searchValue) == -1) {
+        if(req.body.searchValue != "" && post[i].title.toLowerCase().search(req.body.searchValue) == -1 && post[i].category.toLowerCase().search(req.body.searchValue) == -1) {
             continue;
         }
         time_ago.push(tm.format(post[i].time))

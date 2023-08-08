@@ -18,6 +18,7 @@ exports.show_profile = async (req, res) => {
     const allreview = await reviewModel.find({id : givenId });
 
     allreview.reverse()
+    allpost.reverse()
 
     for (let i = 0; i < allpost.length; i++) {
         allpost[i].detail1 = allpost[i].detail.substring(0, 10)

@@ -88,6 +88,5 @@ exports.category = async (req, res) => {
 
 exports.allcategory = async (req, res) => {
     const val = await categoryModel.find({})
-   
     res.send(val)
 }

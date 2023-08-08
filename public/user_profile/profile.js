@@ -20,6 +20,7 @@ async function img() {
         document.querySelector(".pd-img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
         document.querySelector(".nav_profile_img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
         document.querySelector(".popup_image").src = `data:${responseJson[0].img.contentType};base64,${val}`;
+        localStorage.setItem('image', val)
     }
     else {
         document.querySelector(".pd-img").src = "../pictures/Noimage.png";
