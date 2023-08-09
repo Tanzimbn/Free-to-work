@@ -11,6 +11,7 @@ exports.verify_login = async (req, res) => {
         const {email, password } = req.body;
 
         if(email == "admin@free2work.com" && password == "12") {
+            req.session.user_id = "admin@free2work.com"
             res.json({message:"admin"});
         }
         else {

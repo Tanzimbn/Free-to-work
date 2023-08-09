@@ -6,6 +6,12 @@ const reportModel = require("../models/reports")
 const userModel = require("../models/users")
 
 exports.admin_data = async (req, res) => {
+
+    if(req.session.user_id != "admin@free2work.com") {
+        res.render("./other/error.hbs");
+        return
+    }
+
     const user = await userModel.find({}, { "_id": 1 })
     const post = await postModel.find({}, { "time": 1, "max_bid": 1, "max_bid_user": 1 })
     const report = await reportModel.find({})

@@ -7,10 +7,21 @@ const reviewModel = require("../models/reviews");
 const coverModel = require("../models/cover");
 
 exports.own_profile = async (req, res) => {
+    
+    if(!req.session.user_id) {
+        res.render("./other/error.hbs");
+        return
+    }
     res.redirect(`/profile/${req.session.user_id}`);
 }
 
 exports.show_profile = async (req, res) => {
+
+    if(!req.session.user_id) {
+        res.render("./other/error.hbs");
+        return
+    }
+
     const givenId = req.params.id
     const view_user = await userModel.find({_id : givenId}) 
     const user = await userModel.find({_id : req.session.user_id})
@@ -131,6 +142,7 @@ exports.review = async (req, res) => {
 
 exports.delete_post = async (req, res) => {
     const ans = await postModel.deleteOne({_id : req.body.id});
+    const alldone = await notiModel.deleteMany({postid : req.body.id});
     console.log("done")
     res.send({"message":"Success"})
 }

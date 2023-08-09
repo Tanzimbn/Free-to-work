@@ -2,6 +2,12 @@ const notiModel = require("../models/notification");
 const userModel = require("../models/users");
 
 exports.show_list = async (req, res) => {
+
+    if(!req.session.user_id) {
+        res.render("./other/error.hbs");
+        return
+    }
+    
     const user = await userModel.find({_id : req.session.user_id});
 
     const noti = await notiModel.find({"user" : req.session.user_id})

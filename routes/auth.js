@@ -18,17 +18,13 @@ const coverModel = require("../models/cover");
 const reportModel = require("../models/reports");
 const { feedback } = require("../controllers/feedback.controller");
 const { admin_data, block_user, report_process, category, allcategory } = require("../controllers/admin.controller");
+const { check_login } = require("../controllers/sessionlogin.controller");
 
 
 router.get('/', (req, res) => {
     res.render("./home_page/landingpage.hbs");
 })
-router.get('/login', (req, res) => {
-    if(req.session.user_id) 
-    res.redirect("/newsfeed");
-    else
-    res.render("./login_reg/index.hbs");
-})
+router.get('/login', check_login)
 router.get('/register', (req, res) => {
     res.render("./login_reg/register.hbs");
 })
@@ -42,6 +38,9 @@ router.get('/profile/:id', show_profile)
 router.get('/profile', own_profile)
 router.get('/list', show_list)
 router.get('/verify/:id', email_confirmed)
+router.get('/*',(req, res) => {
+    res.render("./other/error.hbs");
+})
 
 
 // router.post('/admin_data', admin_data)

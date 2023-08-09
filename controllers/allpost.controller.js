@@ -7,6 +7,12 @@ time_ago.addDefaultLocale(loc)
 const tm = new time_ago();
 
 exports.loadUserData = async (req, res) => {
+
+    if(!req.session.user_id) {
+        res.render("./other/error.hbs");
+        return
+    }
+
     const allpost = await postModel.find({});
     allpost.sort((a, b) => {
         return b.time.getTime() - a.time.getTime()

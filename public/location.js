@@ -35,6 +35,7 @@ function divisionsList() {
 
     //  set/send districts name to District lists from division
     document.getElementById("distr").innerHTML = disctList;
+    document.getElementById("polic_sta").innerHTML = '<option disabled selected value="">Select district first</option>';
 }
 
 // Thana Section select
