@@ -18,15 +18,26 @@ async function img() {
         }, ''));
         // let html = `<img src = "data:${responseJson[0].img.contentType};base64,${val}" alt="dp" class="pd-img">`;
         document.querySelector(".pd-img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
-        document.querySelector(".nav_profile_img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
-        document.querySelector(".popup_image").src = `data:${responseJson[0].img.contentType};base64,${val}`;
-        localStorage.setItem('image', val)
+        // document.querySelector(".nav_profile_img").src = `data:${responseJson[0].img.contentType};base64,${val}`;
+        // document.querySelector(".popup_image").src = `data:${responseJson[0].img.contentType};base64,${val}`;
+        
+        if(localStorage.getItem('user_id') == givenId) {
+            localStorage.setItem('image', val)
+        }
     }
     else {
         document.querySelector(".pd-img").src = "../pictures/Noimage.png";
-        document.querySelector(".nav_profile_img").src = `../pictures/Noimage.png`;
-        document.querySelector(".popup_image").src = `../pictures/Noimage.png`;
+        // document.querySelector(".nav_profile_img").src = `../pictures/Noimage.png`;
+        // document.querySelector(".popup_image").src = `../pictures/Noimage.png`;
     }
+
+    let url = localStorage.getItem("image");
+    let type = localStorage.getItem("imagetype")
+    
+    if(url == "") return;
+
+    document.querySelector(".nav_profile_img").src = `data:${type};base64,${url}`;
+    document.querySelector(".popup_image").src = `data:${type};base64,${url}`;
     
 }
 img();

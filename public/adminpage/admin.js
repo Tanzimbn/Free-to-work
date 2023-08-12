@@ -4,7 +4,7 @@ function gotohome() {
   window.location.href = "/";
 }
 function logout() {
-  window.location.href = "/";
+  window.location.href = "/logout";
 }
 function menuToggle() {
   toggleMenu.classList.toggle('active');
