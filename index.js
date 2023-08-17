@@ -13,7 +13,7 @@ app.use(session({
     saveUninitialized: true
 }));
 // db add
-dotenv.config({ path: './.env'});
+dotenv.config({ path: './others/.env'});
 require('./db/conn');
 // json
 app.use(express.json());
