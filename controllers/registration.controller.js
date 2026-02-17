@@ -399,7 +399,8 @@ exports.email_confirmed = async (req, res) => {
             const del = await verifyModel.deleteOne({_id : req.params.id})
         }
 
-        res.redirect("/login");
+        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        res.redirect(`${clientUrl}/login`);
         
     } catch (error) {
         

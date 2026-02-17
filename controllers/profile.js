@@ -9,17 +9,18 @@ const coverModel = require("../models/cover");
 exports.own_profile = async (req, res) => {
     
     if(!req.session.user_id) {
-        res.render("./other/error.hbs");
-        return
+        res.status(401).json({ error: "Unauthorized" });
+        return;
     }
-    res.redirect(`/profile/${req.session.user_id}`);
+    // res.redirect(`/profile/${req.session.user_id}`);
+    res.json({ userId: req.session.user_id });
 }
 
 exports.show_profile = async (req, res) => {
 
     if(!req.session.user_id) {
-        res.render("./other/error.hbs");
-        return
+        res.status(401).json({ error: "Unauthorized" });
+        return;
     }
 
     const givenId = req.params.id
@@ -48,7 +49,7 @@ exports.show_profile = async (req, res) => {
     }
 
 
-    res.render("./profile/profile.hbs", {user, view_user, allpost, givenId, loginId, MainUser, noti, unseen, allreview})
+    res.json({user, view_user, allpost, givenId, loginId, MainUser, noti, unseen, allreview})
 }
 
 exports.load_image = async (req, res) => {
@@ -64,7 +65,7 @@ exports.load_image = async (req, res) => {
           return
         }
     })
-    res.redirect('/profile')
+    res.json({ success: true });
 }
 
 exports.load_coverimage = async (req, res) => {
@@ -95,7 +96,7 @@ exports.load_coverimage = async (req, res) => {
           return
         }
     })
-    res.redirect('/profile')
+    res.json({ success: true });
 }
 
 exports.edit_user_info = async (req, res) => {

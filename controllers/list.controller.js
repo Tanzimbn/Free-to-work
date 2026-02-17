@@ -4,8 +4,8 @@ const userModel = require("../models/users");
 exports.show_list = async (req, res) => {
 
     if(!req.session.user_id) {
-        res.render("./other/error.hbs");
-        return
+        res.status(401).json({ error: "Unauthorized" });
+        return;
     }
     
     const user = await userModel.find({_id : req.session.user_id});
@@ -17,7 +17,7 @@ exports.show_list = async (req, res) => {
         unseen = unseen || noti[i].unseen
     }
 
-    res.render("./list/list.hbs", { user, noti, unseen });
+    res.json({ user, noti, unseen });
 }
 
 exports.list_filter = async (req, res) => {

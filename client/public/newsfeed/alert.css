@@ -1,0 +1,11 @@
+
+.alert_mess {
+    display: none;
+}
+.alert_mess_box {
+}
+.alert_mess_box p {
+    font-size: 1.3rem;
+    font-family: 'Trebuchet MS', sans-serif;
+    color: rgb(0, 0, 0);
+}

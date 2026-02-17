@@ -1,0 +1,64 @@
+.post_popup {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 200;
+    position: fixed;
+    top: 0;
+    height: 112%;
+    background-color: rgba(0, 0, 0, 0.5); /* Added semi-transparent background */
+}
+
+.post-box {
+    width: 45%;
+    height: 80%;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fdfbfb;
+    box-shadow: 0 4px 4px grey;
+    overflow-y: scroll;
+}
+
+#post_popup_close {
+    float: right;
+    border-radius: 10%;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+}
+
+.post-box h2 {
+    text-align: center;
+}
+
+.post-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-box label {
+    margin-top: 5px;
+}
+
+.post-box input, .post-box textarea, .post-box select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.post-box button[type="submit"] {
+    padding: 5px 15px;
+    background: var(--hover3);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.post-box button[type="submit"]:hover {
+    transform: scale(1.02);
+}

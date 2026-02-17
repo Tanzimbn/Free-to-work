@@ -9,8 +9,8 @@ const tm = new time_ago();
 exports.loadUserData = async (req, res) => {
 
     if(!req.session.user_id) {
-        res.render("./other/error.hbs");
-        return
+        res.status(401).json({ error: "Unauthorized" });
+        return;
     }
 
     const allpost = await postModel.find({});
@@ -19,20 +19,20 @@ exports.loadUserData = async (req, res) => {
     })
     const user = await userModel.find({_id : req.session.user_id});
 
-    
-
     const noti = await notiModel.find({"user" : req.session.user_id})
     noti.reverse()
     let unseen = false
+    // Fix loop condition (it was i < noti.length in original but snippet cut off? No, snippet was ok)
     for (let i = 0; i < noti.length; i++) {
         unseen = unseen || noti[i].unseen
     }
 
-    res.render("./newsfeed/temp.hbs", { user, noti, unseen });
+    res.json({ user, noti, unseen });
 }
 
 exports.showallpost = async (req, res) => {
     const allpost = await postModel.find({});
+    // Sorting logic is missing in original snippet I saw? No it was there.
     allpost.sort((a, b) => {
         return b.time.getTime() - a.time.getTime()
     })
@@ -41,7 +41,8 @@ exports.showallpost = async (req, res) => {
     for (let i = 0; i < allpost.length; i++) {
         time_ago.push(tm.format(allpost[i].time))
     }
-    res.send({time_ago, allpost});
+    // original was res.send({time_ago, allpost});
+    res.json({time_ago, allpost});
 }
 
 exports.tm = tm

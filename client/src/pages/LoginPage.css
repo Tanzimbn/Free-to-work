@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+.login-wrapper {
+  --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+  --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+  --white :#fff;
+  --hover1 : #ff7d7d;
+  --hover2 : #FFDAB9;
+  --hover3 : #FFDAB9;
+
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:var(--bc2);
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  width: 100%;
+}
+
+.login-wrapper * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-wrapper .container {
+    width: 60%;
+    margin: 3% auto;
+    display: flex;
+    height: 700px;
+    box-shadow: -1px 0px 15px 11px #1d5c8c5c;
+    border-radius: 6px;
+    background: var(--bc1);
+    position: relative; /* Changed from absolute to relative since wrapper is flex centered */
+    /* top: 43%; left: 50%; transform: translate(-50%, -50%); - removed */
+}
+
+.login-wrapper .login-link {
+    background-color: var(--bc2);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    width: 30%;
+    padding: 3%;
+}
+
+.login-wrapper .logo .text {
+    font-weight: 600;
+    color: #333; /* Changed for visibility on light bg */
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.login-wrapper .logo .text:hover {
+  color:#a19090 ;
+  transition: all 0.3s ease;
+}
+
+.login-wrapper .side-big-heading {
+    text-align: center;
+    font-weight: 800;
+    color: #333; /* Changed */
+    font-size: 1.6rem;
+    margin: 46% 0 5%;
+}
+
+.login-wrapper .primary-bg-text {
+    margin-top: 10px;
+    color: #555; /* Changed */
+    font-weight: 500;
+    text-align: center;
+}
+
+.login-wrapper .primary-reg-text {
+    color: #777; /* Changed */
+    font-weight: 100;
+    text-align: center;
+    padding-top: 50px;
+    font-size: small;
+}
+
+.login-wrapper .loginbtn {
+    text-decoration: none;
+    color: #fff;
+    background-color: #d11f0c;
+    width: 70%;
+    font-weight: 500;
+    display: inline-block;
+    margin: 7% 15%;
+    text-align: center;
+    border-radius: 6px;
+    padding: 3% 0;
+}
+
+.login-wrapper .loginbtn:hover {
+    color: white;
+    background-color: var(--hover2);
+}
+
+.login-wrapper .login-form-container {
+  width: 70%;
+  padding: 15% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-wrapper .login-big-heading {
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--white);
+  text-align: left;
+  margin-bottom: 5%;
+}
+
+.login-wrapper .login-form-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.login-wrapper .text-fields {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 2%;
+    margin: 3% 2%;
+    width: 80%; /* Adjusted */
+    border-radius: 4px;
+    color: #84848d;
+    margin-bottom: 10%;
+}
+
+.login-wrapper input {
+    border: none;
+    outline: none;
+    background: inherit;
+    color: var(--hover2);
+    width: 100%;
+    margin-left: 4%;
+    font-size: 1rem;
+}
+
+.login-wrapper .nextPage {
+    background-color: #d11f0c;
+    color: #fff;
+    width: 45%;
+    cursor: pointer;
+    padding: 2%;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+}
+
+.login-wrapper .nextPage:hover {
+    background-color: var(--hover2);
+}
+
+.login-wrapper .forget_password {
+  margin: 2%;
+  cursor: pointer;
+  color: var(--hover3);
+  margin-top: 20px;
+}
+
+.login-wrapper .container.review-active {
+  filter: blur(10px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.login-wrapper .forget_password_popup {
+  max-width: 50%;
+  background: var(--bc1);
+  padding: 20px;
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 35%;
+  height: auto;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.4s;
+  box-shadow: 1px 1px 20px 0px #000000;
+  z-index: 100;
+}
+
+.login-wrapper .forget_password_popup.review-active {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.login-wrapper .forget_password_popup #heading {
+  text-align: center;
+  color: white;
+  margin-bottom: 2%;
+}
+
+.login-wrapper .forget_password_popup h3 {
+  text-align: center;
+  color: white;
+  margin-bottom: 6%;
+}
+
+.login-wrapper .forget_password_popup .detail p {
+  width: 80%;
+  color: var(--hover3);
+  text-align: center;
+  margin: 0 auto;
+}
+
+.login-wrapper .forget_password_popup input {
+  border: 1px solid;
+  width: 90%;
+  padding: 2%;
+  margin: 5%;
+  border-radius: 15px;
+  background-color: inherit;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: var(--hover2);
+}
+
+.login-wrapper .forget_password_popup button {
+  width: 90%;
+  background-color: var(--hover1);
+  color: white;
+  padding: 2%;
+  border-radius: 15px;
+  margin: 5%;
+  cursor: pointer;
+  border: 0px;
+}
+
+.login-wrapper .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+}

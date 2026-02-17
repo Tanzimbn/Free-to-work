@@ -1,0 +1,463 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+}
+:root{
+    --bc1 :linear-gradient(114.9deg, rgb(34, 34, 34) 8.3%, rgb(0, 40, 60) 41.6%, rgb(0, 143, 213) 93.4%);
+    --bc2 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc3 :linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    --bc4 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --bc5 :linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    --white :#fff;
+    --hover1 : #ff7d7d;
+    --hover2 : #FFDAB9;
+    --hover3 : #FFDAB9;
+  }
+
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    background-color: rgb(0, 40, 60);;
+    /* background-image: url(../pictures/Free\ Vector\ _\ Gradient\ blue\ waves\ background.jpeg); */
+    /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+    /* background-image: var(--hover1); */
+}
+.container{
+    width: 60%;
+    margin: 3% auto;
+    display: flex;
+    height: 700px;
+    box-shadow: -1px 0px 15px 11px #1d5c8c5c;
+    border-radius: 6px;
+    background: var(--bc1);
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.logo .text:hover {
+    color:#a19090 ;
+    transition: all 0.3s ease;
+  }
+.popup{
+    width: 400px;
+    background: rgba(105, 185, 255, 0.952);
+    border-radius: 6px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px  30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+.open-popup{
+    visibility: visible;
+    top : 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+.popup img{
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+.popup h2{
+    font-size: 38px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+}
+.popup button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    color: rgba(105, 108, 255);
+    background: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.login-link{
+    background-color: var(--bc2);
+   /* background-image: url('../pictures/bg-shapes.svg'); */
+   background-position: bottom left;
+   background-repeat: no-repeat;
+   width: 30%;
+   padding: 3%;
+}
+.signup-form-container{
+    width: 70%;
+    padding: 6% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo{
+    font-weight: 600;
+    color: #fff;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.side-big-heading{
+    text-align: center;
+    font-weight: 800;
+    color: #fff;
+    font-size: 1.6rem;
+    margin: 46% 0 5%;
+}
+.primary-bg-text{
+    margin-top: 10px;
+    color: #eff0ff;
+    font-weight: 500;
+    text-align: center;
+}
+.primary-reg-text{
+    color: #eff0ffac;
+    font-weight: 100;
+    text-align: center;
+    padding-top: 50px;
+    font-size: small;
+}
+a.loginbtn{
+    text-decoration: none;
+    color: #fff;
+    background-color: #d11f0c;
+    width: 70%;
+    font-weight: 500;
+    display: inline-block;
+    margin: 7% 15%;
+    text-align: center;
+    /* border: 2px solid #eff0ff;  */
+    /* border: 1px solid;  */
+    border-radius: 6px;
+    padding: 3% 0;
+}
+a.loginbtn:hover{
+    color: white;
+    background-color: var(--hover2);
+}
+.big-heading{
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--white);
+    text-align: left;
+}
+.social-media-platform{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+.social-media-platform a{
+    color: #1a1d86;
+    text-decoration: none;
+    border-radius: 50%;
+    display: inline-flex;
+    border: 1px solid #e0e3e2;
+    margin: 12%;
+    padding: 13%;
+}
+.progress-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4% 0;
+    width: 70%;
+}
+.progress-bar .stage{
+   width: 30%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+.progress-bar .tool-tip{
+    color: white;
+    font-weight: 600;
+}
+.stageno{
+    margin: 6% 0;
+    padding: 2% 7%;
+    border-radius: 50%;
+    background-color: #f5f5f9;
+}
+.button-container{
+    display: flex;
+    align-items: center;
+    margin: 4% 0;
+}
+.text-fields{
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 2%;
+    margin: 0 2%;
+    width: 46%;
+    border-radius: 4px;
+    color: #84848d;
+}
+input{
+    border: none;
+    outline: none;
+    background: inherit;
+    /* color: #84848d; */
+    color: var(--hover2);
+    /* background-color: white; */
+    width: 200%;
+    margin-left: 4%;
+    font-size: 1rem;
+}
+.signup-form-content{
+    width: 100%;
+    padding: 0 3%;
+}
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-year-field,input::placeholder{
+    /* background-color: #fff; */
+    color: #ffdab9
+}
+/* .text-fields.fname:after{
+    content: 'First name';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 4%;
+    left: -197px;
+    width: 334px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.lname:after{
+    content: 'Last name';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 4%;
+    left: -197px;
+    width: 332px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.gender-selection:after{
+    content: 'Gender';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 4%;
+    left: -195px;
+    width: 150px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.nid:after{
+    content: 'Nid Number';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 4%;
+    left: -185px;
+    width: 400px;
+    color: black;
+    top: -33px;
+    text-align: center;
+} */
+.field-heading{
+    color: #696cff;
+    width: 20%;
+}
+.gender-selection label{
+    margin: 0 2%;
+    display: flex;
+    align-items: center;
+    color: var(--hover2);
+    width: 20%;
+}
+.gender-selection #gender_label {
+    margin: 0 2%;
+    display: flex;
+    align-items: center;
+    color: #84848d;
+    width: 5%;
+}
+input[type="radio"]{
+    accent-color: #000000;
+    margin-right: 6%;
+}
+.pagination-btns{
+    display: flex;
+    justify-content: center;
+    margin: 3% 0;
+    padding: 0 4%;
+}
+.nextPage, .previousPage{
+    background-color: #d11f0c;
+    color: #fff;
+    width: 45%;
+    cursor: pointer;
+    padding: 2%;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+}
+.nextPage:hover, .previousPage:hover{
+    background-color: var(--hover2);
+}
+/* .text-fields.phone:after{
+    content: 'Phone number';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -165px;
+    width: 592px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.email:after{
+    content: 'Email Id';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -203px;
+    width: 308px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.divisions:after{
+    content: 'Division';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -230px;
+    width: 100px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.district:after{
+    content: 'District';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -225px;
+    width: 100px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.station:after{
+    content: 'Station';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -230px;
+    width: 100px;
+    color: black;
+    top: -33px;
+    text-align: center;
+} */
+select {
+    width: 300px;
+    padding: 0px 5px;
+    margin-left: 4%;
+    border: 0px;
+    background-color: inherit;
+    color: var(--hover2);
+    font-size: 1rem;
+    cursor: pointer;
+}
+select option {
+    color: #000000;
+    background-color: var(--hover2);
+}
+
+/* LOGIN PAGE */
+
+/* .text-fields.login_email:after{
+    content: 'Email Id';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -367px;
+    top: -33px;
+    width: 308px;
+    color: black;
+    border-radius: 2px;
+    text-align: center;
+}
+.text-fields.login_password:after{
+    content: 'Enter Password';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -322px;
+    width: 511px;
+    color: black;
+    top: -33px;
+    border-radius: 2px;
+    text-align: center;
+}
+.text-fields.password:after, .text-fields.confirmpassword:after{
+    content: 'Enter Password';
+    background-color: #fadede;
+    position: relative;
+    padding: 0 1%;
+    left: -160px;
+    width: 641px;
+    color: black;
+    top: -33px;
+    text-align: center;
+}
+.text-fields.text-fields.confirmpassword:after{
+    content: 'Confirm Password';
+    width: 1148px;
+    left: -125px;
+} */
+.tc-container input{
+    width: 4%;
+    margin-left: 4%;
+    accent-color: #f9f9fb;
+}
+.tc a{
+    text-decoration: underline;
+    color: white;
+}
+label.tc{
+    margin-left: 4%;
+    color: white;
+}
+.blur_active {
+    filter: blur(2px);
+}
+
+/* .login-form-contents .text-fields.email:after{
+    left: -323px;
+}
+.login-form-contents .text-fields.password:after{
+    left: -294px;
+} */
+.javascript-condational-form{overflow: hidden;text-align: center;}
+.javascript-condational-form form{margin-top: 100px;background-color: #4c93e4;display: inline-block;padding: 50px 100px;border-radius: 5px;}
+.javascript-condational-form form label{font-size: 25px;margin-right: 8px;}
+.javascript-condational-form form select{font-size: 20px;min-width: 150px;border: 1px solid #ddd;border-radius: 3px;padding: 5px;color: #666;}
+.javascript-condational-form form select option{font-size: 20px;color: #333;}
+.message{text-align: center;margin-top: 50px;}
+.message h4{font-size: 18px;margin-top: 10px;margin-bottom: 10px;}
+.message h4 a{color:#fff;}
+.message p{font-size: 18px;}
+.message p a{color:#ecf0f1;}

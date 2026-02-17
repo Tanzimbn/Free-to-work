@@ -1,6 +1,7 @@
 const notiModel = require("../models/notification");
 const postModel = require("../models/post");
 const userModel = require("../models/users");
+const commentModel = require("../models/comment");
 const { tm } = require("./allpost.controller");
 // const time_ago = require("javascript-time-ago")
 // const loc = require("javascript-time-ago/locale/en")
@@ -52,3 +53,37 @@ exports.post_detail = async (req, res) => {
     const ans = await notiModel.updateOne({postid : req.body.id, user: req.session.user_id}, { $set: {unseen:false}});
     res.json(allpost[0])
 }
+
+exports.add_comment = async (req, res) => {
+    try {
+        if (!req.session.user_id) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+        
+        const user = await userModel.findOne({_id: req.session.user_id});
+        
+        const newComment = new commentModel({
+            post_id: req.body.post_id,
+            parent_id: req.body.parent_id || null,
+            user_id: req.session.user_id,
+            user_name: user ? `${user.fname} ${user.lname}` : "Unknown",
+            text: req.body.text
+        });
+        
+        await newComment.save();
+        res.json({ message: "Success", comment: newComment });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to add comment" });
+    }
+};
+
+exports.get_comments = async (req, res) => {
+    try {
+        const comments = await commentModel.find({ post_id: req.body.post_id }).sort({ created_at: -1 });
+        res.json(comments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to get comments" });
+    }
+};

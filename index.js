@@ -2,7 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const path = require("path");
-const session = require("express-session")
+const session = require("express-session");
+const cors = require("cors");
 
 const app = express();
 
@@ -10,23 +11,35 @@ const app = express();
 app.use(session({
     secret: "cookie_secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
 }));
+
+app.use(cors({
+    origin: "http://localhost:5173", // Allow Vite frontend
+    credentials: true
+}));
+
 // db add
 dotenv.config({ path: './.env'});
 require('./db/conn');
 // json
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-// to set view engine
-app.set("view engine", "hbs");
-// static file add
-const filepath = path.join(__dirname, "./public");
+
+// static file add (for uploaded images)
+const filepath = path.join(__dirname, "./public"); // Keep this for existing assets if needed, or point to uploads
 app.use(express.static(filepath));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // route add
-app.use(require("./routes/auth"));
+app.use('/api', require("./routes/auth"));
 
-
+// Serve React frontend in production
+// app.use(express.static(path.join(__dirname, "client/dist")));
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client/dist/index.html"));
+// });
 
 app.listen(3000, ()=> {
     console.log("server connected");
