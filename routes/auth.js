@@ -22,25 +22,25 @@ const { check_login } = require("../controllers/sessionlogin.controller");
 
 
 router.get('/', (req, res) => {
-    res.render("./home_page/landingpage.hbs");
+    res.json({ message: "API is running" });
 })
 router.get('/login', check_login)
 router.get('/register', (req, res) => {
-    res.render("./login_reg/register.hbs");
+    res.json({ message: "Please use the frontend to register" });
 })
 router.get('/admin', admin_data)
 router.get('/newsfeed', loadUserData)
 router.get('/logout', (req, res) => {
     delete req.session.user_id
-    res.redirect('/login')
+    res.json({ message: "Logged out successfully" })
 })
 router.get('/profile/:id', show_profile)
 router.get('/profile', own_profile)
 router.get('/list', show_list)
 router.get('/verify/:id', email_confirmed)
-router.get('/*',(req, res) => {
-    res.render("./other/error.hbs");
-})
+// router.get('/*',(req, res) => {
+//     res.render("./other/error.hbs");
+// })
 
 
 // router.post('/admin_data', admin_data)
@@ -89,7 +89,7 @@ router.post('/report', async (req, res) => {
             comments: req.body.additionalComments
         })
         const resp = await new_report.save();
-        res.redirect(`/profile/${req.body.to}`);
+        res.json({ message: "Report submitted successfully" });
 
     } catch (error) {
         console.error(error);

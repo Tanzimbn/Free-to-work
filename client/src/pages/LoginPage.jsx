@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -12,7 +12,17 @@ export default function LoginPage() {
     const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
     const [forgotEmail, setForgotEmail] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
     const { login } = useAuth();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        if (queryParams.get('verified') === 'true') {
+            toast.success("Email verified successfully! You can now login.");
+            // Remove query param from URL without reload
+            window.history.replaceState({}, document.title, "/login");
+        }
+    }, [location]);
 
     const handleLogin = async (e) => {
         e.preventDefault();

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import './AuthNavbar.css';
 
@@ -54,7 +55,7 @@ export default function AuthNavbar({ onPostClick, onSearch }) {
         try {
             await api.post('/update_mood', { check: newMood });
             updateUser({ ...user, mood: newMood });
-            alert(newMood ? "Free mood is on!" : "Work mood on! You won't get any notification of new post.");
+            toast.info(newMood ? "Free mood is on!" : "Work mood on! You won't get any notification of new post.");
         } catch (error) {
             console.error("Failed to update mood", error);
         }

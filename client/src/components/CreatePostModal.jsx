@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import api from '../services/api';
 import { divisions, districts, thanas } from '../utils/locationData';
 import './CreatePostModal.css';
@@ -51,12 +52,13 @@ const CreatePostModal = ({ onClose, onPostCreated }) => {
             if (res.data.message === "Success") {
                 onPostCreated();
                 onClose();
+                toast.success("Post created successfully!");
             } else {
-                alert("Failed to create post");
+                toast.error("Failed to create post");
             }
         } catch (error) {
             console.error("Error creating post:", error);
-            alert("Error creating post");
+            toast.error("Error creating post");
         }
     };
 

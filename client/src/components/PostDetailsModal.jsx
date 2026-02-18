@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import api from '../services/api';
 import './PostDetailsModal.css';
 
@@ -39,7 +40,7 @@ export default function PostDetailsModal({ post, user, onClose }) {
 
     const handleBidSubmit = async () => {
         if (!bidValue) {
-            alert("Please enter a bid amount");
+            toast.error("Please enter a bid amount");
             return;
         }
 
@@ -51,7 +52,7 @@ export default function PostDetailsModal({ post, user, onClose }) {
         const isFirstBid = maxBidUserName === 'No Bid yet';
         
         if (!isFirstBid && newBid >= currentMax) {
-            alert("Your bid must be lower than the current best bid!");
+            toast.error("Your bid must be lower than the current best bid!");
             return;
         }
 
@@ -63,11 +64,11 @@ export default function PostDetailsModal({ post, user, onClose }) {
             });
 
             if (res.data.user_id === "-1") {
-                alert("You can't bid in your own post!");
+                toast.error("You can't bid in your own post!");
                 return;
             }
             if (res.data.user_id === "-2") {
-                alert("Bidding time ended!");
+                toast.error("Bidding time ended!");
                 return;
             }
 
@@ -76,11 +77,11 @@ export default function PostDetailsModal({ post, user, onClose }) {
             setMaxBidUser(res.data.user_id);
             setMaxBidUserName(user?.name || 'Unknown');
             setBidValue('');
-            alert("Bid submitted successfully!");
+            toast.success("Bid submitted successfully!");
 
         } catch (err) {
             console.error(err);
-            alert("Failed to submit bid. Please try again.");
+            toast.error("Failed to submit bid. Please try again.");
         }
     };
 
@@ -99,12 +100,13 @@ export default function PostDetailsModal({ post, user, onClose }) {
                 setComments(prev => [res.data.comment, ...prev]);
                 setNewComment("");
                 setReplyTo(null);
+                toast.success("Comment added!");
             } else {
-                alert("Failed to add comment");
+                toast.error("Failed to add comment");
             }
         } catch (error) {
             console.error("Error adding comment:", error);
-            alert("Error adding comment");
+            toast.error("Error adding comment");
         }
     };
 

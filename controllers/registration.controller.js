@@ -23,7 +23,8 @@ exports.reg_submit = async (req, res) => {
         })
         const register = await new_user.save();
 
-        let verify_email = `https://freetowork.onrender.com/verify/${register._id}`;
+        const backendUrl = process.env.BACKEND_URL || "http://localhost:3000/api";
+        let verify_email = `${backendUrl}/verify/${register._id}`;
         
         let config = {
             service : 'gmail',
@@ -400,7 +401,7 @@ exports.email_confirmed = async (req, res) => {
         }
 
         const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
-        res.redirect(`${clientUrl}/login`);
+        res.redirect(`${clientUrl}/login?verified=true`);
         
     } catch (error) {
         

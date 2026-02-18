@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../services/api';
 import { divisions, districts, thanas } from '../utils/locationData';
 import './FilterSidebar.css';
 
@@ -19,19 +20,17 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
     const [categorySuggestions, setCategorySuggestions] = useState([]);
 
     useEffect(() => {
-        // Fetch categories if needed, or just rely on manual input for now
-        // For now, let's assume we can fetch them or just leave it empty until user types
-        // Implementing simple fetch if possible
         const fetchCategories = async () => {
              try {
-                 const response = await fetch('/api/allcategory', { method: 'POST' });
-                 const data = await response.json();
-                 setAllCategories(data.map(item => item.value));
+                 const response = await api.post('/allcategory');
+                 if (Array.isArray(response.data)) {
+                    setAllCategories(response.data.map(item => item.value));
+                 }
              } catch (error) {
                  console.error("Failed to fetch categories", error);
              }
         };
-        // fetchCategories(); // Uncomment if API is ready and CORS allows
+        fetchCategories();
     }, []);
 
     useEffect(() => {

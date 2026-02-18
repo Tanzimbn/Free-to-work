@@ -22,6 +22,15 @@ export default function NewsfeedPage() {
     const [isPostModalOpen, setIsPostModalOpen] = useState(false);
     const [sortType, setSortType] = useState('Date');
     const [sortOrder, setSortOrder] = useState('Descending');
+    const [filters, setFilters] = useState({
+        price_min: "",
+        price_max: "",
+        division: "",
+        district: "",
+        station: "",
+        category: "",
+        searchValue: ""
+    });
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -39,53 +48,53 @@ export default function NewsfeedPage() {
         }
     }, [location]);
 
-    const fetchData = async () => {
-        try {
-            // Fetch user data
-            const userRes = await api.get('/newsfeed');
-            // Check if authorized
-            if (userRes.data.error === "Unauthorized") {
-                navigate('/login');
-                return;
-            }
-            // userRes.data structure: { user: [...], noti: [...], unseen: ... }
-            if (userRes.data.user && userRes.data.user.length > 0) {
-                setUser(userRes.data.user[0]);
-            }
-            
-            // Fetch posts using post_filter with empty filters
-            const postsRes = await api.post('/post_filter', {
-                price_min: "",
-                price_max: "",
-                division: "",
-                district: "",
-                station: "",
-                category: "",
-                searchValue: ""
-            });
-            
-            if (postsRes.data && Array.isArray(postsRes.data)) {
-                const processedPosts = postsRes.data.map(item => ({
-                    ...item.post,
-                    time_ago: item.time_ago
-                }));
-                // Initial sort will be handled by useEffect
-                setPosts(processedPosts);
-            }
-        } catch (err) {
-            console.error(err);
-            // If 401, navigate to login
-            if (err.response && err.response.status === 401) {
-                navigate('/login');
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
+    // Fetch user data on mount
     useEffect(() => {
-        fetchData();
+        const fetchUser = async () => {
+            try {
+                // Fetch user data
+                const userRes = await api.get('/newsfeed');
+                // Check if authorized
+                if (userRes.data.error === "Unauthorized") {
+                    navigate('/login');
+                    return;
+                }
+                // userRes.data structure: { user: [...], noti: [...], unseen: ... }
+                if (userRes.data.user && userRes.data.user.length > 0) {
+                    setUser(userRes.data.user[0]);
+                }
+            } catch (err) {
+                console.error(err);
+                // If 401, navigate to login
+                if (err.response && err.response.status === 401) {
+                    navigate('/login');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
     }, [navigate]);
+
+    // Fetch posts when filters change
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const postsRes = await api.post('/post_filter', filters);
+                
+                if (postsRes.data && Array.isArray(postsRes.data)) {
+                    const processedPosts = postsRes.data.map(item => ({
+                        ...item.post,
+                        time_ago: item.time_ago
+                    }));
+                    setPosts(processedPosts);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchPosts();
+    }, [filters]);
 
     const getSortedPosts = () => {
         let sorted = [...posts];
@@ -107,23 +116,36 @@ export default function NewsfeedPage() {
 
     const sortedPosts = getSortedPosts();
 
-    const handleFilterChange = async (filters) => {
-        try {
-            const res = await api.post('/post_filter', filters);
-            if (res.data && Array.isArray(res.data)) {
-                 const newPosts = res.data.map(item => ({
-                    ...item.post,
-                    time_ago: item.time_ago
-                }));
-                setPosts(newPosts);
-            }
-        } catch (err) {
-            console.error(err);
-        }
+    const handleFilterChange = (newFilters) => {
+        setFilters(prev => ({ ...prev, ...newFilters }));
+    };
+
+    const handleSearch = (val) => {
+        setFilters(prev => ({ ...prev, searchValue: val }));
     };
 
     const handlePostCreated = () => {
-        fetchData(); // Refresh posts
+        // Trigger re-fetch by toggling a dependency or calling fetchPosts directly?
+        // Since fetchPosts depends on filters, we can just call the API again or force update.
+        // Simplest is to reload the page or trigger a refresh.
+        // Or we can just re-run the effect by momentarily changing a dummy state, 
+        // OR we can extract fetchPosts outside useEffect.
+        // For now, let's just re-fetch posts with current filters.
+        const fetchPosts = async () => {
+            try {
+                const postsRes = await api.post('/post_filter', filters);
+                if (postsRes.data && Array.isArray(postsRes.data)) {
+                    const processedPosts = postsRes.data.map(item => ({
+                        ...item.post,
+                        time_ago: item.time_ago
+                    }));
+                    setPosts(processedPosts);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchPosts();
     };
 
     if (loading) {
@@ -132,7 +154,7 @@ export default function NewsfeedPage() {
 
     return (
         <div className="newsfeed-page">
-            <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} />
+            <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} onSearch={handleSearch} />
             
             <div className="advertise" style={{ marginTop: '20px', marginBottom: '20px' }}>
                 <Swiper

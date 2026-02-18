@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../services/api';
 import './AdminPage.css';
 
@@ -42,7 +43,7 @@ export default function AdminPage() {
         } catch (error) {
             console.error("Error fetching admin data:", error);
             if (error.response && error.response.status === 403) {
-                alert("Access Denied. Admins only.");
+                toast.error("Access Denied. Admins only.");
                 navigate('/login');
             } else {
                 setLoading(false);
@@ -72,9 +73,10 @@ export default function AdminPage() {
         try {
             await api.post('/block_user', { id: userId, reportid: reportId });
             setReports(prev => prev.filter(r => r._id !== reportId));
-            alert("User blocked and report resolved.");
+            toast.success("User blocked and report resolved.");
         } catch (error) {
             console.error("Error accepting report:", error);
+            toast.error("Error blocking user.");
         }
     };
 
@@ -82,9 +84,10 @@ export default function AdminPage() {
         try {
             await api.post('/report_process', { reportid: reportId });
             setReports(prev => prev.filter(r => r._id !== reportId));
-            alert("Report rejected.");
+            toast.info("Report rejected.");
         } catch (error) {
             console.error("Error rejecting report:", error);
+            toast.error("Error rejecting report.");
         }
     };
 
@@ -95,12 +98,13 @@ export default function AdminPage() {
             if (response.data.message === "Success") {
                 setCategories(prev => [...prev, newCategory]);
                 setNewCategory('');
-                alert("Category added successfully.");
+                toast.success("Category added successfully.");
             } else {
-                alert("Category already exists or error occurred.");
+                toast.error("Category already exists or error occurred.");
             }
         } catch (error) {
             console.error("Error adding category:", error);
+            toast.error("Error adding category.");
         }
     };
 

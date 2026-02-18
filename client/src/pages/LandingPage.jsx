@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import api from '../services/api';
 import './LandingPage.css';
 
@@ -38,12 +39,12 @@ const LandingPage = () => {
         email: feedbackEmail,
         message: feedbackMessage
       });
-      alert('Feedback submitted successfully!');
+      toast.success('Feedback submitted successfully!');
       setFeedbackEmail('');
       setFeedbackMessage('');
     } catch (error) {
       console.error('Error submitting feedback:', error);
-      alert('Failed to submit feedback.');
+      toast.error('Failed to submit feedback.');
     }
   };
 
