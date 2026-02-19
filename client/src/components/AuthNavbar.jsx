@@ -4,13 +4,12 @@ import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-export default function AuthNavbar({ onPostClick, onSearch }) {
+export default function AuthNavbar({ onPostClick }) {
     const { user, logout, notifications, hasUnseenNotifications, updateUser, refreshNotifications } = useAuth();
     const [menuActive, setMenuActive] = useState(false);
     const [notiActive, setNotiActive] = useState(false);
     const navigate = useNavigate();
     const [userImage, setUserImage] = useState('');
-    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         if (user && user.img && user.img.data) {
@@ -74,141 +73,176 @@ export default function AuthNavbar({ onPostClick, onSearch }) {
         }
     };
 
-    const handleSearchChange = (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
-        if (onSearch) {
-            onSearch(value);
-        }
-    };
-
     return (
-        <nav className="relative sticky top-0 z-40 bg-gradient-to-r from-slate-900 via-sky-900 to-sky-500 text-white shadow">
-            <div className="flex items-center justify-between max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 gap-4 py-3">
-                <div className="flex items-center gap-4">
-                    <Link
-                        to="/newsfeed"
-                        className="text-white no-underline text-lg sm:text-xl leading-tight font-semibold tracking-tight"
-                    >
-                        Free to<br />work.
-                    </Link>
-                    <ul className="hidden sm:flex items-center gap-4 text-xl">
-                        <li><Link to="/newsfeed"><i className="bx bxs-home"></i></Link></li>
-                        <li><Link to="/list"><i className="bx bx-list-ul"></i></Link></li>
-                        <li onClick={toggleNoti}>
-                            <i className={`fa-solid fa-bell ${hasUnseenNotifications ? 'text-red-400' : ''}`} />
-                        </li>
-                    </ul>
-                </div>
-
-                <div className="flex items-center gap-3 flex-1 justify-end">
-                    <div className="flex-1 max-w-xs hidden sm:flex items-center gap-2 bg-white/10 rounded-full px-3 py-1 border border-white/20">
-                        <img src="/pictures/search-alt-regular-24.png" alt="search" className="w-4 h-4 opacity-80" />
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            className="bg-transparent border-none outline-none text-sm w-full placeholder:text-slate-200 text-white"
-                        />
-                    </div>
-
-                    <div
-                        className="hidden sm:flex items-center justify-center px-4 py-1 rounded-full bg-white text-slate-900 text-sm cursor-pointer shadow hover:bg-slate-100 transition"
-                        onClick={handlePostClick}
-                    >
-                        <p>Post</p>
-                    </div>
-
-                    <div className="flex items-center cursor-pointer" onClick={toggleMenu}>
-                        <img
-                            src={userImage || "/pictures/user.png"}
-                            alt="User"
-                            className="w-9 h-9 rounded-full object-cover ring-2 ring-white/40"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <div
-                className={`absolute right-4 top-full mt-3 w-72 bg-white text-slate-900 rounded-xl shadow-lg border border-slate-100 text-sm transform transition-all origin-top-right ${
-                    notiActive ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'
-                }`}
-            >
-                <h3 className="text-base font-semibold text-slate-800 text-center mb-2">Notifications</h3>
-                <hr className="border-slate-100 mb-1" />
-                {notifications && notifications.length > 0 ? (
-                    notifications.map((noti, index) => (
-                        <div
-                            key={index}
-                            className={`mt-2 rounded-md px-3 py-2 cursor-pointer text-xs ${
-                                noti.unseen ? 'bg-emerald-100' : 'bg-orange-50'
-                            }`}
-                            onClick={() => handleNotificationClick(noti)}
-                        >
-                            {noti.type}
+        <header className="sticky top-0 z-40 border-b border-slate-800/60 bg-slate-950/95 backdrop-blur">
+            <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:py-3.5">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    <Link to="/newsfeed" className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d11f0c] text-[11px] font-semibold text-white shadow-sm shadow-[#d11f0c]/40 sm:h-9 sm:w-9">
+                            FT
                         </div>
-                    ))
-                ) : (
-                    <div className="mt-2 rounded-md px-3 py-2 text-xs text-slate-500 text-center">
-                        No notifications
-                    </div>
-                )}
+                        <div className="flex flex-col">
+                            <span className="text-xs font-semibold text-slate-50 sm:text-sm">
+                                FreeToWork
+                            </span>
+                            <span className="hidden text-[10px] text-slate-500 sm:block">
+                                Live opportunities
+                            </span>
+                        </div>
+                    </Link>
+
+                    <nav className="hidden items-center gap-4 text-[11px] font-medium text-slate-300 sm:flex">
+                        <Link to="/newsfeed" className="inline-flex items-center gap-1 hover:text-slate-50">
+                            <i className="bx bxs-home-alt-2 text-xs" />
+                            <span>Newsfeed</span>
+                        </Link>
+                        <Link to="/list" className="inline-flex items-center gap-1 hover:text-slate-50">
+                            <i className="bx bx-list-ul text-xs" />
+                            <span>Browse list</span>
+                        </Link>
+                        <button
+                            type="button"
+                            onClick={toggleNoti}
+                            className="relative inline-flex items-center gap-1 hover:text-slate-50"
+                        >
+                            <i className="fa-solid fa-bell text-xs" />
+                            {hasUnseenNotifications && (
+                                <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-400" />
+                            )}
+                            <span>Alerts</span>
+                        </button>
+                    </nav>
+                </div>
+
+                <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+                    <button
+                        type="button"
+                        onClick={handlePostClick}
+                        className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1.5 text-[11px] font-medium text-white shadow-sm hover:bg-emerald-600 sm:px-4 sm:text-xs"
+                    >
+                        <span className="hidden sm:inline">Post a job</span>
+                        <span className="sm:hidden">Post</span>
+                    </button>
+
+                    <button
+                        type="button"
+                        className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-1.5 py-1 pl-1.5 pr-2 text-left sm:px-2"
+                        onClick={toggleMenu}
+                    >
+                        <img
+                            src={userImage || '/pictures/user.png'}
+                            alt="User"
+                            className="h-7 w-7 rounded-full object-cover ring-1 ring-slate-600 sm:h-8 sm:w-8"
+                        />
+                        <div className="hidden sm:flex flex-col">
+                            <span className="text-[11px] font-medium text-slate-50">
+                                {user ? user.fname : 'User'}
+                            </span>
+                            <span className="text-[10px] text-slate-500">
+                                {user ? user.category : ''}
+                            </span>
+                        </div>
+                        <i className="bx bx-chevron-down hidden text-slate-500 sm:block" />
+                    </button>
+                </div>
             </div>
 
             <div
-                className={`absolute right-4 top-full mt-3 w-56 bg-white text-slate-900 rounded-xl shadow-lg border border-slate-100 text-sm transform transition-all origin-top-right ${
-                    menuActive ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-95 pointer-events-none'
+                className={`absolute right-4 top-full mt-3 w-72 rounded-2xl border border-slate-800 bg-slate-950/95 text-xs text-slate-100 shadow-xl backdrop-blur transition-all ${
+                    notiActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
                 }`}
             >
-                <div className="flex flex-col items-center mb-2 pt-3">
-                    <img
-                        src={userImage || "/pictures/user.png"}
-                        alt="User"
-                        className="w-14 h-14 rounded-full object-cover mb-1"
-                    />
+                <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        Notifications
+                    </p>
+                    <button
+                        type="button"
+                        onClick={toggleNoti}
+                        className="text-[10px] text-slate-500 hover:text-slate-200"
+                    >
+                        Close
+                    </button>
                 </div>
-                <h3 className="w-full text-center text-base font-semibold text-slate-800 mb-1">
-                    {user ? `${user.fname} ${user.lname}` : 'User'}
-                    <br />
-                    <span className="text-xs font-normal text-slate-400">{user ? user.category : ''}</span>
-                </h3>
+                <div className="max-h-64 overflow-y-auto px-3 py-2">
+                    {notifications && notifications.length > 0 ? (
+                        notifications.map((noti, index) => (
+                            <button
+                                key={index}
+                                type="button"
+                                className={`mt-1 w-full rounded-xl px-3 py-2 text-left text-[11px] ${
+                                    noti.unseen ? 'bg-emerald-500/10 border border-emerald-500/40' : 'bg-slate-900/80 border border-slate-800'
+                                }`}
+                                onClick={() => handleNotificationClick(noti)}
+                            >
+                                <p className="text-slate-100">{noti.type}</p>
+                            </button>
+                        ))
+                    ) : (
+                        <p className="py-4 text-center text-[11px] text-slate-500">
+                            No notifications
+                        </p>
+                    )}
+                </div>
+            </div>
 
-                {user && (
-                    <div className="flex justify-center pb-3">
+            <div
+                className={`absolute right-4 top-full mt-3 w-64 rounded-2xl border border-slate-800 bg-slate-950/95 text-xs text-slate-100 shadow-xl backdrop-blur transition-all ${
+                    menuActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
+                }`}
+            >
+                <div className="flex flex-col items-center px-4 pt-4 pb-3">
+                    <img
+                        src={userImage || '/pictures/user.png'}
+                        alt="User"
+                        className="mb-2 h-12 w-12 rounded-full object-cover ring-2 ring-slate-700"
+                    />
+                    <div className="text-center">
+                        <p className="text-sm font-semibold text-slate-50">
+                            {user ? `${user.fname} ${user.lname}` : 'User'}
+                        </p>
+                        <p className="text-[11px] text-slate-400">
+                            {user ? user.category : ''}
+                        </p>
+                    </div>
+                    {user && (
                         <button
                             type="button"
                             onClick={handleMoodToggle}
-                            className="relative inline-flex w-16 h-8 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-200"
-                            style={{ backgroundColor: user.mood ? '#33cc33' : 'rgba(223, 64, 64, 0.242)' }}
+                            className="mt-3 inline-flex h-7 w-20 items-center rounded-full bg-slate-900 px-1 text-[10px] text-slate-200"
                         >
                             <span
-                                className="absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white shadow transition-transform duration-200"
-                                style={{ transform: user.mood ? 'translateX(1.9rem)' : 'translateX(0)' }}
-                            />
+                                className={`inline-flex h-5 w-9 items-center justify-center rounded-full text-[10px] font-medium transition-all ${
+                                    user.mood ? 'translate-x-0 bg-emerald-500 text-white' : 'translate-x-9 bg-slate-700 text-slate-100'
+                                }`}
+                            >
+                                {user.mood ? 'Free' : 'Busy'}
+                            </span>
                         </button>
-                    </div>
-                )}
-
-                <ul className="divide-y divide-slate-100">
-                    <li className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-slate-50">
-                        <img src="/pictures/user1.png" alt="Profile" className="w-5 h-5 opacity-70" />
-                        <Link to="/profile" className="text-sm text-slate-700">
-                            My profile
-                        </Link>
-                    </li>
-                    <li className="flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-slate-50">
-                        <img src="/pictures/logout.png" alt="Logout" className="w-5 h-5 opacity-70" />
-                        <button
-                            type="button"
-                            onClick={handleLogout}
-                            className="text-sm text-slate-700"
-                        >
-                            Log out
-                        </button>
-                    </li>
-                </ul>
+                    )}
+                </div>
+                <div className="border-t border-slate-800">
+                    <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left hover:bg-slate-900"
+                        onClick={() => {
+                            navigate('/profile');
+                            setMenuActive(false);
+                        }}
+                    >
+                        <img src="/pictures/user1.png" alt="Profile" className="h-4 w-4 opacity-70" />
+                        <span>My profile</span>
+                    </button>
+                    <button
+                        type="button"
+                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left hover:bg-slate-900"
+                        onClick={handleLogout}
+                    >
+                        <img src="/pictures/logout.png" alt="Logout" className="h-4 w-4 opacity-70" />
+                        <span>Log out</span>
+                    </button>
+                </div>
             </div>
-        </nav>
+        </header>
     );
 }

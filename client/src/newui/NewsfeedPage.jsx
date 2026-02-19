@@ -146,7 +146,7 @@ export default function NewsfeedPage() {
         <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
       </div>
 
-      <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} onSearch={handleSearch} />
+      <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} />
 
       <main className="pb-10">
         <section className="border-b border-slate-800/60 bg-slate-950/80">
@@ -168,27 +168,185 @@ export default function NewsfeedPage() {
         </section>
 
         <section className="border-b border-slate-800/60 bg-slate-950">
-          <div className="mx-auto max-w-6xl px-4 pt-6 pb-8">
+          <div className="mx-auto max-w-6xl px-4 pt-4 pb-6">
             <Swiper
-              modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={16}
+              modules={[Autoplay]}
+              spaceBetween={20}
               slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              autoplay={{ delay: 3000 }}
+              autoplay={{ delay: 4000 }}
               loop
-              className="mySwiper h-52 sm:h-64 md:h-72 lg:h-80 rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/60"
+              className="mySwiper h-40 sm:h-44 md:h-52 lg:h-56 overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950"
             >
               <SwiperSlide>
-                <img src="/images/4.png" alt="Ad 1" className="h-full w-full object-cover" />
+                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
+                  <div className="max-w-md space-y-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-300">
+                      About freetowork
+                    </p>
+                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
+                      One place for local jobs and trusted workers
+                    </h2>
+                    <p className="text-xs text-slate-300 sm:text-sm">
+                      FreeToWork connects people who need help with students, professionals and
+                      everyday workers nearby for daily, part-time and project based jobs.
+                    </p>
+                    <div className="flex flex-wrap gap-2 text-[10px] sm:text-[11px]">
+                      <span className="inline-flex items-center rounded-full border border-emerald-500/60 bg-emerald-500/10 px-3 py-1 text-emerald-200">
+                        <i className="bx bx-check-circle mr-1 text-xs" />
+                        Verified community
+                      </span>
+                      <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-slate-100">
+                        <i className="bx bx-map-pin mr-1 text-xs" />
+                        Nearby & flexible
+                      </span>
+                    </div>
+                  </div>
+                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        Quick view
+                      </p>
+                      <p className="mt-2 text-xs font-semibold text-slate-50 sm:text-sm">
+                        3K+ active opportunities
+                      </p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        Short-term, long-term and one-time jobs around you.
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        For both sides
+                      </p>
+                      <p className="mt-2 text-xs font-semibold text-slate-50 sm:text-sm">
+                        Workers & job posters
+                      </p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        See real profiles and connect with the right people.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/pictures/1.png" alt="Ad 2" className="h-full w-full object-cover" />
+                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
+                  <div className="max-w-md space-y-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-300">
+                      Job categories
+                    </p>
+                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
+                      Find all kinds of local work in one feed
+                    </h2>
+                    <p className="text-xs text-slate-300 sm:text-sm">
+                      From delivery and tutoring to home repairs, explore jobs that match your
+                      time, skills and location.
+                    </p>
+                  </div>
+                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-xs font-semibold text-slate-50">Daily & part-time</p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        Delivery, driving, helper work, shop support and more.
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Delivery
+                        </span>
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Driving
+                        </span>
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Shop help
+                        </span>
+                      </div>
+                    </div>
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-xs font-semibold text-slate-50">Skilled & services</p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        Tuition, tech support, design, repair and event work.
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Tuition
+                        </span>
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Tech
+                        </span>
+                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
+                          Events
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </SwiperSlide>
               <SwiperSlide>
-                <img src="/pictures/2.png" alt="Ad 3" className="h-full w-full object-cover" />
+                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
+                  <div className="max-w-md space-y-3">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-300">
+                      Types of workers
+                    </p>
+                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
+                      Reach the right people for every type of task
+                    </h2>
+                    <p className="text-xs text-slate-300 sm:text-sm">
+                      Post a job and connect with students, professionals and experienced local
+                      workers ready to help.
+                    </p>
+                  </div>
+                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-xs font-semibold text-slate-50">Students & learners</p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        Flexible part-time workers looking to build experience and income.
+                      </p>
+                      <ul className="mt-2 space-y-1 text-[10px] text-slate-300">
+                        <li>• Campus helpers</li>
+                        <li>• Tutors and trainers</li>
+                        <li>• Event staff</li>
+                      </ul>
+                    </div>
+                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
+                      <p className="text-xs font-semibold text-slate-50">Skilled professionals</p>
+                      <p className="mt-1 text-[11px] text-slate-300">
+                        Mechanics, drivers, technicians and experienced home support.
+                      </p>
+                      <ul className="mt-2 space-y-1 text-[10px] text-slate-300">
+                        <li>• Drivers & riders</li>
+                        <li>• Service technicians</li>
+                        <li>• Home & care support</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </SwiperSlide>
             </Swiper>
+          </div>
+        </section>
+
+        <section className="border-b border-slate-800/60 bg-slate-950">
+          <div className="mx-auto max-w-6xl px-4 pt-4 pb-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+                  Search
+                </p>
+                <p className="text-xs text-slate-300 sm:text-sm">
+                  Search across jobs and workers by title, category or location.
+                </p>
+              </div>
+              <div className="w-full max-w-md">
+                <div className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-xs text-slate-100">
+                  <i className="bx bx-search-alt-2 text-slate-400 text-xs" />
+                  <input
+                    type="text"
+                    placeholder="Search jobs or people"
+                    value={filters.searchValue}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="w-full bg-transparent text-xs text-slate-100 outline-none placeholder:text-slate-500"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -196,7 +354,6 @@ export default function NewsfeedPage() {
           <div className="mx-auto max-w-6xl px-4 pt-6 pb-12 flex flex-col gap-6 md:flex-row">
             <div className="md:w-1/3 lg:w-1/4">
               <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-3 sm:p-4">
-                <p className="text-xs font-semibold text-slate-200 mb-2">Filters</p>
                 <FilterSidebar onFilterChange={handleFilterChange} />
               </div>
             </div>
@@ -264,4 +421,3 @@ export default function NewsfeedPage() {
     </div>
   );
 }
-

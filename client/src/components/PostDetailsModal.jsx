@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import api from '../services/api';
-import './PostDetailsModal.css';
 
 export default function PostDetailsModal({ post, user, onClose }) {
     const [details, setDetails] = useState(null);
@@ -135,21 +134,38 @@ export default function PostDetailsModal({ post, user, onClose }) {
     };
 
     const renderComment = (comment) => (
-        <div key={comment._id} className="comment_container" style={{ marginLeft: comment.parent_id ? '20px' : '0', marginTop: '10px' }}>
-            <div className="comment_card" style={{ borderLeft: '4px solid #1a1d86', paddingLeft: '10px', backgroundColor: '#f9f9f9', padding: '10px', borderRadius: '5px' }}>
-                <h3 className="comment_title" style={{ margin: '0 0 5px 0', fontSize: '14px', color: '#333' }}>{comment.user_name}</h3>
-                <p style={{ margin: '0 0 10px 0', fontSize: '13px' }}>{comment.text}</p>
-                <div className="comment_footer" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div className="reply" onClick={() => setReplyTo({ id: comment._id, name: comment.user_name })} style={{ cursor: 'pointer', color: '#1a1d86', fontWeight: 'bold', fontSize: '12px' }}>reply</div>
-                    <div className="show_reply" style={{fontSize: '11px', color: '#888'}}>
+        <div
+            key={comment._id}
+            className={`mt-3 ${comment.parent_id ? 'ml-4 sm:ml-6' : ''}`}
+        >
+            <div className="rounded-xl border border-slate-800 bg-slate-900/80 p-3 sm:p-3.5">
+                <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xs font-semibold text-slate-100">
+                        {comment.user_name}
+                    </h3>
+                    <span className="text-[10px] text-slate-500">
                         {new Date(comment.created_at).toLocaleString()}
-                    </div>
+                    </span>
+                </div>
+                <p className="mt-1 text-xs text-slate-200 leading-relaxed">
+                    {comment.text}
+                </p>
+                <div className="mt-2 flex items-center justify-between">
+                    <button
+                        type="button"
+                        onClick={() => setReplyTo({ id: comment._id, name: comment.user_name })}
+                        className="text-[11px] font-medium text-emerald-400 hover:text-emerald-300"
+                    >
+                        Reply
+                    </button>
                 </div>
             </div>
             {comment.children && comment.children.length > 0 && (
-                 <div style={{ marginLeft: '10px' }}>
-                    {comment.children.sort((a,b) => new Date(a.created_at) - new Date(b.created_at)).map(child => renderComment(child))}
-                 </div>
+                <div className="ml-3 border-l border-slate-800 pl-3">
+                    {comment.children
+                        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+                        .map((child) => renderComment(child))}
+                </div>
             )}
         </div>
     );
@@ -157,101 +173,155 @@ export default function PostDetailsModal({ post, user, onClose }) {
     if (!post) return null;
 
     return (
-        <div className="details_overlay">
-            <div className="details_content">
-                <span className="close-btn" onClick={onClose}>
-                    <i className="fa-solid fa-times"></i>
-                </span>
-                
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 px-3 sm:px-4">
+            <div className="relative w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-3xl border border-slate-800 bg-slate-950 shadow-2xl">
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="absolute right-4 top-4 inline-flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white text-xs"
+                >
+                    <i className="fa-solid fa-times" />
+                </button>
+
                 {loading ? (
-                    <p style={{ textAlign: 'center', marginTop: '20px' }}>Loading details...</p>
+                    <div className="flex h-60 items-center justify-center text-xs text-slate-300">
+                        Loading details...
+                    </div>
                 ) : details ? (
-                    <div className="details_body">
-                        <div className="details_body_left">
-                            <div className="details_body_left_head">
-                                <div className="basic_info">
-                                    <div className="title">
-                                        <span>{details.title}</span>
-                                    </div>
-                                    <div className="budget_time">
-                                        <p>Est. budget: {details.budget} BDT</p>
-                                        <p>Posted {post.time_ago || 'recently'}</p>
-                                    </div>
-                                    <div className="tag">
-                                        <ul>
-                                            <li>{details.category}</li>
-                                        </ul>
-                                    </div>
-                                    <div className="details_location">
-                                        <i className="fa-solid fa-location-dot"></i>
-                                        <p>{details.division}, {details.district}</p>
-                                    </div>
+                    <div className="flex flex-col gap-4 px-4 pb-4 pt-5 sm:px-5 sm:pt-6 sm:pb-5 overflow-y-auto max-h-[90vh]">
+                        <div className="flex flex-col gap-4 border-b border-slate-800 pb-4 sm:flex-row sm:items-start sm:justify-between">
+                            <div className="flex-1">
+                                <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300 mb-1">
+                                    <span className="h-1 w-1 rounded-full bg-emerald-400" />
+                                    <span>Job detail</span>
                                 </div>
-                                
-                                <div className="best_bid">
-                                    <div className="best_bid_box">
-                                        <p className="best_bidder_name">{maxBidUserName}</p>
-                                        <p><span>{maxBid}</span> BDT</p>
-                                    </div>
-                                    <div className="bid_label">
-                                        <p>BEST BID</p>
-                                    </div>
+                                <h2 className="text-base sm:text-lg font-semibold text-slate-50">
+                                    {details.title}
+                                </h2>
+                                <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] text-slate-400">
+                                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-900/80 px-2.5 py-0.5 border border-slate-700">
+                                        Est. budget:{' '}
+                                        <span className="text-slate-100 font-medium">
+                                            {details.budget} BDT
+                                        </span>
+                                    </span>
+                                    <span className="inline-flex items-center gap-1">
+                                        <span className="h-1 w-1 rounded-full bg-slate-600" />
+                                        Posted {post.time_ago || 'recently'}
+                                    </span>
+                                    <span className="inline-flex items-center gap-1">
+                                        <i className="fa-solid fa-location-dot text-slate-500" />
+                                        <span>
+                                            {details.division}, {details.district}
+                                        </span>
+                                    </span>
                                 </div>
-                                
-                                <div className="sumbit_bid">
-                                    <div className="submit_bid_box">
-                                        <input 
-                                            type="number" 
-                                            placeholder="Enter your bid" 
+                                {details.category && (
+                                    <div className="mt-2">
+                                        <span className="inline-flex items-center rounded-full bg-slate-950/70 px-2.5 py-0.5 text-[11px] font-medium text-sky-300 border border-slate-700">
+                                            {details.category}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="w-full max-w-xs rounded-2xl border border-slate-800 bg-slate-900/70 p-3">
+                                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-slate-400">
+                                    Best bid
+                                </p>
+                                <div className="mt-2 flex items-baseline justify-between">
+                                    <span className="text-sm font-semibold text-slate-50">
+                                        {maxBidUserName}
+                                    </span>
+                                    <span className="text-xs font-medium text-emerald-400">
+                                        {maxBid} BDT
+                                    </span>
+                                </div>
+                                <div className="mt-3">
+                                    <label className="text-[11px] text-slate-400 mb-1 block">
+                                        Place your bid
+                                    </label>
+                                    <div className="flex items-center gap-2">
+                                        <input
+                                            type="number"
+                                            placeholder="Enter your bid"
                                             value={bidValue}
                                             onChange={(e) => setBidValue(e.target.value)}
+                                            className="flex-1 rounded-full border border-slate-700 bg-slate-950/70 px-3 py-1.5 text-xs text-slate-100 outline-none placeholder:text-slate-500"
                                         />
-                                    </div>
-                                    <div>
-                                        <button className="submit_btn" onClick={handleBidSubmit}>SUBMIT</button>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="details_body_left_body">
-                                <p id="details">Details:</p>
-                                <span className="post_detail_detail">
-                                    {details.detail}
-                                </span>
-                            </div>
-                            
-                            <div className="comment">
-                                <p id="comment">Comments:</p>
-                                <div className="comment_container opened">
-                                    {comments.length === 0 ? (
-                                        <p style={{padding: '10px', color: '#666'}}>No comments yet.</p>
-                                    ) : (
-                                        buildCommentTree(comments).map(comment => renderComment(comment))
-                                    )}
-                                    
-                                    <div className="comment_box" style={{ marginTop: '20px' }}>
-                                        {replyTo && (
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', fontSize: '12px', color: '#666' }}>
-                                                <span>Replying to <b>{replyTo.name}</b></span>
-                                                <span onClick={() => setReplyTo(null)} style={{ cursor: 'pointer', color: 'red' }}>Cancel</span>
-                                            </div>
-                                        )}
-                                        <form onSubmit={handleCommentSubmit}>
-                                            <textarea 
-                                                name="message" 
-                                                placeholder={replyTo ? `Replying to ${replyTo.name}...` : "Write comment"}
-                                                value={newComment}
-                                                onChange={(e) => setNewComment(e.target.value)}
-                                            ></textarea>
-                                            <input type="submit" value="Comment" />
-                                        </form>
+                                        <button
+                                            type="button"
+                                            onClick={handleBidSubmit}
+                                            className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1.5 text-[11px] font-medium text-white hover:bg-emerald-600"
+                                        >
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div>
+                            <p className="text-xs font-semibold text-slate-300 mb-1">Details</p>
+                            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed whitespace-pre-line">
+                                {details.detail}
+                            </p>
+                        </div>
+
+                        <div className="mt-2 rounded-2xl border border-slate-800 bg-slate-900/60 p-3 sm:p-4">
+                            <p className="text-xs font-semibold text-slate-300 mb-2">Comments</p>
+
+                            {comments.length === 0 ? (
+                                <p className="text-[11px] text-slate-500">No comments yet.</p>
+                            ) : (
+                                <div className="mt-1">
+                                    {buildCommentTree(comments).map((comment) => renderComment(comment))}
+                                </div>
+                            )}
+
+                            <div className="mt-4 border-t border-slate-800 pt-3">
+                                {replyTo && (
+                                    <div className="mb-2 flex items-center justify-between text-[11px] text-slate-400">
+                                        <span>
+                                            Replying to <span className="font-semibold">{replyTo.name}</span>
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() => setReplyTo(null)}
+                                            className="text-red-400 hover:text-red-300"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                )}
+                                <form onSubmit={handleCommentSubmit} className="space-y-2">
+                                    <textarea
+                                        name="message"
+                                        placeholder={
+                                            replyTo
+                                                ? `Replying to ${replyTo.name}...`
+                                                : 'Write a comment'
+                                        }
+                                        value={newComment}
+                                        onChange={(e) => setNewComment(e.target.value)}
+                                        className="min-h-[70px] w-full rounded-2xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-xs text-slate-100 outline-none placeholder:text-slate-500"
+                                    />
+                                    <div className="flex justify-end">
+                                        <button
+                                            type="submit"
+                                            className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-medium text-slate-900 hover:bg-white"
+                                        >
+                                            Comment
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 ) : (
-                    <p>Details not found.</p>
+                    <div className="flex h-60 items-center justify-center text-xs text-slate-300">
+                        Details not found.
+                    </div>
                 )}
             </div>
         </div>
