@@ -9,7 +9,7 @@ const password = process.env.PASSWORD;
 exports.verify_login = async (req, res) => {
     try {
         const {email, password } = req.body;
-
+        console.log(email, password);
         if(email == "admin@free2work.com" && password == "12") {
             req.session.user_id = "admin@free2work.com"
             res.json({message:"admin"});

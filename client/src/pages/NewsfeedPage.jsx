@@ -149,54 +149,67 @@ export default function NewsfeedPage() {
     };
 
     if (loading) {
-        return <div className="loading">Loading...</div>;
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-gray-50">
+                <div className="text-gray-600 text-sm">Loading...</div>
+            </div>
+        );
     }
 
     return (
-        <div className="newsfeed-page">
+        <div className="newsfeed-page bg-gray-50 min-h-screen">
             <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} onSearch={handleSearch} />
             
-            <div className="advertise" style={{ marginTop: '20px', marginBottom: '20px' }}>
+            <div className="advertise max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-5 mb-6">
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay]}
-                    spaceBetween={50}
+                    spaceBetween={16}
                     slidesPerView={1}
                     navigation
                     pagination={{ clickable: true }}
                     autoplay={{ delay: 3000 }}
                     loop={true}
-                    className="mySwiper"
-                    style={{ height: '300px', borderRadius: '10px' }}
+                    className="mySwiper h-52 sm:h-64 md:h-72 lg:h-80 rounded-xl overflow-hidden"
                 >
-                    <SwiperSlide><img src="/images/4.png" alt="Ad 1" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></SwiperSlide>
-                    <SwiperSlide><img src="/pictures/1.png" alt="Ad 2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></SwiperSlide>
-                    <SwiperSlide><img src="/pictures/2.png" alt="Ad 3" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></SwiperSlide>
+                    <SwiperSlide>
+                        <img src="/images/4.png" alt="Ad 1" className="w-full h-full object-cover" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="/pictures/1.png" alt="Ad 2" className="w-full h-full object-cover" />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img src="/pictures/2.png" alt="Ad 3" className="w-full h-full object-cover" />
+                    </SwiperSlide>
                 </Swiper>
             </div>
 
-            <div className="container">
-                <FilterSidebar onFilterChange={handleFilterChange} />
+            <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 flex flex-col md:flex-row gap-6">
+                <div className="md:w-1/3 lg:w-1/4">
+                    <FilterSidebar onFilterChange={handleFilterChange} />
+                </div>
                 
-                <div className="main_content">
-                    <div className="main_title">
-                        <span>Top results </span>
-                        <div className="sort">
-                            <div id='title'><p>Sort by</p></div>
-                            <div className="sort_value">
-                                <select 
-                                    name="sort_type" 
+                <div className="main_content flex-1">
+                    <div className="main_title flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                        <span className="text-base font-semibold text-gray-800">Top results</span>
+                        <div className="sort flex items-center gap-3">
+                            <div id="title" className="text-sm text-gray-600"><p>Sort by</p></div>
+                            <div className="sort_value flex items-center gap-2">
+                                <select
+                                    name="sort_type"
                                     id="sort_type"
                                     value={sortType}
                                     onChange={(e) => setSortType(e.target.value)}
+                                    className="border border-gray-200 rounded-md text-sm px-2 py-1 bg-white"
                                 >
                                     <option value="Date">Date</option>
                                     <option value="price">Price</option>
                                 </select>
-                                <select 
-                                    name="sort_order" 
+                                <select
+                                    name="sort_order"
                                     id="sort_order"
                                     value={sortOrder}
                                     onChange={(e) => setSortOrder(e.target.value)}
+                                    className="border border-gray-200 rounded-md text-sm px-2 py-1 bg-white"
                                 >
                                     <option value="Ascending">Ascending</option>
                                     <option value="Descending">Descending</option>
@@ -205,7 +218,7 @@ export default function NewsfeedPage() {
                         </div>
                     </div>
                     
-                    <div className="post-list">
+                    <div className="post-list grid gap-4 sm:gap-5">
                         {sortedPosts.map(post => (
                             <PostCard 
                                 key={post._id} 
@@ -213,7 +226,7 @@ export default function NewsfeedPage() {
                                 onShowDetails={() => setSelectedPost(post)} 
                             />
                         ))}
-                        {sortedPosts.length === 0 && <p>No posts found.</p>}
+                        {sortedPosts.length === 0 && <p className="text-sm text-gray-600">No posts found.</p>}
                     </div>
                 </div>
             </div>

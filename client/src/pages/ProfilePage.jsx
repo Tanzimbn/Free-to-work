@@ -8,10 +8,7 @@ import ReviewsModal from '../components/ReviewsModal';
 import ReportUserModal from '../components/ReportUserModal';
 import './ProfilePage.css';
 
-// Default images
-import NoImage from '../../public/pictures/Noimage.png';
-// We might not have the exact path for cover placeholder, let's use a generic one or handle error
-// The HBS used: /user_profile/pictures/1600w-qt_TMRJF4m0.webp
+const NoImage = "/pictures/Noimage.png";
 
 const ProfilePage = () => {
     const { id } = useParams();
@@ -173,20 +170,25 @@ const ProfilePage = () => {
         }
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (!profileData) return <div>Profile not found</div>;
+    if (loading) return <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-600 text-sm">Loading...</div>;
+    if (!profileData) return <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-600 text-sm">Profile not found</div>;
 
     return (
-        <div className="profile-page">
+        <div className="profile-page bg-gray-50 min-h-screen">
             <AuthNavbar />
-            <div className="advertise"></div>
+            <div className="advertise h-6"></div>
             
-            <div className="profile-container">
-                <form encType="multipart/form-data">
+            <div className="profile-container max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+                <form encType="multipart/form-data" className="mb-6">
                     {coverImgSrc ? (
-                        <img src={coverImgSrc} className="cover-img" alt="coverimage" onError={(e) => {e.target.style.display='none'}} />
+                        <img
+                            src={coverImgSrc}
+                            className="cover-img w-full h-40 sm:h-52 md:h-64 object-cover rounded-xl"
+                            alt="coverimage"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                        />
                     ) : (
-                        <div className="cover-img" style={{ backgroundColor: '#ccc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="cover-img w-full h-40 sm:h-52 md:h-64 rounded-xl bg-gray-200 flex items-center justify-center text-gray-600 text-sm">
                             No Cover Image
                         </div>
                     )}
@@ -195,27 +197,33 @@ const ProfilePage = () => {
                         <>
                             <input 
                                 type="file" 
-                                className="admin__input" 
+                                className="admin__input"
                                 id="mycoverFile" 
                                 name="testImage" 
                                 onChange={handleCoverImageUpload}
                                 style={{ display: 'none' }}
                             />
-                            <label htmlFor="mycoverFile" id="choose_cp"> Choose image </label>
+                            <label
+                                htmlFor="mycoverFile"
+                                id="choose_cp"
+                                className="inline-flex mt-3 px-4 py-1 rounded-full bg-slate-900 text-white text-xs cursor-pointer"
+                            >
+                                Choose image
+                            </label>
                         </>
                     )}
                 </form>
 
-                <div className="profile-details">
-                    <div className="pd-left">
-                        <div className="pd-row">
+                <div className="profile-details flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div className="pd-left flex-1">
+                        <div className="pd-row flex gap-4">
                             <div className="edit_pp">
-                                <form encType="multipart/form-data">
+                                <form encType="multipart/form-data" className="flex flex-col items-center">
                                     <img 
                                         src={profileImgSrc} 
                                         alt="dp" 
-                                        className="pd-img" 
-                                        onError={(e) => {e.target.src = NoImage}}
+                                        className="pd-img w-28 h-28 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-white shadow-md -mt-14 md:-mt-16 bg-white"
+                                        onError={(e) => { e.target.src = NoImage; }}
                                     />
                                     {isMainUser && (
                                         <>
@@ -227,100 +235,129 @@ const ProfilePage = () => {
                                                 onChange={handleProfileImageUpload}
                                                 style={{ display: 'none' }}
                                             />
-                                            <label htmlFor="myFile" id="choose_pp">Choose image</label>
+                                            <label
+                                                htmlFor="myFile"
+                                                id="choose_pp"
+                                                className="mt-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs cursor-pointer"
+                                            >
+                                                Choose image
+                                            </label>
                                         </>
                                     )}
                                 </form>
                             </div>
-                            <div>
-                                <h3 className="user_name">
+                            <div className="flex flex-col justify-end">
+                                <h3 className="user_name text-lg sm:text-xl font-semibold flex items-center gap-2">
                                     {profileData.fname} <span> </span> {profileData.lname} 
-                                    <img src="/user_profile/pictures/verified.png" id="verified_img" alt="verified" onError={(e) => e.target.style.display='none'} />
+                                    <img src="/user_profile/pictures/verified.png" id="verified_img" alt="verified" onError={(e) => e.target.style.display='none'} className="w-4 h-4" />
                                 </h3>
-                                <p className="work_title">{profileData.category}</p>
-                                <div className="rating">
+                                <p className="work_title text-sm text-gray-600">{profileData.category}</p>
+                                <div className="rating flex items-center gap-2 mt-1 text-sm text-gray-700">
                                     <p>Ratings:</p>
-                                    <p id="user_rating">{profileData.rating ? Number(profileData.rating).toFixed(1) : '0.0'}</p>
+                                    <p id="user_rating" className="font-semibold">{profileData.rating ? Number(profileData.rating).toFixed(1) : '0.0'}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="pd-right">
-                        <button type="button" id="reviewbtn" onClick={() => setIsReviewsOpen(true)}>
-                            <img src="/user_profile/pictures/review.png" alt="review" onError={(e) => e.target.style.display='none'} />Reviews
+                    <div className="pd-right flex items-center gap-2 mt-2 md:mt-0">
+                        <button
+                            type="button"
+                            id="reviewbtn"
+                            onClick={() => setIsReviewsOpen(true)}
+                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-200 bg-white text-xs sm:text-sm"
+                        >
+                            <img src="/user_profile/pictures/review.png" alt="review" onError={(e) => e.target.style.display='none'} className="w-4 h-4" />
+                            Reviews
                         </button>
                         {isMainUser ? (
-                            <button type="button" id="reportbtn" onClick={() => setIsEditProfileOpen(true)}>
-                                <img src="/user_profile/pictures/edit.png" alt="edit" onError={(e) => e.target.style.display='none'} />Edit profile
+                            <button
+                                type="button"
+                                id="reportbtn"
+                                onClick={() => setIsEditProfileOpen(true)}
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 text-white text-xs sm:text-sm"
+                            >
+                                <img src="/user_profile/pictures/edit.png" alt="edit" onError={(e) => e.target.style.display='none'} className="w-4 h-4" />
+                                Edit profile
                             </button>
                         ) : (
-                            <button type="button" id="reportbtn" onClick={() => setIsReportOpen(true)}>
-                                <img src="/user_profile/pictures/report.png" alt="report" onError={(e) => e.target.style.display='none'} />Report User
+                            <button
+                                type="button"
+                                id="reportbtn"
+                                onClick={() => setIsReportOpen(true)}
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-200 bg-red-50 text-xs sm:text-sm text-red-700"
+                            >
+                                <img src="/user_profile/pictures/report.png" alt="report" onError={(e) => e.target.style.display='none'} className="w-4 h-4" />
+                                Report User
                             </button>
                         )}
                     </div>
                 </div>
 
-                <div className="profile-info">
-                    <div className="info-col">
-                        <div className="profile-intro">
-                            <h3>Bio-</h3>
-                            <p id="profile_bio">{profileData.bio || "No bio available"}</p>
-                            <hr />
-                            <h3>Details</h3>
-                            <ul>
+                <div className="profile-info mt-6 flex flex-col lg:flex-row gap-6">
+                    <div className="info-col lg:w-5/12">
+                        <div className="profile-intro bg-white rounded-xl shadow-sm p-4">
+                            <h3 className="text-base font-semibold mb-2">Bio</h3>
+                            <p id="profile_bio" className="text-sm text-gray-700">{profileData.bio || "No bio available"}</p>
+                            <hr className="my-3" />
+                            <h3 className="text-base font-semibold mb-2">Details</h3>
+                            <ul className="space-y-1 text-sm text-gray-700">
                                 <li><i className="fa-regular fa-envelope"></i>&nbsp; Email : <span>&nbsp;{profileData.email}</span></li>
                                 <li><i className="fa-solid fa-phone"></i>&nbsp; Phone : <span>&nbsp;{profileData.phone}</span></li>
                                 <li><i className="fa-solid fa-map-location-dot"></i>&nbsp; Division : <span>&nbsp;{profileData.division}</span></li>
                                 <li><i className="fa-solid fa-location-dot"></i>&nbsp; District : <span>&nbsp;{profileData.district}</span></li>
                                 <li><i className="fa-solid fa-location-crosshairs"></i>&nbsp; Police Station : <span>&nbsp;{profileData.station}</span></li>
                             </ul>
-                            <hr />
+                            <hr className="my-3" />
                         </div>
                     </div>
 
-                    <div className="post-col">
-                        <div className="main_content">
-                            <h3>Recent Posts:</h3>
-                            <div className="post">
+                    <div className="post-col flex-1">
+                        <div className="main_content bg-white rounded-xl shadow-sm p-4">
+                            <h3 className="text-base font-semibold mb-3">Recent Posts:</h3>
+                            <div className="post space-y-4">
                                 {posts && posts.length > 0 ? posts.map(post => (
-                                    <div className="post-content" key={post._id}>
-                                        <div className="heading">
-                                            <p onClick={() => setSelectedPost(post)} style={{ cursor: 'pointer' }}>{post.title}</p>
+                                    <div className="post-content border border-gray-100 rounded-lg p-3" key={post._id}>
+                                        <div className="heading flex items-start justify-between gap-2">
+                                            <p
+                                                onClick={() => setSelectedPost(post)}
+                                                style={{ cursor: 'pointer' }}
+                                                className="font-semibold text-sm text-gray-900"
+                                            >
+                                                {post.title}
+                                            </p>
                                             {isMainUser && (
                                                 <p>
                                                     <i 
-                                                        className="fa-solid fa-trash-can" 
-                                                        style={{ color: '#db0f0f', cursor: 'pointer' }}
+                                                        className="fa-solid fa-trash-can text-sm text-red-600 cursor-pointer"
                                                         onClick={() => handleDeletePost(post._id)}
                                                     ></i>
                                                 </p>
                                             )}
                                         </div>
-                                        <div className="budget">
+                                        <div className="budget flex flex-wrap items-center gap-2 text-xs text-gray-600 mt-1">
                                             <p>Est. budget: {post.budget} BDT</p>
-                                            <p>.</p>
+                                            <p>•</p>
                                             <p>Posted : {post.time_ago || new Date(post.time).toLocaleDateString()}</p>
                                         </div>
-                                        <div className="details">
+                                        <div className="details mt-2 text-sm text-gray-700">
                                             <p>
                                                 {post.detail && post.detail.length > 100 
                                                     ? `${post.detail.substring(0, 100)}...` 
                                                     : post.detail}
                                             </p>
                                         </div>
-                                        <div className="post_tag">
-                                            <ul>
-                                                <li>{post.category}</li>
+                                        <div className="post_tag mt-2">
+                                            <ul className="flex flex-wrap gap-2 text-xs">
+                                                <li className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-800">{post.category}</li>
                                             </ul>
                                         </div>
-                                        <div className="location">
+                                        <div className="location flex items-center gap-1 mt-2 text-xs text-gray-600">
                                             <i className="fa-solid fa-location-dot"></i>
                                             <p>{post.division}</p>
                                         </div>
                                     </div>
                                 )) : (
-                                    <p>No posts available.</p>
+                                    <p className="text-sm text-gray-600">No posts available.</p>
                                 )}
                             </div>
                         </div>
@@ -328,7 +365,6 @@ const ProfilePage = () => {
                 </div>
             </div>
 
-            {/* Modals */}
             <PostDetailsModal 
                 isOpen={!!selectedPost} 
                 onClose={() => setSelectedPost(null)} 
@@ -356,8 +392,7 @@ const ProfilePage = () => {
                 onClose={() => setIsReportOpen(false)} 
                 targetUserId={id}
             />
-            
-            {/* Overlay for blurring background when modals are open - Optional, can be handled by CSS classes on body */}
+
             {(isEditProfileOpen || isReviewsOpen || isReportOpen) && (
                 <div className="overlay" onClick={() => {
                     setIsEditProfileOpen(false);
