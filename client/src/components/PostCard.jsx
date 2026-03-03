@@ -40,18 +40,18 @@ export default function PostCard({ post, onShowDetails, isOwner, onDelete }) {
 
     const timeAgo = post.time_ago || getTimeAgo(post.time);
 
+    const location = [post.district, post.division].filter(Boolean).join(', ');
+
     return (
-        <article className="group rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-4 sm:px-5 sm:py-4 shadow-sm hover:border-slate-600 hover:bg-slate-900 transition-colors">
-            <div className="flex items-start justify-between gap-3">
-                <button
-                    type="button"
-                    onClick={() => onShowDetails(post)}
-                    className="text-left"
-                >
-                    <h3 className="text-sm sm:text-base font-semibold text-slate-50 group-hover:text-white line-clamp-2">
-                        {post.title}
-                    </h3>
-                </button>
+        <article className="group rounded-2xl border border-slate-800 bg-slate-900/70 px-4 py-4 sm:px-5 transition-all duration-200 hover:border-slate-600 hover:bg-slate-900">
+            {/* Poster row */}
+            <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-slate-700 bg-slate-800 text-slate-400">
+                        <i className="bx bx-user text-xs" />
+                    </div>
+                    <span className="text-[11px] text-slate-400">Posted {timeAgo}</span>
+                </div>
                 {isOwner && onDelete && (
                     <button
                         type="button"
@@ -63,19 +63,22 @@ export default function PostCard({ post, onShowDetails, isOwner, onDelete }) {
                 )}
             </div>
 
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-slate-400">
-                <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-2.5 py-0.5 border border-slate-800">
+            {/* Title */}
+            <h3 className="mb-2 text-sm font-semibold text-slate-50 line-clamp-2 sm:text-base">
+                {post.title}
+            </h3>
+
+            {/* Budget */}
+            <div className="mb-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-300">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                    Est. budget: <span className="text-slate-100 font-medium">{post.budget} BDT</span>
-                </span>
-                <span className="inline-flex items-center gap-1 text-slate-500">
-                    <span className="h-1 w-1 rounded-full bg-slate-600" />
-                    Posted {timeAgo}
+                    {post.budget} BDT
                 </span>
             </div>
 
-            <div className="mt-3 text-xs text-slate-200 leading-relaxed">
-                <p className={isLong ? 'line-clamp-3 sm:line-clamp-4' : ''}>
+            {/* Description */}
+            <div className="mb-3 text-xs leading-relaxed text-slate-300">
+                <p className={!expanded && isLong ? 'line-clamp-3' : ''}>
                     {displayedDetail}
                 </p>
                 {isLong && (
@@ -89,18 +92,29 @@ export default function PostCard({ post, onShowDetails, isOwner, onDelete }) {
                 )}
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+            {/* Footer */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/60 pt-3">
+                <div className="flex flex-wrap items-center gap-1.5">
                     {post.category && (
-                        <span className="inline-flex items-center rounded-full bg-slate-950/60 px-2.5 py-0.5 text-[11px] font-medium text-sky-300 border border-slate-700">
+                        <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-950/60 px-2.5 py-0.5 text-[11px] font-medium text-sky-300">
                             {post.category}
                         </span>
                     )}
+                    {location && (
+                        <span className="flex items-center gap-1 text-[11px] text-slate-400">
+                            <i className="fa-solid fa-location-dot text-[10px] text-slate-500" />
+                            {location}
+                        </span>
+                    )}
                 </div>
-                <div className="flex items-center gap-1 text-[11px] text-slate-400">
-                    <i className="fa-solid fa-location-dot text-slate-500" />
-                    <span>{post.division}</span>
-                </div>
+                <button
+                    type="button"
+                    onClick={() => onShowDetails(post)}
+                    className="inline-flex items-center gap-1 rounded-full border border-slate-700 bg-slate-800 px-3 py-1.5 text-[11px] font-semibold text-slate-100 transition-colors hover:border-slate-600 hover:bg-slate-700"
+                >
+                    View Details
+                    <i className="bx bx-chevron-right text-sm leading-none" />
+                </button>
             </div>
         </article>
     );

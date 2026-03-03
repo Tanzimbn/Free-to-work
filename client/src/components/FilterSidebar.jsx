@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { divisions, districts, thanas } from '../utils/locationData';
 
@@ -9,13 +9,10 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
     const [district, setDistrict] = useState('');
     const [thana, setThana] = useState('');
     const [category, setCategory] = useState('');
-    
-    // Derived state for dropdown options
+
     const [districtOptions, setDistrictOptions] = useState([]);
     const [thanaOptions, setThanaOptions] = useState([]);
-
-    // Category suggestions (mock or fetched)
-    const [allCategories, setAllCategories] = useState([]); // This should ideally come from API
+    const [allCategories, setAllCategories] = useState([]);
     const [categorySuggestions, setCategorySuggestions] = useState([]);
 
     useEffect(() => {
@@ -33,8 +30,6 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
     }, []);
 
     useEffect(() => {
-        // Notify parent of filter changes
-        // Debounce could be added here if needed
         onFilterChange({
             price_min: priceMin,
             price_max: priceMax,
@@ -45,12 +40,11 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
         });
     }, [priceMin, priceMax, division, district, thana, category]);
 
-    // Update district options when division changes
     useEffect(() => {
         if (division && districts[division]) {
             setDistrictOptions(districts[division]);
-            setDistrict(''); // Reset district
-            setThana(''); // Reset thana
+            setDistrict('');
+            setThana('');
         } else {
             setDistrictOptions([]);
             setDistrict('');
@@ -58,11 +52,10 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
         }
     }, [division]);
 
-    // Update thana options when district changes
     useEffect(() => {
         if (district && thanas[district]) {
             setThanaOptions(thanas[district]);
-            setThana(''); // Reset thana
+            setThana('');
         } else {
             setThanaOptions([]);
             setThana('');
@@ -73,9 +66,8 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
         const val = e.target.value;
         setCategory(val);
         if (val.length > 0) {
-            // Filter suggestions
-            // const filtered = allCategories.filter(c => c.toLowerCase().includes(val.toLowerCase()));
-            // setCategorySuggestions(filtered);
+            const filtered = allCategories.filter(c => c.toLowerCase().includes(val.toLowerCase()));
+            setCategorySuggestions(filtered);
         } else {
             setCategorySuggestions([]);
         }
@@ -88,26 +80,25 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
 
     return (
         <div className="space-y-6">
-            <div>
-                <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-xs font-semibold tracking-[0.18em] text-slate-400 uppercase">
-                        Filters
-                    </h2>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            setPriceMin('');
-                            setPriceMax('');
-                            setDivision('');
-                            setDistrict('');
-                            setThana('');
-                            setCategory('');
-                        }}
-                        className="text-[11px] font-medium text-slate-400 hover:text-slate-200"
-                    >
-                        Clear all
-                    </button>
-                </div>
+            <div className="flex items-center justify-between">
+                <h2 className="text-xs font-semibold tracking-[0.18em] text-slate-400 uppercase">
+                    Filters
+                </h2>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setPriceMin('');
+                        setPriceMax('');
+                        setDivision('');
+                        setDistrict('');
+                        setThana('');
+                        setCategory('');
+                        setCategorySuggestions([]);
+                    }}
+                    className="text-[11px] font-medium text-slate-400 hover:text-slate-200"
+                >
+                    Clear all
+                </button>
             </div>
 
             {showPrice && (
@@ -119,10 +110,7 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                         <button
                             type="button"
                             className="text-[11px] text-slate-400 hover:text-slate-200"
-                            onClick={() => {
-                                setPriceMin('');
-                                setPriceMax('');
-                            }}
+                            onClick={() => { setPriceMin(''); setPriceMax(''); }}
                         >
                             Clear
                         </button>
@@ -168,16 +156,11 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                     <button
                         type="button"
                         className="text-[11px] text-slate-400 hover:text-slate-200"
-                        onClick={() => {
-                            setDivision('');
-                            setDistrict('');
-                            setThana('');
-                        }}
+                        onClick={() => { setDivision(''); setDistrict(''); setThana(''); }}
                     >
                         Clear
                     </button>
                 </div>
-
                 <div className="space-y-3">
                     <div>
                         <p className="text-[11px] text-slate-400 mb-1">Division</p>
@@ -186,18 +169,15 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                             <select
                                 value={division}
                                 onChange={(e) => setDivision(e.target.value)}
-                                className="flex-1 bg-transparent text-xs text-slate-100 outline-none"
+                                className="flex-1 bg-slate-950 text-xs text-slate-100 outline-none"
                             >
                                 <option value="">Select division</option>
                                 {divisions.map((div) => (
-                                    <option key={div} value={div}>
-                                        {div}
-                                    </option>
+                                    <option key={div} value={div}>{div}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
-
                     <div>
                         <p className="text-[11px] text-slate-400 mb-1">District</p>
                         <div className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-950/60 px-3 py-1.5">
@@ -206,18 +186,15 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                                 value={district}
                                 onChange={(e) => setDistrict(e.target.value)}
                                 disabled={!division}
-                                className="flex-1 bg-transparent text-xs text-slate-100 outline-none disabled:text-slate-600"
+                                className="flex-1 bg-slate-950 text-xs text-slate-100 outline-none disabled:text-slate-600 disabled:bg-slate-950"
                             >
                                 <option value="">{division ? 'Select district' : 'Select division first'}</option>
                                 {districtOptions.map((dist) => (
-                                    <option key={dist} value={dist}>
-                                        {dist}
-                                    </option>
+                                    <option key={dist} value={dist}>{dist}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
-
                     <div>
                         <p className="text-[11px] text-slate-400 mb-1">Thana</p>
                         <div className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-950/60 px-3 py-1.5">
@@ -226,13 +203,11 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                                 value={thana}
                                 onChange={(e) => setThana(e.target.value)}
                                 disabled={!district}
-                                className="flex-1 bg-transparent text-xs text-slate-100 outline-none disabled:text-slate-600"
+                                className="flex-1 bg-slate-950 text-xs text-slate-100 outline-none disabled:text-slate-600 disabled:bg-slate-950"
                             >
                                 <option value="">{district ? 'Select thana' : 'Select district first'}</option>
                                 {thanaOptions.map((t) => (
-                                    <option key={t} value={t}>
-                                        {t}
-                                    </option>
+                                    <option key={t} value={t}>{t}</option>
                                 ))}
                             </select>
                         </div>
@@ -248,12 +223,11 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                     <button
                         type="button"
                         className="text-[11px] text-slate-400 hover:text-slate-200"
-                        onClick={() => setCategory('')}
+                        onClick={() => { setCategory(''); setCategorySuggestions([]); }}
                     >
                         Clear
                     </button>
                 </div>
-
                 <div className="space-y-2">
                     <div className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-950/60 px-3 py-1.5">
                         <i className="bx bx-search-alt-2 text-slate-400 text-xs" />
@@ -265,7 +239,6 @@ export default function FilterSidebar({ onFilterChange, showPrice = true }) {
                             className="flex-1 bg-transparent text-xs text-slate-100 outline-none placeholder:text-slate-500"
                         />
                     </div>
-
                     {categorySuggestions.length > 0 && (
                         <div className="rounded-xl border border-slate-800 bg-slate-950/90 max-h-40 overflow-y-auto">
                             <ul className="py-1 text-xs text-slate-100">

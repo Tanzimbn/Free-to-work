@@ -10,7 +10,7 @@ import RegisterPage from './RegisterPage';
 import NewsfeedPage from './NewsfeedPage';
 import ProfilePage from '../pages/ProfilePage';
 import AdminPage from '../pages/AdminPage';
-import ListPage from '../pages/ListPage';
+import ListPage from './ListPage';
 import ErrorPage from '../pages/ErrorPage';
 
 function App() {

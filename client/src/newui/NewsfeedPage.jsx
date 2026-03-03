@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import api from '../services/api';
 import AuthNavbar from '../components/AuthNavbar';
@@ -13,10 +8,36 @@ import PostCard from '../components/PostCard';
 import PostDetailsModal from '../components/PostDetailsModal';
 import CreatePostModal from '../components/CreatePostModal';
 
+function PostCardSkeleton() {
+  return (
+    <div className="animate-pulse rounded-2xl border border-slate-800 bg-slate-900/70 px-5 py-4">
+      <div className="mb-3 flex items-center gap-2">
+        <div className="h-7 w-7 rounded-full bg-slate-800" />
+        <div className="h-2.5 w-28 rounded-full bg-slate-800" />
+      </div>
+      <div className="mb-3 h-4 w-3/4 rounded-full bg-slate-800" />
+      <div className="mb-3 h-5 w-24 rounded-full bg-slate-800" />
+      <div className="mb-4 space-y-1.5">
+        <div className="h-3 w-full rounded-full bg-slate-800" />
+        <div className="h-3 w-5/6 rounded-full bg-slate-800" />
+        <div className="h-3 w-4/6 rounded-full bg-slate-800" />
+      </div>
+      <div className="flex items-center justify-between border-t border-slate-800/60 pt-2">
+        <div className="flex gap-2">
+          <div className="h-5 w-20 rounded-full bg-slate-800" />
+          <div className="h-5 w-16 rounded-full bg-slate-800" />
+        </div>
+        <div className="h-7 w-28 rounded-full bg-slate-800" />
+      </div>
+    </div>
+  );
+}
+
 export default function NewsfeedPage() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [postsLoading, setPostsLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [sortType, setSortType] = useState('Date');
@@ -69,6 +90,7 @@ export default function NewsfeedPage() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      setPostsLoading(true);
       try {
         const postsRes = await api.post('/post_filter', filters);
         if (postsRes.data && Array.isArray(postsRes.data)) {
@@ -80,6 +102,8 @@ export default function NewsfeedPage() {
         }
       } catch (err) {
         console.error(err);
+      } finally {
+        setPostsLoading(false);
       }
     };
     fetchPosts();
@@ -133,8 +157,33 @@ export default function NewsfeedPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-200">
-        <div className="text-xs sm:text-sm">Loading...</div>
+      <div className="min-h-screen bg-slate-950 text-slate-50">
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-[#d11f0c]/15 blur-3xl" />
+          <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
+        </div>
+        <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} />
+        <main className="pb-10">
+          <section className="border-b border-slate-800/60 bg-slate-950/80">
+            <div className="mx-auto max-w-6xl px-4 pt-4 pb-7">
+              <div className="animate-pulse space-y-2">
+                <div className="h-2.5 w-16 rounded-full bg-slate-800" />
+                <div className="h-6 w-64 rounded-full bg-slate-800" />
+                <div className="h-3 w-80 rounded-full bg-slate-800" />
+              </div>
+            </div>
+          </section>
+          <section className="bg-slate-950">
+            <div className="mx-auto max-w-6xl px-4 pt-6 pb-12 flex flex-col gap-6 md:flex-row">
+              <div className="md:w-1/3 lg:w-1/4">
+                <div className="animate-pulse rounded-2xl border border-slate-800 bg-slate-900/70 h-72" />
+              </div>
+              <div className="flex-1 grid gap-4">
+                {[...Array(4)].map((_, i) => <PostCardSkeleton key={i} />)}
+              </div>
+            </div>
+          </section>
+        </main>
       </div>
     );
   }
@@ -167,185 +216,28 @@ export default function NewsfeedPage() {
           </div>
         </section>
 
-        <section className="border-b border-slate-800/60 bg-slate-950">
-          <div className="mx-auto max-w-6xl px-4 pt-4 pb-6">
-            <Swiper
-              modules={[Autoplay]}
-              spaceBetween={20}
-              slidesPerView={1}
-              autoplay={{ delay: 4000 }}
-              loop
-              className="mySwiper h-40 sm:h-44 md:h-52 lg:h-56 overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950"
-            >
-              <SwiperSlide>
-                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
-                  <div className="max-w-md space-y-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-300">
-                      About freetowork
-                    </p>
-                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
-                      One place for local jobs and trusted workers
-                    </h2>
-                    <p className="text-xs text-slate-300 sm:text-sm">
-                      FreeToWork connects people who need help with students, professionals and
-                      everyday workers nearby for daily, part-time and project based jobs.
-                    </p>
-                    <div className="flex flex-wrap gap-2 text-[10px] sm:text-[11px]">
-                      <span className="inline-flex items-center rounded-full border border-emerald-500/60 bg-emerald-500/10 px-3 py-1 text-emerald-200">
-                        <i className="bx bx-check-circle mr-1 text-xs" />
-                        Verified community
-                      </span>
-                      <span className="inline-flex items-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-slate-100">
-                        <i className="bx bx-map-pin mr-1 text-xs" />
-                        Nearby & flexible
-                      </span>
-                    </div>
-                  </div>
-                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        Quick view
-                      </p>
-                      <p className="mt-2 text-xs font-semibold text-slate-50 sm:text-sm">
-                        3K+ active opportunities
-                      </p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        Short-term, long-term and one-time jobs around you.
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        For both sides
-                      </p>
-                      <p className="mt-2 text-xs font-semibold text-slate-50 sm:text-sm">
-                        Workers & job posters
-                      </p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        See real profiles and connect with the right people.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
-                  <div className="max-w-md space-y-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-300">
-                      Job categories
-                    </p>
-                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
-                      Find all kinds of local work in one feed
-                    </h2>
-                    <p className="text-xs text-slate-300 sm:text-sm">
-                      From delivery and tutoring to home repairs, explore jobs that match your
-                      time, skills and location.
-                    </p>
-                  </div>
-                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-xs font-semibold text-slate-50">Daily & part-time</p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        Delivery, driving, helper work, shop support and more.
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Delivery
-                        </span>
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Driving
-                        </span>
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Shop help
-                        </span>
-                      </div>
-                    </div>
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-xs font-semibold text-slate-50">Skilled & services</p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        Tuition, tech support, design, repair and event work.
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Tuition
-                        </span>
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Tech
-                        </span>
-                        <span className="rounded-full bg-slate-900 px-2 py-0.5 text-[10px] text-slate-200">
-                          Events
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className="flex h-full w-full flex-col justify-center gap-6 px-4 py-4 sm:px-6 md:flex-row md:px-10">
-                  <div className="max-w-md space-y-3">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-purple-300">
-                      Types of workers
-                    </p>
-                    <h2 className="text-lg font-semibold text-slate-50 sm:text-xl md:text-2xl">
-                      Reach the right people for every type of task
-                    </h2>
-                    <p className="text-xs text-slate-300 sm:text-sm">
-                      Post a job and connect with students, professionals and experienced local
-                      workers ready to help.
-                    </p>
-                  </div>
-                  <div className="grid flex-1 grid-cols-2 gap-3 text-[11px] sm:text-xs">
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-xs font-semibold text-slate-50">Students & learners</p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        Flexible part-time workers looking to build experience and income.
-                      </p>
-                      <ul className="mt-2 space-y-1 text-[10px] text-slate-300">
-                        <li>• Campus helpers</li>
-                        <li>• Tutors and trainers</li>
-                        <li>• Event staff</li>
-                      </ul>
-                    </div>
-                    <div className="rounded-2xl border border-slate-800 bg-slate-900/80 p-3">
-                      <p className="text-xs font-semibold text-slate-50">Skilled professionals</p>
-                      <p className="mt-1 text-[11px] text-slate-300">
-                        Mechanics, drivers, technicians and experienced home support.
-                      </p>
-                      <ul className="mt-2 space-y-1 text-[10px] text-slate-300">
-                        <li>• Drivers & riders</li>
-                        <li>• Service technicians</li>
-                        <li>• Home & care support</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          </div>
-        </section>
 
-        <section className="border-b border-slate-800/60 bg-slate-950">
-          <div className="mx-auto max-w-6xl px-4 pt-4 pb-6">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-                  Search
-                </p>
-                <p className="text-xs text-slate-300 sm:text-sm">
-                  Search across jobs and workers by title, category or location.
-                </p>
+        <section className="border-b border-slate-800/60 bg-slate-950 py-4">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="flex items-stretch gap-2">
+              <div className="flex flex-1 items-center gap-2 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3">
+                <i className="bx bx-search-alt-2 flex-shrink-0 text-base text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Job title, category, or keywords..."
+                  value={filters.searchValue}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                />
               </div>
-              <div className="w-full max-w-md">
-                <div className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-3 py-2 text-xs text-slate-100">
-                  <i className="bx bx-search-alt-2 text-slate-400 text-xs" />
-                  <input
-                    type="text"
-                    placeholder="Search jobs or people"
-                    value={filters.searchValue}
-                    onChange={(e) => handleSearch(e.target.value)}
-                    className="w-full bg-transparent text-xs text-slate-100 outline-none placeholder:text-slate-500"
-                  />
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() => handleSearch(filters.searchValue)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-500"
+              >
+                <i className="bx bx-search text-base" />
+                <span className="hidden sm:inline">Search Jobs</span>
+              </button>
             </div>
           </div>
         </section>
@@ -391,14 +283,17 @@ export default function NewsfeedPage() {
               </div>
 
               <div className="grid gap-4">
-                {sortedPosts.map((post) => (
-                  <PostCard
-                    key={post._id}
-                    post={post}
-                    onShowDetails={() => setSelectedPost(post)}
-                  />
-                ))}
-                {sortedPosts.length === 0 && (
+                {postsLoading
+                  ? [...Array(4)].map((_, i) => <PostCardSkeleton key={i} />)
+                  : sortedPosts.map((post) => (
+                    <PostCard
+                      key={post._id}
+                      post={post}
+                      onShowDetails={() => setSelectedPost(post)}
+                    />
+                  ))
+                }
+                {!postsLoading && sortedPosts.length === 0 && (
                   <p className="text-xs text-slate-400">No posts found with current filters.</p>
                 )}
               </div>

@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 export default function AuthNavbar({ onPostClick }) {
-    const { user, logout, notifications, hasUnseenNotifications, updateUser, refreshNotifications } = useAuth();
+    const { user, logout, notifications, hasUnseenNotifications, updateUser } = useAuth();
     const [menuActive, setMenuActive] = useState(false);
     const [notiActive, setNotiActive] = useState(false);
-    const navigate = useNavigate();
     const [userImage, setUserImage] = useState('');
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const menuRef = useRef(null);
+    const notiRef = useRef(null);
 
     useEffect(() => {
         if (user && user.img && user.img.data) {
             try {
-                // Check if user.img.data is buffer (array of bytes)
-                // If backend sends it as buffer object { type: 'Buffer', data: [...] }
                 const bufferData = user.img.data.data || user.img.data;
                 const base64String = btoa(
                     new Uint8Array(bufferData).reduce(
@@ -26,26 +27,26 @@ export default function AuthNavbar({ onPostClick }) {
                 setUserImage(`data:${user.img.contentType};base64,${base64String}`);
             } catch (e) {
                 console.error("Error processing image", e);
-                setUserImage("");
+                setUserImage('');
             }
         } else {
-            setUserImage("");
+            setUserImage('');
         }
     }, [user]);
+
+    // Close dropdowns on outside click
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target)) setMenuActive(false);
+            if (notiRef.current && !notiRef.current.contains(e.target)) setNotiActive(false);
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     const handleLogout = async () => {
         await logout();
         navigate('/login');
-    };
-
-    const toggleMenu = () => {
-        setMenuActive(!menuActive);
-        if (notiActive) setNotiActive(false);
-    };
-
-    const toggleNoti = () => {
-        setNotiActive(!notiActive);
-        if (menuActive) setMenuActive(false);
     };
 
     const handleMoodToggle = async () => {
@@ -54,7 +55,7 @@ export default function AuthNavbar({ onPostClick }) {
         try {
             await api.post('/update_mood', { check: newMood });
             updateUser({ ...user, mood: newMood });
-            toast.info(newMood ? "Free mood is on!" : "Work mood on! You won't get any notification of new post.");
+            toast.info(newMood ? "You're now available for work." : "Job alerts paused.");
         } catch (error) {
             console.error("Failed to update mood", error);
         }
@@ -73,174 +74,202 @@ export default function AuthNavbar({ onPostClick }) {
         }
     };
 
+    const navLinkClass = (path) =>
+        `inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-colors ${
+            pathname.startsWith(path)
+                ? 'bg-slate-800 text-slate-50'
+                : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+        }`;
+
     return (
         <header className="sticky top-0 z-40 border-b border-slate-800/60 bg-slate-950/95 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:py-3.5">
-                <div className="flex items-center gap-2 sm:gap-3">
-                    <Link to="/newsfeed" className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d11f0c] text-[11px] font-semibold text-white shadow-sm shadow-[#d11f0c]/40 sm:h-9 sm:w-9">
+            <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+
+                {/* Left: Logo + Nav */}
+                <div className="flex items-center gap-4">
+                    <Link to="/newsfeed" className="flex flex-shrink-0 items-center gap-2.5">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d11f0c] text-[11px] font-bold text-white shadow-sm shadow-[#d11f0c]/40">
                             FT
                         </div>
-                        <div className="flex flex-col">
-                            <span className="text-xs font-semibold text-slate-50 sm:text-sm">
-                                FreeToWork
-                            </span>
-                            <span className="hidden text-[10px] text-slate-500 sm:block">
-                                Live opportunities
-                            </span>
-                        </div>
+                        <span className="hidden text-sm font-semibold text-slate-50 sm:block">
+                            FreeToWork
+                        </span>
                     </Link>
 
-                    <nav className="hidden items-center gap-4 text-[11px] font-medium text-slate-300 sm:flex">
-                        <Link to="/newsfeed" className="inline-flex items-center gap-1 hover:text-slate-50">
+                    <div className="hidden h-5 w-px bg-slate-800 sm:block" />
+
+                    <nav className="hidden items-center gap-1 sm:flex">
+                        <Link to="/newsfeed" className={navLinkClass('/newsfeed')}>
                             <i className="bx bxs-home-alt-2 text-xs" />
-                            <span>Newsfeed</span>
+                            Newsfeed
                         </Link>
-                        <Link to="/list" className="inline-flex items-center gap-1 hover:text-slate-50">
+                        <Link to="/list" className={navLinkClass('/list')}>
                             <i className="bx bx-list-ul text-xs" />
-                            <span>Browse list</span>
+                            Browse list
                         </Link>
-                        <button
-                            type="button"
-                            onClick={toggleNoti}
-                            className="relative inline-flex items-center gap-1 hover:text-slate-50"
-                        >
-                            <i className="fa-solid fa-bell text-xs" />
-                            {hasUnseenNotifications && (
-                                <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-emerald-400" />
-                            )}
-                            <span>Alerts</span>
-                        </button>
                     </nav>
                 </div>
 
-                <div className="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+                {/* Right: Actions */}
+                <div className="flex items-center gap-2">
+
+                    {/* Post a job */}
                     <button
                         type="button"
                         onClick={handlePostClick}
-                        className="inline-flex items-center rounded-full bg-emerald-500 px-3 py-1.5 text-[11px] font-medium text-white shadow-sm hover:bg-emerald-600 sm:px-4 sm:text-xs"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm transition-colors hover:bg-emerald-600 sm:px-4"
                     >
+                        <i className="bx bx-plus text-sm" />
                         <span className="hidden sm:inline">Post a job</span>
-                        <span className="sm:hidden">Post</span>
                     </button>
 
-                    <button
-                        type="button"
-                        className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-1.5 py-1 pl-1.5 pr-2 text-left sm:px-2"
-                        onClick={toggleMenu}
-                    >
-                        <img
-                            src={userImage || '/pictures/user.png'}
-                            alt="User"
-                            className="h-7 w-7 rounded-full object-cover ring-1 ring-slate-600 sm:h-8 sm:w-8"
-                        />
-                        <div className="hidden sm:flex flex-col">
-                            <span className="text-[11px] font-medium text-slate-50">
-                                {user ? user.fname : 'User'}
-                            </span>
-                            <span className="text-[10px] text-slate-500">
-                                {user ? user.category : ''}
-                            </span>
-                        </div>
-                        <i className="bx bx-chevron-down hidden text-slate-500 sm:block" />
-                    </button>
-                </div>
-            </div>
-
-            <div
-                className={`absolute right-4 top-full mt-3 w-72 rounded-2xl border border-slate-800 bg-slate-950/95 text-xs text-slate-100 shadow-xl backdrop-blur transition-all ${
-                    notiActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
-                }`}
-            >
-                <div className="flex items-center justify-between px-3 py-2 border-b border-slate-800">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        Notifications
-                    </p>
-                    <button
-                        type="button"
-                        onClick={toggleNoti}
-                        className="text-[10px] text-slate-500 hover:text-slate-200"
-                    >
-                        Close
-                    </button>
-                </div>
-                <div className="max-h-64 overflow-y-auto px-3 py-2">
-                    {notifications && notifications.length > 0 ? (
-                        notifications.map((noti, index) => (
-                            <button
-                                key={index}
-                                type="button"
-                                className={`mt-1 w-full rounded-xl px-3 py-2 text-left text-[11px] ${
-                                    noti.unseen ? 'bg-emerald-500/10 border border-emerald-500/40' : 'bg-slate-900/80 border border-slate-800'
-                                }`}
-                                onClick={() => handleNotificationClick(noti)}
-                            >
-                                <p className="text-slate-100">{noti.type}</p>
-                            </button>
-                        ))
-                    ) : (
-                        <p className="py-4 text-center text-[11px] text-slate-500">
-                            No notifications
-                        </p>
-                    )}
-                </div>
-            </div>
-
-            <div
-                className={`absolute right-4 top-full mt-3 w-64 rounded-2xl border border-slate-800 bg-slate-950/95 text-xs text-slate-100 shadow-xl backdrop-blur transition-all ${
-                    menuActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
-                }`}
-            >
-                <div className="flex flex-col items-center px-4 pt-4 pb-3">
-                    <img
-                        src={userImage || '/pictures/user.png'}
-                        alt="User"
-                        className="mb-2 h-12 w-12 rounded-full object-cover ring-2 ring-slate-700"
-                    />
-                    <div className="text-center">
-                        <p className="text-sm font-semibold text-slate-50">
-                            {user ? `${user.fname} ${user.lname}` : 'User'}
-                        </p>
-                        <p className="text-[11px] text-slate-400">
-                            {user ? user.category : ''}
-                        </p>
-                    </div>
-                    {user && (
+                    {/* Bell */}
+                    <div className="relative" ref={notiRef}>
                         <button
                             type="button"
-                            onClick={handleMoodToggle}
-                            className="mt-3 inline-flex h-7 w-20 items-center rounded-full bg-slate-900 px-1 text-[10px] text-slate-200"
+                            onClick={() => { setNotiActive(p => !p); setMenuActive(false); }}
+                            className="relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200"
                         >
-                            <span
-                                className={`inline-flex h-5 w-9 items-center justify-center rounded-full text-[10px] font-medium transition-all ${
-                                    user.mood ? 'translate-x-0 bg-emerald-500 text-white' : 'translate-x-9 bg-slate-700 text-slate-100'
-                                }`}
-                            >
-                                {user.mood ? 'Free' : 'Busy'}
-                            </span>
+                            <i className="bx bx-bell text-sm" />
+                            {hasUnseenNotifications && (
+                                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-slate-950" />
+                            )}
                         </button>
-                    )}
-                </div>
-                <div className="border-t border-slate-800">
-                    <button
-                        type="button"
-                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left hover:bg-slate-900"
-                        onClick={() => {
-                            navigate('/profile');
-                            setMenuActive(false);
-                        }}
-                    >
-                        <img src="/pictures/user1.png" alt="Profile" className="h-4 w-4 opacity-70" />
-                        <span>My profile</span>
-                    </button>
-                    <button
-                        type="button"
-                        className="flex w-full items-center gap-2 px-4 py-2.5 text-left hover:bg-slate-900"
-                        onClick={handleLogout}
-                    >
-                        <img src="/pictures/logout.png" alt="Logout" className="h-4 w-4 opacity-70" />
-                        <span>Log out</span>
-                    </button>
+
+                        {/* Notification panel */}
+                        <div className={`absolute right-0 top-full mt-2 w-72 rounded-2xl border border-slate-800 bg-slate-950 shadow-xl transition-all duration-150 ${
+                            notiActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
+                        }`}>
+                            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+                                <p className="text-[11px] font-semibold uppercase tracking-widest text-slate-400">
+                                    Notifications
+                                </p>
+                                {hasUnseenNotifications && (
+                                    <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
+                                        New
+                                    </span>
+                                )}
+                            </div>
+                            <div className="max-h-72 overflow-y-auto p-2">
+                                {notifications && notifications.length > 0 ? (
+                                    notifications.map((noti, index) => (
+                                        <button
+                                            key={index}
+                                            type="button"
+                                            className={`w-full rounded-xl px-3 py-2.5 text-left text-[11px] transition-colors hover:bg-slate-800/80 ${
+                                                noti.unseen ? 'border border-emerald-500/30 bg-emerald-500/10' : 'border border-transparent'
+                                            }`}
+                                            onClick={() => handleNotificationClick(noti)}
+                                        >
+                                            <div className="flex items-start gap-2">
+                                                {noti.unseen && (
+                                                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
+                                                )}
+                                                <p className="leading-relaxed text-slate-200">{noti.type}</p>
+                                            </div>
+                                        </button>
+                                    ))
+                                ) : (
+                                    <div className="flex flex-col items-center gap-2 py-8">
+                                        <i className="bx bx-bell-off text-2xl text-slate-600" />
+                                        <p className="text-[11px] text-slate-500">No notifications yet</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* User menu */}
+                    <div className="relative" ref={menuRef}>
+                        <button
+                            type="button"
+                            onClick={() => { setMenuActive(p => !p); setNotiActive(false); }}
+                            className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 py-1 pl-1 pr-2.5 transition-colors hover:border-slate-600"
+                        >
+                            <img
+                                src={userImage || '/pictures/user.png'}
+                                alt="User"
+                                className="h-6 w-6 rounded-full object-cover ring-1 ring-slate-600 sm:h-7 sm:w-7"
+                            />
+                            <div className="hidden min-w-0 sm:flex sm:flex-col">
+                                <span className="max-w-[80px] truncate text-[11px] font-medium text-slate-50">
+                                    {user ? user.fname : 'User'}
+                                </span>
+                                <span className="max-w-[80px] truncate text-[10px] text-slate-500">
+                                    {user ? (user.category || 'Member') : ''}
+                                </span>
+                            </div>
+                            <i className={`bx bx-chevron-down hidden text-sm text-slate-500 transition-transform duration-200 sm:block ${menuActive ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        {/* User dropdown */}
+                        <div className={`absolute right-0 top-full mt-2 w-60 rounded-2xl border border-slate-800 bg-slate-950 shadow-xl transition-all duration-150 ${
+                            menuActive ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-2 opacity-0'
+                        }`}>
+                            {/* Profile header */}
+                            <div className="flex items-center gap-3 border-b border-slate-800 px-4 py-3">
+                                <img
+                                    src={userImage || '/pictures/user.png'}
+                                    alt="User"
+                                    className="h-9 w-9 flex-shrink-0 rounded-full object-cover ring-2 ring-slate-700"
+                                />
+                                <div className="min-w-0">
+                                    <p className="truncate text-sm font-semibold text-slate-50">
+                                        {user ? `${user.fname} ${user.lname}` : 'User'}
+                                    </p>
+                                    <p className="truncate text-[11px] text-slate-400">
+                                        {user ? (user.category || 'Member') : ''}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Availability toggle */}
+                            {user && (
+                                <div className="border-b border-slate-800 px-4 py-3">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div>
+                                            <p className="text-[11px] font-medium text-slate-200">Availability</p>
+                                            <p className="text-[10px] text-slate-500">
+                                                {user.mood ? 'Receiving job alerts' : 'Alerts paused'}
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={handleMoodToggle}
+                                            className={`relative inline-flex h-5 w-9 flex-shrink-0 items-center rounded-full transition-colors duration-200 ${
+                                                user.mood ? 'bg-emerald-500' : 'bg-slate-700'
+                                            }`}
+                                        >
+                                            <span className={`mx-0.5 inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 ${
+                                                user.mood ? 'translate-x-4' : 'translate-x-0'
+                                            }`} />
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Menu items */}
+                            <div className="p-1.5">
+                                <button
+                                    type="button"
+                                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-xs text-slate-300 transition-colors hover:bg-slate-800 hover:text-slate-100"
+                                    onClick={() => { navigate('/profile'); setMenuActive(false); }}
+                                >
+                                    <i className="bx bx-user text-sm text-slate-400" />
+                                    My profile
+                                </button>
+                                <button
+                                    type="button"
+                                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-xs text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                                    onClick={handleLogout}
+                                >
+                                    <i className="bx bx-log-out text-sm" />
+                                    Log out
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </header>
