@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Toggle, CustomProvider } from 'rsuite';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -233,17 +234,15 @@ export default function AuthNavbar({ onPostClick }) {
                                                 {user.mood ? 'Receiving job alerts' : 'Alerts paused'}
                                             </p>
                                         </div>
-                                        <button
-                                            type="button"
-                                            onClick={handleMoodToggle}
-                                            className={`relative inline-flex h-5 w-9 flex-shrink-0 items-center rounded-full transition-colors duration-200 ${
-                                                user.mood ? 'bg-emerald-500' : 'bg-slate-700'
-                                            }`}
-                                        >
-                                            <span className={`mx-0.5 inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-200 ${
-                                                user.mood ? 'translate-x-4' : 'translate-x-0'
-                                            }`} />
-                                        </button>
+                                        <CustomProvider theme="dark">
+                                            <Toggle
+                                                size="sm"
+                                                checked={user.mood}
+                                                onChange={handleMoodToggle}
+                                                checkedChildren="ON"
+                                                unCheckedChildren="OFF"
+                                            />
+                                        </CustomProvider>
                                     </div>
                                 </div>
                             )}

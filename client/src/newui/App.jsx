@@ -8,7 +8,7 @@ import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
 import RegisterPage from './RegisterPage';
 import NewsfeedPage from './NewsfeedPage';
-import ProfilePage from '../pages/ProfilePage';
+import ProfilePage from './ProfilePage';
 import AdminPage from '../pages/AdminPage';
 import ListPage from './ListPage';
 import ErrorPage from '../pages/ErrorPage';

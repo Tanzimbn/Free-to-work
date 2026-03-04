@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@rsuite/icons": "^1.4.0",
     "axios": "^1.13.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
     "react-toastify": "^11.0.5",
+    "rsuite": "^6.1.2",
     "swiper": "^12.1.1"
   },
   "devDependencies": {
