@@ -4,170 +4,203 @@ import { toast } from 'react-toastify';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
-    const [forgotEmail, setForgotEmail] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { login } = useAuth();
+function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        if (queryParams.get('verified') === 'true') {
-            toast.success("Email verified successfully! You can now login.");
-            // Remove query param from URL without reload
-            window.history.replaceState({}, document.title, "/login");
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (queryParams.get('verified') === 'true') {
+      toast.success('Email verified successfully! You can now login.');
+      window.history.replaceState({}, document.title, '/login');
+    }
+  }, [location]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await login(email, password);
+      if (result.success) {
+        if (result.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/newsfeed');
         }
-    }, [location]);
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error('Login failed. Please try again.');
+    }
+  };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const result = await login(email, password);
-            if (result.success) {
-                if (result.role === 'admin') {
-                    navigate('/admin');
-                } else {
-                    navigate('/newsfeed');
-                }
-            } else {
-                toast.error(result.message);
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error("Login failed. Please try again.");
-        }
-    };
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await api.post('/change_password', { email: forgotEmail });
+      const data = response.data;
+      if (data.state === '1') {
+        toast.success(data.message);
+        setForgotPasswordOpen(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error('Request failed.');
+    }
+  };
 
-    const handleForgotPassword = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await api.post('/change_password', { email: forgotEmail });
-            const data = response.data;
-            if (data.state === "1") {
-                toast.success(data.message);
-                setForgotPasswordOpen(false);
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            console.error(error);
-            toast.error("Request failed.");
-        }
-    };
-
-    return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 px-4">
-            <div className={`w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row ${forgotPasswordOpen ? 'ring-2 ring-slate-300' : ''}`}>
-                <div className="md:w-5/12 bg-slate-900 text-white flex flex-col justify-center p-8 md:p-10">
-                    <div className="mb-6 cursor-pointer" onClick={() => navigate('/')}>
-                        <span className="text-2xl font-bold tracking-wide">FreeToWork.</span>
-                    </div>
-                    <p className="text-2xl md:text-3xl font-semibold mb-2">Welcome!</p>
-                    <p className="text-sm md:text-base mb-4">Are you free to work? Join the community and find a job now.</p>
-                    <p className="text-sm md:text-base mb-4">If you don't have an account then join with us.</p>
-                    <Link
-                        to="/register"
-                        className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white text-slate-900 text-sm font-medium mt-2 hover:bg-slate-100 transition"
-                    >
-                        Register now
-                    </Link>
-                </div>
-                <div className="flex-1 flex flex-col justify-center p-6 md:p-10">
-                    <form className="w-full" onSubmit={handleLogin}>
-                        <p className="text-2xl font-semibold mb-4 text-slate-900">Login</p>
-                        <div className="space-y-4">
-                            <div className="flex items-center gap-2 border border-slate-200 rounded-full px-3 py-2 bg-slate-50">
-                                <label htmlFor="email" className="text-slate-500">
-                                    <i className="bx bx-envelope"></i>
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="flex-1 bg-transparent border-none outline-none text-sm text-slate-900 placeholder:text-slate-400"
-                                />
-                            </div>
-                            <div className="flex items-center gap-2 border border-slate-200 rounded-full px-3 py-2 bg-slate-50">
-                                <label htmlFor="password" className="text-slate-500">
-                                    <i className="bx bx-lock-alt"></i>
-                                </label>
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    name="password"
-                                    id="password"
-                                    placeholder="Enter password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="flex-1 bg-transparent border-none outline-none text-sm text-slate-900 placeholder:text-slate-400"
-                                />
-                                <i
-                                    className={`fa-solid ${showPassword ? 'fa-eye' : 'fa-eye-slash'}`}
-                                    style={{ color: '#FFDAB9', cursor: 'pointer', marginLeft: '10px' }}
-                                    onClick={() => setShowPassword(!showPassword)}
-                                ></i>
-                            </div>
-                        </div>
-                        <input
-                            type="submit"
-                            value="Login"
-                            className="mt-6 w-full rounded-full bg-slate-900 hover:bg-slate-800 text-white py-2 text-sm font-medium cursor-pointer transition"
-                        />
-                    </form>
-                    <div className="forgot-password-link mt-3 text-right">
-                        <a
-                            href="#"
-                            className="text-xs text-slate-600 hover:text-slate-900"
-                            onClick={(e) => { e.preventDefault(); setForgotPasswordOpen(true); }}
-                        >
-                            Forgot Password?
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            {forgotPasswordOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-                    <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 relative">
-                        <button
-                            type="button"
-                            className="absolute top-3 right-3 text-slate-500 hover:text-slate-700 text-xl"
-                            onClick={() => setForgotPasswordOpen(false)}
-                        >
-                            &times;
-                        </button>
-                        <h1 className="text-xl font-semibold mb-4 text-slate-900">Reset Password</h1>
-                        <form onSubmit={handleForgotPassword} className="space-y-4">
-                            <div className="flex flex-col gap-1">
-                                <label htmlFor="forgot-email" className="text-sm font-medium text-slate-700">
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    id="forgot-email"
-                                    required
-                                    value={forgotEmail}
-                                    onChange={(e) => setForgotEmail(e.target.value)}
-                                    className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-slate-300"
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full rounded-full bg-slate-900 hover:bg-slate-800 text-white py-2 text-sm font-medium transition"
-                            >
-                                Send Reset Link
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4">
+      <div className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute -left-20 top-0 h-72 w-72 rounded-full bg-[#d11f0c]/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-500/30 blur-3xl" />
+      </div>
+      <div className="relative grid w-full max-w-4xl overflow-hidden rounded-3xl border border-slate-800 bg-slate-950/80 shadow-2xl shadow-black/60 md:grid-cols-[1.1fr_minmax(0,1fr)]">
+        <div className="relative flex flex-col justify-between border-b border-slate-800/80 px-6 py-6 md:border-b-0 md:border-r md:px-8 md:py-8">
+          <div>
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="mb-6 inline-flex items-center gap-2 text-xs font-medium text-slate-200"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#d11f0c] text-[11px] font-semibold text-white">
+                FT
+              </span>
+              <span>FreeToWork</span>
+            </button>
+            <h1 className="text-2xl font-semibold text-slate-50 sm:text-3xl">Welcome back.</h1>
+            <p className="mt-2 text-sm text-slate-300">
+              Sign in to find nearby work or manage the jobs you have posted.
+            </p>
+          </div>
+          <div className="mt-8 space-y-2 text-xs text-slate-300">
+            <p className="font-medium text-slate-200">New to FreeToWork?</p>
+            <p>Join our trusted community and turn your free time into real income.</p>
+            <Link
+              to="/register"
+              className="inline-flex items-center justify-center rounded-full bg-slate-50 px-4 py-1.5 text-xs font-medium text-slate-900 hover:bg-slate-200"
+            >
+              Create an account
+            </Link>
+          </div>
         </div>
-    );
+
+        <div className="flex flex-col justify-center px-6 py-6 md:px-8 md:py-8">
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <p className="text-sm font-medium text-slate-100">Login</p>
+              <p className="mt-1 text-xs text-slate-400">
+                Use the email and password you registered with.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <div className="space-y-1 text-xs">
+                <label htmlFor="email" className="text-slate-300">
+                  Email
+                </label>
+                <div className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2">
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full bg-transparent text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div className="space-y-1 text-xs">
+                <label htmlFor="password" className="text-slate-300">
+                  Password
+                </label>
+                <div className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-3 py-2">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="w-full bg-transparent text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="text-[11px] font-medium text-slate-400 hover:text-slate-200"
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-[11px] text-slate-400">
+              <button
+                type="button"
+                onClick={() => setForgotPasswordOpen(true)}
+                className="hover:text-slate-200"
+              >
+                Forgot password?
+              </button>
+            </div>
+            <button
+              type="submit"
+              className="w-full rounded-full bg-[#d11f0c] px-4 py-2.5 text-sm font-medium text-white shadow-md shadow-[#d11f0c]/40 hover:bg-[#b91a09]"
+            >
+              Continue
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {forgotPasswordOpen && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 px-4">
+          <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-950/95 p-5 shadow-xl shadow-black/60">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-slate-50">Reset password</h2>
+              <button
+                type="button"
+                onClick={() => setForgotPasswordOpen(false)}
+                className="text-lg text-slate-400 hover:text-slate-200"
+              >
+                ×
+              </button>
+            </div>
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div className="space-y-1 text-xs">
+                <label htmlFor="forgot-email" className="text-slate-300">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="forgot-email"
+                  required
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                  placeholder="you@example.com"
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full rounded-full bg-slate-50 px-4 py-2 text-sm font-medium text-slate-950 hover:bg-slate-200"
+              >
+                Send reset link
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
+
+export default LoginPage;
+

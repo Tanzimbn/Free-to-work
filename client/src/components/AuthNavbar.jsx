@@ -9,6 +9,7 @@ export default function AuthNavbar({ onPostClick }) {
     const { user, logout, notifications, hasUnseenNotifications, updateUser } = useAuth();
     const [menuActive, setMenuActive] = useState(false);
     const [notiActive, setNotiActive] = useState(false);
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
     const [userImage, setUserImage] = useState('');
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -109,6 +110,16 @@ export default function AuthNavbar({ onPostClick }) {
                             Browse list
                         </Link>
                     </nav>
+
+                    {/* Hamburger — mobile only */}
+                    <button
+                        type="button"
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200 sm:hidden"
+                        onClick={() => setMobileNavOpen(p => !p)}
+                        aria-label="Toggle navigation"
+                    >
+                        <i className={`bx ${mobileNavOpen ? 'bx-x' : 'bx-menu'} text-base`} />
+                    </button>
                 </div>
 
                 {/* Right: Actions */}
@@ -128,7 +139,7 @@ export default function AuthNavbar({ onPostClick }) {
                     <div className="relative" ref={notiRef}>
                         <button
                             type="button"
-                            onClick={() => { setNotiActive(p => !p); setMenuActive(false); }}
+                            onClick={() => { setNotiActive(p => !p); setMenuActive(false); setMobileNavOpen(false); }}
                             className="relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200"
                         >
                             <i className="bx bx-bell text-sm" />
@@ -184,7 +195,7 @@ export default function AuthNavbar({ onPostClick }) {
                     <div className="relative" ref={menuRef}>
                         <button
                             type="button"
-                            onClick={() => { setMenuActive(p => !p); setNotiActive(false); }}
+                            onClick={() => { setMenuActive(p => !p); setNotiActive(false); setMobileNavOpen(false); }}
                             className="flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 py-1 pl-1 pr-2.5 transition-colors hover:border-slate-600"
                         >
                             <img
@@ -271,6 +282,45 @@ export default function AuthNavbar({ onPostClick }) {
 
                 </div>
             </div>
+            {/* Mobile nav dropdown */}
+            {mobileNavOpen && (
+                <div className="border-t border-slate-800/60 px-4 pb-3 pt-2 sm:hidden">
+                    <nav className="flex flex-col gap-1">
+                        <Link
+                            to="/newsfeed"
+                            className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                                pathname.startsWith('/newsfeed')
+                                    ? 'bg-slate-800 text-slate-50'
+                                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                            }`}
+                            onClick={() => setMobileNavOpen(false)}
+                        >
+                            <i className="bx bxs-home-alt-2 text-base" />
+                            Newsfeed
+                        </Link>
+                        <Link
+                            to="/list"
+                            className={`flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                                pathname.startsWith('/list')
+                                    ? 'bg-slate-800 text-slate-50'
+                                    : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                            }`}
+                            onClick={() => setMobileNavOpen(false)}
+                        >
+                            <i className="bx bx-list-ul text-base" />
+                            Browse list
+                        </Link>
+                        <button
+                            type="button"
+                            onClick={() => { handlePostClick(); setMobileNavOpen(false); }}
+                            className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-emerald-400 transition-colors hover:bg-emerald-500/10"
+                        >
+                            <i className="bx bx-plus text-base" />
+                            Post a job
+                        </button>
+                    </nav>
+                </div>
+            )}
         </header>
     );
 }
