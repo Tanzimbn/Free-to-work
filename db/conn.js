@@ -1,13 +1,16 @@
-const mongoose = require("mongoose");
+'use strict';
 
-const url = process.env.DATABASE;
+const mongoose = require('mongoose');
+const config = require('../config');
+
 async function connect() {
-    
     try {
-        await mongoose.connect(url);
-        console.log("DB connected");
+        await mongoose.connect(config.db.url);
+        console.log('DB connected');
     } catch (error) {
-        console.error(error);
+        console.error('DB connection failed:', error.message);
+        process.exit(1);
     }
 }
+
 connect();
