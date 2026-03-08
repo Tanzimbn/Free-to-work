@@ -5,8 +5,8 @@ import { Toggle, CustomProvider } from 'rsuite';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
-export default function AuthNavbar({ onPostClick }) {
-    const { user, logout, notifications, hasUnseenNotifications, updateUser } = useAuth();
+export default function AuthNavbar() {
+    const { user, logout, notifications, hasUnseenNotifications, updateUser, fetchNotifications } = useAuth();
     const [menuActive, setMenuActive] = useState(false);
     const [notiActive, setNotiActive] = useState(false);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -69,11 +69,7 @@ export default function AuthNavbar({ onPostClick }) {
     };
 
     const handlePostClick = () => {
-        if (onPostClick) {
-            onPostClick();
-        } else {
-            navigate('/newsfeed', { state: { openPostModal: true } });
-        }
+        navigate('/newsfeed', { state: { openPostModal: true } });
     };
 
     const navLinkClass = (path) =>
@@ -139,7 +135,7 @@ export default function AuthNavbar({ onPostClick }) {
                     <div className="relative" ref={notiRef}>
                         <button
                             type="button"
-                            onClick={() => { setNotiActive(p => !p); setMenuActive(false); setMobileNavOpen(false); }}
+                            onClick={() => { const opening = !notiActive; setNotiActive(opening); setMenuActive(false); setMobileNavOpen(false); if (opening) fetchNotifications(); }}
                             className="relative flex h-8 w-8 items-center justify-center rounded-full border border-slate-700 bg-slate-900 text-slate-400 transition-colors hover:border-slate-600 hover:text-slate-200"
                         >
                             <i className="bx bx-bell text-sm" />

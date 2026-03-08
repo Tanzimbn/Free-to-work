@@ -3,6 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import MainLayout from './layouts/MainLayout';
+import AuthLayout from './layouts/AuthLayout';
 
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
@@ -17,59 +19,32 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-slate-950 text-slate-50">
-          <div className="pointer-events-none fixed inset-0 -z-10">
-            <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-[#d11f0c]/20 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-          </div>
+        <MainLayout>
           <ToastContainer />
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/newsfeed"
-              element={
-                <ProtectedRoute>
-                  <NewsfeedPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/:id"
-              element={
-                <ProtectedRoute>
-                  <ProfilePage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute adminOnly={true}>
-                  <AdminPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/list"
-              element={
-                <ProtectedRoute>
-                  <ListPage />
-                </ProtectedRoute>
-              }
-            />
+
+            {/* Protected routes — AuthLayout provides the shared navbar */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AuthLayout />}>
+                <Route path="/newsfeed" element={<NewsfeedPage />} />
+                <Route path="/list" element={<ListPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/:id" element={<ProfilePage />} />
+              </Route>
+            </Route>
+
+            {/* Admin — has its own sidebar layout, does not use AuthNavbar */}
+            <Route element={<ProtectedRoute adminOnly />}>
+              <Route path="/admin" element={<AdminPage />} />
+            </Route>
+
             <Route path="*" element={<ErrorPage />} />
           </Routes>
-        </div>
+        </MainLayout>
       </Router>
     </AuthProvider>
   );

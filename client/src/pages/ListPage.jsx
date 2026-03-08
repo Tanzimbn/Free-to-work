@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import api from '../services/api';
-import AuthNavbar from '../components/AuthNavbar';
 import FilterSidebar from '../components/FilterSidebar';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -195,10 +194,7 @@ export default function ListPage() {
     const visibleUsers = filteredUsers.slice(0, visibleCount);
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-50">
-            <AuthNavbar />
-
-            <main className="pb-10">
+        <main className="pb-10">
                 {/* Header */}
                 <section className="border-b border-slate-800/60 bg-slate-950/80">
                     <div className="mx-auto max-w-6xl px-4 pt-4 pb-7">
@@ -312,7 +308,6 @@ export default function ListPage() {
                         </div>
                     </div>
                 </section>
-            </main>
-        </div>
+        </main>
     );
 }

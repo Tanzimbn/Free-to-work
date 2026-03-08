@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
 
+/**
+ * AuthContext provides authentication state and methods to manage user sessions.
+ * It includes user data, notifications, admin status, and loading state.
+ */
+
 const AuthContext = createContext();
 
 export function useAuth() {
@@ -14,38 +19,47 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
 
+    // Fetches minimal identity data — user doc + unseen boolean.
+    // No posts, no full notification list.
     const fetchUserData = async () => {
         try {
-            const userRes = await api.get('/newsfeed');
-            if (userRes.data.user && userRes.data.user.length > 0) {
-                setUser(userRes.data.user[0]);
-                setNotifications(userRes.data.noti || []);
-                setHasUnseenNotifications(userRes.data.unseen || false);
+            const res = await api.get('/newsfeed');
+            if (res.data.user) {
+                setUser(res.data.user);
+                setHasUnseenNotifications(res.data.hasUnseenNotifications || false);
             }
         } catch (error) {
-            console.error("Error fetching user data:", error);
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    // Lazy — called only when the notification panel is opened.
+    const fetchNotifications = async () => {
+        try {
+            const res = await api.get('/notifications');
+            setNotifications(res.data.notifications || []);
+        } catch (error) {
+            console.error('Error fetching notifications:', error);
         }
     };
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await api.get('/login'); // check_login
+                const res = await api.get('/login');
                 if (res.data.loggedIn) {
                     if (res.data.role === 'admin') {
                         setIsAdmin(true);
                         setUser({ email: 'admin@free2work.com', role: 'admin' });
                     } else {
-                        // Fetch user details
                         await fetchUserData();
                     }
                 } else {
                     setUser(null);
                     setIsAdmin(false);
-                    setNotifications([]);
                 }
             } catch (error) {
-                console.error("Auth check failed:", error);
+                console.error('Auth check failed:', error);
                 setUser(null);
             } finally {
                 setLoading(false);
@@ -57,14 +71,12 @@ export function AuthProvider({ children }) {
 
     const login = async (email, password) => {
         const res = await api.post('/login', { email, password });
-        if (res.data.message === "admin") {
+        if (res.data.message === 'admin') {
             setIsAdmin(true);
             setUser({ email: 'admin@free2work.com', role: 'admin' });
             return { success: true, role: 'admin' };
-        } else if (res.data.message === "correct") {
-            setUser(res.data.userdata);
+        } else if (res.data.message === 'correct') {
             setIsAdmin(false);
-            // Fetch initial notifications after login
             await fetchUserData();
             return { success: true, role: 'user' };
         } else {
@@ -77,14 +89,17 @@ export function AuthProvider({ children }) {
         setUser(null);
         setIsAdmin(false);
         setNotifications([]);
+        setHasUnseenNotifications(false);
     };
-    
+
     const updateUser = (userData) => {
         setUser(userData);
     };
 
+    // Re-checks the unseen boolean and refreshes the list if the panel is open.
     const refreshNotifications = async () => {
         await fetchUserData();
+        await fetchNotifications();
     };
 
     const value = {
@@ -96,7 +111,8 @@ export function AuthProvider({ children }) {
         login,
         logout,
         updateUser,
-        refreshNotifications
+        fetchNotifications,
+        refreshNotifications,
     };
 
     return (

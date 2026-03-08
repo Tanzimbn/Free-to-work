@@ -2,7 +2,7 @@ const express = require("express");
 const userModel = require("../models/users");
 const { verify_login, change_password } = require("../controllers/login.controller");
 const { reg_submit, form1_submit, form2_submit, email_confirmed } = require("../controllers/registration.controller");
-const { showallpost, loadUserData } = require("../controllers/allpost.controller");
+const { showallpost, loadUserData, getNotifications } = require("../controllers/allpost.controller");
 const { post, post_detail, add_comment, get_comments } = require("../controllers/post.controller");
 const { find_user } = require("../controllers/user_info");
 const { own_profile, show_profile, load_image, review, load_coverimage, edit_user_info, delete_post } = require("../controllers/profile");
@@ -30,6 +30,7 @@ router.get('/register', (req, res) => {
 })
 router.get('/admin', admin_data)
 router.get('/newsfeed', loadUserData)
+router.get('/notifications', getNotifications)
 router.get('/logout', (req, res) => {
     delete req.session.user_id
     res.json({ message: "Logged out successfully" })

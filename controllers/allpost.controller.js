@@ -6,28 +6,27 @@ const notiModel = require("../models/notification");
 time_ago.addDefaultLocale(loc)
 const tm = new time_ago();
 
+// Called by AuthContext on startup — returns only what the app shell needs.
+// No posts query. hasUnseenNotifications drives the bell dot indicator.
 exports.loadUserData = async (req, res) => {
-
-    if(!req.session.user_id) {
-        res.status(401).json({ error: "Unauthorized" });
-        return;
+    if (!req.session.user_id) {
+        return res.status(401).json({ error: "Unauthorized" });
     }
+    const user = await userModel.findById(req.session.user_id);
+    const hasUnseenNotifications = !!(await notiModel.exists({ user: req.session.user_id, unseen: true }));
+    res.json({ user, hasUnseenNotifications });
+}
 
-    const allpost = await postModel.find({});
-    allpost.sort((a, b) => {
-        return b.time.getTime() - a.time.getTime()
-    })
-    const user = await userModel.find({_id : req.session.user_id});
-
-    const noti = await notiModel.find({"user" : req.session.user_id})
-    noti.reverse()
-    let unseen = false
-    // Fix loop condition (it was i < noti.length in original but snippet cut off? No, snippet was ok)
-    for (let i = 0; i < noti.length; i++) {
-        unseen = unseen || noti[i].unseen
+// Lazy — only called when the user opens the notification panel.
+exports.getNotifications = async (req, res) => {
+    if (!req.session.user_id) {
+        return res.status(401).json({ error: "Unauthorized" });
     }
-
-    res.json({ user, noti, unseen });
+    const notifications = await notiModel
+        .find({ user: req.session.user_id })
+        .sort({ _id: -1 })
+        .limit(30);
+    res.json({ notifications });
 }
 
 exports.showallpost = async (req, res) => {

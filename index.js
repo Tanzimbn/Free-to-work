@@ -7,9 +7,9 @@ const cors = require("cors");
 const app = express();
 
 app.use(session({
-    secret: "cookie_secret",
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     cookie: { secure: false }
 }));
 

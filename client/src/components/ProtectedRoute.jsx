@@ -1,8 +1,14 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export default function ProtectedRoute({ children, adminOnly = false }) {
+/**
+ * A protected route component that restricts access to authenticated users.
+ * If the user is not authenticated, they will be redirected to the login page.
+ * If the adminOnly prop is set to true, only admin users will have access.
+ * Otherwise, all authenticated users will have access.
+ */
+
+export default function ProtectedRoute({ adminOnly = false }) {
     const { user, isAdmin, loading } = useAuth();
 
     if (loading) {
@@ -17,5 +23,5 @@ export default function ProtectedRoute({ children, adminOnly = false }) {
         return <Navigate to="/newsfeed" />;
     }
 
-    return children;
+    return <Outlet />;
 }

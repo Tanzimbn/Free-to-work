@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import api from '../services/api';
-import AuthNavbar from '../components/AuthNavbar';
+import { useAuth } from '../context/AuthContext';
 import FilterSidebar from '../components/FilterSidebar';
 import PostCard from '../components/PostCard';
 import PostDetailsModal from '../components/PostDetailsModal';
@@ -34,9 +34,8 @@ function PostCardSkeleton() {
 }
 
 export default function NewsfeedPage() {
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [postsLoading, setPostsLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState(null);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
@@ -51,7 +50,6 @@ export default function NewsfeedPage() {
     category: '',
     searchValue: '',
   });
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -64,29 +62,6 @@ export default function NewsfeedPage() {
       window.history.replaceState({}, document.title);
     }
   }, [location]);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userRes = await api.get('/newsfeed');
-        if (userRes.data.error === 'Unauthorized') {
-          navigate('/login');
-          return;
-        }
-        if (userRes.data.user && userRes.data.user.length > 0) {
-          setUser(userRes.data.user[0]);
-        }
-      } catch (err) {
-        console.error(err);
-        if (err.response && err.response.status === 401) {
-          navigate('/login');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchUser();
-  }, [navigate]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -155,48 +130,8 @@ export default function NewsfeedPage() {
     fetchPosts();
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-slate-950 text-slate-50">
-        <div className="fixed inset-0 -z-10 pointer-events-none">
-          <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-[#d11f0c]/15 blur-3xl" />
-          <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-        </div>
-        <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} />
-        <main className="pb-10">
-          <section className="border-b border-slate-800/60 bg-slate-950/80">
-            <div className="mx-auto max-w-6xl px-4 pt-4 pb-7">
-              <div className="animate-pulse space-y-2">
-                <div className="h-2.5 w-16 rounded-full bg-slate-800" />
-                <div className="h-6 w-64 rounded-full bg-slate-800" />
-                <div className="h-3 w-80 rounded-full bg-slate-800" />
-              </div>
-            </div>
-          </section>
-          <section className="bg-slate-950">
-            <div className="mx-auto max-w-6xl px-4 pt-6 pb-12 flex flex-col gap-6 md:flex-row">
-              <div className="md:w-1/3 lg:w-1/4">
-                <div className="animate-pulse rounded-2xl border border-slate-800 bg-slate-900/70 h-72" />
-              </div>
-              <div className="flex-1 grid gap-4">
-                {[...Array(4)].map((_, i) => <PostCardSkeleton key={i} />)}
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-[#d11f0c]/15 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-      </div>
-
-      <AuthNavbar onPostClick={() => setIsPostModalOpen(true)} />
-
+    <>
       <main className="pb-10">
         <section className="border-b border-slate-800/60 bg-slate-950/80">
           <div className="mx-auto max-w-6xl px-4 pt-4 pb-7">
@@ -313,6 +248,6 @@ export default function NewsfeedPage() {
         onClose={() => setIsPostModalOpen(false)}
         onPostCreated={handlePostCreated}
       />
-    </div>
+    </>
   );
 }

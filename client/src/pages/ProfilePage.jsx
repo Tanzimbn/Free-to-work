@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import AuthNavbar from '../components/AuthNavbar';
 import PostDetailsModal from '../components/PostDetailsModal';
 import EditProfileModal from '../components/EditProfileModal';
 import ReviewsModal from '../components/ReviewsModal';
@@ -12,9 +11,7 @@ const NoImage = '/pictures/Noimage.png';
 
 function ProfileSkeleton() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      <AuthNavbar />
-      <div className="animate-pulse">
+    <div className="animate-pulse">
         <div className="h-48 w-full bg-slate-900 sm:h-56" />
         <div className="relative z-10 mx-auto max-w-5xl px-4">
           <div className="-mt-12 mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -62,7 +59,6 @@ function ProfileSkeleton() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }
@@ -217,15 +213,7 @@ export default function ProfilePage() {
   const locationParts = [profileData.station, profileData.district, profileData.division].filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Background glow */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -left-40 top-0 h-80 w-80 rounded-full bg-[#d11f0c]/15 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-sky-500/20 blur-3xl" />
-      </div>
-
-      <AuthNavbar />
-
+    <>
       {/* Cover image */}
       <div className="relative h-48 w-full overflow-hidden sm:h-56">
         {coverImgSrc ? (
@@ -421,6 +409,6 @@ export default function ProfilePage() {
         onClose={() => setIsReportOpen(false)}
         targetUserId={id}
       />
-    </div>
+    </>
   );
 }
