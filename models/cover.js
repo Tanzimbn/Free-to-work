@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var SchemaTypes = mongoose.Schema.Types;
 
 const coverSchema = new mongoose.Schema({
     id: {
@@ -9,7 +8,7 @@ const coverSchema = new mongoose.Schema({
         data: Buffer,
         contentType:String
     }
-});
+}, { timestamps: true });
 
 const coverModel = mongoose.model("cover", coverSchema);
 

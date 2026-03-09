@@ -13,7 +13,6 @@ const router = express.Router();
 
 require("../db/conn");
 const multer = require("multer");
-const imageModel = require("../models/image");
 const coverModel = require("../models/cover");
 const reportModel = require("../models/reports");
 const { feedback } = require("../controllers/feedback.controller");

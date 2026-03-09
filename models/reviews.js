@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var SchemaTypes = mongoose.Schema.Types;
 
 const reviewSchema = new mongoose.Schema({
     id: {
@@ -14,7 +13,7 @@ const reviewSchema = new mongoose.Schema({
     rating: {
         type: String
     }
-});
+}, { timestamps: true });
 
 const reviewModel = mongoose.model("reviews", reviewSchema);
 module.exports = reviewModel;
