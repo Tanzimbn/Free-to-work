@@ -11,6 +11,11 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
+// Trust Render/proxy's forwarded headers so secure cookies work behind HTTPS termination
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
+
 app.use(cors({
     origin: config.cors.origins,
     credentials: true,
@@ -20,7 +25,7 @@ app.use(session({
     secret: config.session.secret,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, sameSite: 'strict' },
+    cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, sameSite: 'lax' },
 }));
 
 app.use(express.json());
