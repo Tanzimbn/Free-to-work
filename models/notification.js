@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var SchemaTypes = mongoose.Schema.Types;
 
 const notiSchema = new mongoose.Schema({
     user: {
@@ -15,7 +14,7 @@ const notiSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     }
-});
+}, { timestamps: true });
 
 notiSchema.index({ user: 1, unseen: 1 });
 notiSchema.index({ postid: 1 });

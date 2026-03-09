@@ -1,8 +1,11 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
 const postModel = require('../models/post');
 const userModel = require('../models/users');
 const fs = require('fs');
+
+const SALT_ROUNDS = 12;
 const { tm } = require('./allpost.controller');
 const notiModel = require('../models/notification');
 const reviewModel = require('../models/reviews');
@@ -77,10 +80,11 @@ exports.load_coverimage = async (req, res, next) => {
 
 exports.edit_user_info = async (req, res, next) => {
     try {
-        await userModel.updateOne(
-            { _id: req.body.id },
-            { $set: { password: req.body.password, bio: req.body.bio, category: req.body.category } }
-        );
+        const update = { bio: req.body.bio, category: req.body.category };
+        if (req.body.password) {
+            update.password = await bcrypt.hash(req.body.password, SALT_ROUNDS);
+        }
+        await userModel.updateOne({ _id: req.session.user_id }, { $set: update });
         res.json({ message: 'Success' });
     } catch (err) {
         next(err);
@@ -92,13 +96,16 @@ exports.review = async (req, res, next) => {
         if (!req.body.rating) {
             return res.json({ message: 'Give rating!' });
         }
-        if (req.session.user_id == req.body.id) {
+        if (String(req.session.user_id) === String(req.body.id)) {
             return res.json({ message: "You can't review yourself!" });
         }
 
+        const reviewer = await userModel.findById(req.session.user_id, 'fname lname');
+        const reviewerName = reviewer ? `${reviewer.fname} ${reviewer.lname}`.trim() : 'Unknown';
+
         await reviewModel.create({
             id: req.body.id,
-            reviewer: req.body.reviewer,
+            reviewer: reviewerName,
             text: req.body.text,
             rating: req.body.rating,
         });
@@ -115,7 +122,10 @@ exports.review = async (req, res, next) => {
 
 exports.delete_post = async (req, res, next) => {
     try {
-        await postModel.deleteOne({ _id: req.body.id });
+        const result = await postModel.deleteOne({ _id: req.body.id, user: String(req.session.user_id) });
+        if (result.deletedCount === 0) {
+            return res.status(403).json({ message: 'Forbidden' });
+        }
         await notiModel.deleteMany({ postid: req.body.id });
         res.json({ message: 'Success' });
     } catch (err) {

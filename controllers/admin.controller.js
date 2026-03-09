@@ -1,3 +1,5 @@
+const config = require('../config');
+
 const blockModel = require("../models/block")
 const categoryModel = require("../models/category")
 const feedbackModel = require("../models/feedback")
@@ -7,7 +9,7 @@ const userModel = require("../models/users")
 
 exports.admin_data = async (req, res) => {
 
-    if(req.session.user_id != "admin@free2work.com") {
+    if(req.session.user_id != config.admin.email) {
         res.status(403).json({ error: "Forbidden" });
         return;
     }

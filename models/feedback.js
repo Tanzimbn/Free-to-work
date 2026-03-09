@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var SchemaTypes = mongoose.Schema.Types;
 
 const feedbackSchema = new mongoose.Schema({
     email: {
@@ -8,7 +7,7 @@ const feedbackSchema = new mongoose.Schema({
     message : {
         type: String
     }
-});
+}, { timestamps: true });
 
 const feedbackModel = mongoose.model("feedback", feedbackSchema);
 

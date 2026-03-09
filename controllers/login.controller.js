@@ -1,8 +1,11 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
 const userModel = require('../models/users');
 const emailService = require('../services/email.service');
 const config = require('../config');
+
+const SALT_ROUNDS = 12;
 
 exports.verify_login = async (req, res, next) => {
     try {
@@ -13,9 +16,22 @@ exports.verify_login = async (req, res, next) => {
             return res.json({ message: 'admin' });
         }
 
-        const user = await userModel.findOne({ email, password });
+        const user = await userModel.findOne({ email });
         if (!user) {
-            return res.json({ message: 'Email or Password is incorrect' });
+            return res.status(401).json({ message: 'Email or Password is incorrect' });
+        }
+
+        let match = await bcrypt.compare(password, user.password);
+
+        // Migration shim: existing users have plain-text passwords pre-bcrypt
+        if (!match && password === user.password) {
+            match = true;
+            const hashed = await bcrypt.hash(password, SALT_ROUNDS);
+            await userModel.updateOne({ _id: user._id }, { $set: { password: hashed } });
+        }
+
+        if (!match) {
+            return res.status(401).json({ message: 'Email or Password is incorrect' });
         }
 
         req.session.user_id = user._id;
@@ -38,7 +54,8 @@ exports.change_password = async (req, res, next) => {
         }
 
         const tempPassword = Math.random().toString(36).substring(2, 10);
-        await userModel.updateOne({ email: req.body.email }, { $set: { password: tempPassword } });
+        const hashedTemp = await bcrypt.hash(tempPassword, SALT_ROUNDS);
+        await userModel.updateOne({ email: req.body.email }, { $set: { password: hashedTemp } });
 
         await emailService.sendPasswordResetEmail(req.body.email, tempPassword);
         res.json({ message: 'Check your email', state: '1' });

@@ -1,5 +1,6 @@
 'use strict';
 
+const bcrypt = require('bcrypt');
 const blockModel = require('../models/block');
 const userModel = require('../models/users');
 const emailValidator = require('email-validator');
@@ -7,15 +8,18 @@ const verifyModel = require('../models/verify');
 const emailService = require('../services/email.service');
 const config = require('../config');
 
+const SALT_ROUNDS = 12;
+
 exports.reg_submit = async (req, res, next) => {
     try {
+        const hashedPassword = await bcrypt.hash(req.body.password, SALT_ROUNDS);
         const new_user = new verifyModel({
             fname:    req.body.fname,
             lname:    req.body.lname,
             nid:      req.body.nid,
             gender:   req.body.gender,
             email:    req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
             phone:    req.body.phone,
             division: req.body.division,
             district: req.body.district,

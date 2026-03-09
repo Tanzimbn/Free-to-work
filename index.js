@@ -20,7 +20,7 @@ app.use(session({
     secret: config.session.secret,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false, httpOnly: true, sameSite: 'strict' },
+    cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, sameSite: 'strict' },
 }));
 
 app.use(express.json());

@@ -43,7 +43,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         default: "No bid yet"
     }
-});
+}, { timestamps: true });
 
 postSchema.index({ category: 1, time: -1 });
 postSchema.index({ user: 1 });
