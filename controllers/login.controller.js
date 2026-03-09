@@ -25,6 +25,11 @@ exports.verify_login = async (req, res, next) => {
     }
 };
 
+exports.logout = (req, res) => {
+    delete req.session.user_id;
+    res.json({ message: 'Logged out successfully' });
+};
+
 exports.change_password = async (req, res, next) => {
     try {
         const user = await userModel.findOne({ email: req.body.email });

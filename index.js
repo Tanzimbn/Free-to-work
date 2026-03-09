@@ -30,7 +30,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 require('./db/conn');
 
-app.use('/api', require('./routes/auth'));
+app.use('/api/v1', require('./routes'));
 
 // Global error handler — must be last
 app.use(errorHandler);

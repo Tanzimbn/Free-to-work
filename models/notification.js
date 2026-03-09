@@ -17,5 +17,8 @@ const notiSchema = new mongoose.Schema({
     }
 });
 
+notiSchema.index({ user: 1, unseen: 1 });
+notiSchema.index({ postid: 1 });
+
 const notiModel = mongoose.model("notification", notiSchema);
 module.exports = notiModel;

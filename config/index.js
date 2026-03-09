@@ -41,7 +41,7 @@ module.exports = {
     },
 
     backend: {
-        url: process.env.BACKEND_URL || 'http://localhost:3000/api',
+        url: process.env.BACKEND_URL || 'http://localhost:3000/api/v1',
     },
 
     // Optional — if not set, admin login is disabled

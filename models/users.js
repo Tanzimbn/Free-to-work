@@ -58,6 +58,11 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ nid: 1 });
+userSchema.index({ category: 1 });
+userSchema.index({ mood: 1, category: 1 });  // compound — used by notification fan-out
+
 const userModel = mongoose.model("user", userSchema);
 
 module.exports = userModel;
