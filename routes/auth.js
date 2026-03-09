@@ -2,8 +2,8 @@ const express = require("express");
 const userModel = require("../models/users");
 const { verify_login, change_password } = require("../controllers/login.controller");
 const { reg_submit, form1_submit, form2_submit, email_confirmed } = require("../controllers/registration.controller");
-const { showallpost, loadUserData } = require("../controllers/allpost.controller");
-const { post, post_detail } = require("../controllers/post.controller");
+const { showallpost, loadUserData, getNotifications } = require("../controllers/allpost.controller");
+const { post, post_detail, add_comment, get_comments } = require("../controllers/post.controller");
 const { find_user } = require("../controllers/user_info");
 const { own_profile, show_profile, load_image, review, load_coverimage, edit_user_info, delete_post } = require("../controllers/profile");
 const { update_bid } = require("../controllers/bid.controller");
@@ -13,7 +13,6 @@ const router = express.Router();
 
 require("../db/conn");
 const multer = require("multer");
-const imageModel = require("../models/image");
 const coverModel = require("../models/cover");
 const reportModel = require("../models/reports");
 const { feedback } = require("../controllers/feedback.controller");
@@ -22,25 +21,26 @@ const { check_login } = require("../controllers/sessionlogin.controller");
 
 
 router.get('/', (req, res) => {
-    res.render("./home_page/landingpage.hbs");
+    res.json({ message: "API is running" });
 })
 router.get('/login', check_login)
 router.get('/register', (req, res) => {
-    res.render("./login_reg/register.hbs");
+    res.json({ message: "Please use the frontend to register" });
 })
 router.get('/admin', admin_data)
 router.get('/newsfeed', loadUserData)
+router.get('/notifications', getNotifications)
 router.get('/logout', (req, res) => {
     delete req.session.user_id
-    res.redirect('/login')
+    res.json({ message: "Logged out successfully" })
 })
 router.get('/profile/:id', show_profile)
 router.get('/profile', own_profile)
 router.get('/list', show_list)
 router.get('/verify/:id', email_confirmed)
-router.get('/*',(req, res) => {
-    res.render("./other/error.hbs");
-})
+// router.get('/*',(req, res) => {
+//     res.render("./other/error.hbs");
+// })
 
 
 // router.post('/admin_data', admin_data)
@@ -51,11 +51,14 @@ router.post('/register/form1', form1_submit)
 router.post('/register/form2', form2_submit)
 router.post('/post', post)
 router.post('/post_detail', post_detail)
+router.post('/add_comment', add_comment)
+router.post('/get_comments', get_comments)
 router.post('/user_info', find_user)
 router.post('/update_bid', update_bid)
 router.post('/post_filter', post_filter)
 router.post('/list_filter', list_filter)
 router.post('/review', review)
+router.post('/allcategory', allcategory)
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -86,7 +89,7 @@ router.post('/report', async (req, res) => {
             comments: req.body.additionalComments
         })
         const resp = await new_report.save();
-        res.redirect(`/profile/${req.body.to}`);
+        res.json({ message: "Report submitted successfully" });
 
     } catch (error) {
         console.error(error);

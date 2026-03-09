@@ -43,7 +43,11 @@ const postSchema = new mongoose.Schema({
         type: String,
         default: "No bid yet"
     }
-});
+}, { timestamps: true });
+
+postSchema.index({ category: 1, time: -1 });
+postSchema.index({ user: 1 });
+postSchema.index({ division: 1, district: 1, station: 1 });
 
 const postModel = mongoose.model("post", postSchema);
 module.exports = postModel;

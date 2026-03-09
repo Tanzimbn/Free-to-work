@@ -1,3 +1,5 @@
+const config = require('../config');
+
 const blockModel = require("../models/block")
 const categoryModel = require("../models/category")
 const feedbackModel = require("../models/feedback")
@@ -7,9 +9,9 @@ const userModel = require("../models/users")
 
 exports.admin_data = async (req, res) => {
 
-    if(req.session.user_id != "admin@free2work.com") {
-        res.render("./other/error.hbs");
-        return
+    if(req.session.user_id != config.admin.email) {
+        res.status(403).json({ error: "Forbidden" });
+        return;
     }
 
     const user = await userModel.find({}, { "_id": 1 })
@@ -34,7 +36,7 @@ exports.admin_data = async (req, res) => {
     avgbid = avgbid / totalbid
     avgbid = avgbid.toFixed(3)
 
-    res.render("./Admin/admin.hbs", { totaluser, totalpost, lastpost, avgbid, report, feedback });
+    res.json({ totaluser, totalpost, lastpost, avgbid, report, feedback });
     // console.log(review)
     // console.log(report)
     // req.send({"user" : totaluser, "post" : totalpost, "24hr post" : lastpost, "avg bid" : avgbid})

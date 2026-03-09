@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-var SchemaTypes = mongoose.Schema.Types;
 
 const reportSchema = new mongoose.Schema({
     reporter_id: {
@@ -15,8 +14,7 @@ const reportSchema = new mongoose.Schema({
     comments: {
         type: String
     }
-
-});
+}, { timestamps: true });
 
 const reportModel = mongoose.model("report", reportSchema);
 

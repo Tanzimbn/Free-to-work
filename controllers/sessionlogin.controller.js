@@ -1,8 +1,11 @@
+'use strict';
+
+const config = require('../config');
+
 exports.check_login = (req, res) => {
-    if(req.session.user_id) {
-        if(req.session.user_id == "admin@free2work.com") res.redirect("/admin")
-        else res.redirect("/newsfeed");
+    if (!req.session.user_id) {
+        return res.json({ loggedIn: false });
     }
-    else
-    res.render("./login_reg/index.hbs");
-}
+    const role = (config.admin.email && req.session.user_id === config.admin.email) ? 'admin' : 'user';
+    res.json({ loggedIn: true, role });
+};

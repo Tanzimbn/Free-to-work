@@ -1,34 +1,43 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-const path = require("path");
-const session = require("express-session")
+'use strict';
+
+// config must be the first import — it loads dotenv and validates env vars
+const config = require('./config');
+
+const express = require('express');
+const path = require('path');
+const session = require('express-session');
+const cors = require('cors');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-// session 
-app.use(session({
-    secret: "cookie_secret",
-    resave: true,
-    saveUninitialized: true
+app.use(cors({
+    origin: config.cors.origins,
+    credentials: true,
 }));
-// db add
-dotenv.config({ path: './.env'});
-require('./db/conn');
-// json
+
+app.use(session({
+    secret: config.session.secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, sameSite: 'strict' },
+}));
+
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-// to set view engine
-app.set("view engine", "hbs");
-// static file add
-const filepath = path.join(__dirname, "./public");
-app.use(express.static(filepath));
-// route add
-app.use(require("./routes/auth"));
+app.use(express.urlencoded({ extended: true }));
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+require('./db/conn');
 
-app.listen(3000, ()=> {
-    console.log("server connected");
-})
+app.use('/api/v1', require('./routes'));
 
+// Global error handler — must be last
+app.use(errorHandler);
+
+// app.use(express.static(path.join(__dirname, 'client/dist')));
+// app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'client/dist/index.html')));
+
+app.listen(config.port, () => {
+    console.log(`Server running on http://localhost:${config.port}`);
+});

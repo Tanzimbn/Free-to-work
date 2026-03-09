@@ -7,10 +7,11 @@ exports.feedback = async (req, res) => {
             message: req.body.message
         })
         const post_res = await new_feedback.save()
-        res.redirect("/")
+        // res.redirect("/")
+        res.json({ success: true, message: "Feedback submitted successfully" });
 
     } catch (error) {
         console.error(error);
-        res.status(400).send(error);
+        res.status(400).json({ error: error.message });
     }
 }
