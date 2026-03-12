@@ -89,11 +89,15 @@ Copy `.env.example` to `.env` at the root.
   - `rateLimiter.js` — Per-route rate limit configs
   - `uploadMiddleware.js` — multer memory storage (for Supabase upload)
   - `errorHandler.js` — Global error handler (last in chain)
+- `src/events/`
+  - `emitter.js` — Node EventEmitter singleton (swap for BullMQ in Phase 5)
+  - `handlers/notification.handler.js` — listens to `post.created`, triggers fan-out
+  - `handlers/email.handler.js` — listens to `user.registered`, `password.reset.requested`
 - `src/services/`
   - `auth.service.js` — bcrypt, token generation
   - `email.service.js` — nodemailer templates (verify, password reset)
   - `storage.service.js` — Supabase Storage upload/delete
-  - `notification.service.js` — Fan-out new-post notifications
+  - `notification.service.js` — Fan-out new-post notifications (called by event handler)
   - `post.service.js` — Bid cache update (`bid_count`, `lowest_bid` on posts)
   - `ws.service.js` — WebSocket room tracking, bid broadcast
 - `src/validators/` — Zod schemas: `auth`, `post`, `bid`, `user`

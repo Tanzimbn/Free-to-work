@@ -69,6 +69,8 @@
 | Password | `bcrypt` (12 rounds) | Same as v1 |
 | Rate limiting | `express-rate-limit` | In-memory, swap to Redis store later |
 | Real-time bids | `ws` (raw WebSocket) | Learn fundamentals; socket.io hides too much |
+| Event system | Node.js `EventEmitter` | Decouples side-effects; swap to BullMQ later |
+| Redis (Phase 5+) | Upstash (serverless, free tier) | Sessions, rate limit, cache, job queue |
 
 ### Frontend
 | Concern | Choice |
@@ -501,11 +503,16 @@ All responses follow this envelope:
 │   │   ├── rateLimiter.js        # express-rate-limit configs
 │   │   ├── uploadMiddleware.js   # multer (memory storage) for Supabase upload
 │   │   └── errorHandler.js       # Global error handler
+│   ├── events/
+│   │   ├── emitter.js            # Node EventEmitter singleton (swap for BullMQ later)
+│   │   └── handlers/
+│   │       ├── notification.handler.js  # listens to 'post.created' → fan-out
+│   │       └── email.handler.js         # listens to 'user.registered', etc.
 │   ├── services/
 │   │   ├── auth.service.js       # bcrypt, token generation
 │   │   ├── email.service.js      # nodemailer templates
 │   │   ├── storage.service.js    # Supabase Storage upload/delete
-│   │   ├── notification.service.js  # fan-out logic
+│   │   ├── notification.service.js  # fan-out logic (called by event handler)
 │   │   ├── post.service.js       # bid cache update, deadline close
 │   │   └── ws.service.js         # postRooms map, subscribe, broadcast
 │   ├── validators/
@@ -513,7 +520,7 @@ All responses follow this envelope:
 │   │   ├── post.validator.js
 │   |   |── bid.validator.js
 │   │   └── user.validator.js
-│   └── utils/
+��   └── utils/
 │       ├── response.js           # sendSuccess(), sendError() helpers
 │       ├── pagination.js         # cursor encode/decode helpers
 │       └── AppError.js           # Custom error class with status code
@@ -693,7 +700,7 @@ client/src/
 │   └── NotFoundPage.jsx
 ├── components/
 │   ├── posts/
-│   │   ├── PostCard.jsx
+│   ���   ├── PostCard.jsx
 │   │   ├── PostFilters.jsx
 │   │   ├── CreatePostModal.jsx
 │   │   ├── BidList.jsx          # Author sees names; others see amounts only
@@ -831,7 +838,9 @@ Admin can add/deactivate categories at any time. Users subscribe to categories f
 - [ ] Categories endpoint
 
 ### Phase 3 — Notifications & Admin
-- [ ] Notification fan-out on post creation (async-ready, sync for now)
+- [ ] EventEmitter singleton + register all handlers on startup
+- [ ] `post.created` event → notification fan-out handler (async, non-blocking)
+- [ ] `user.registered` event → email handler (verify email)
 - [ ] Notification list + mark-as-read
 - [ ] User notification preferences (category subscriptions)
 - [ ] Reports: create, admin list, admin update
@@ -853,12 +862,17 @@ Admin can add/deactivate categories at any time. Users subscribe to categories f
 - [ ] Admin dashboard
 - [ ] Error boundary, loading states, toast notifications
 
-### Phase 5 — Hardening
+### Phase 5 — Hardening + Redis
 - [ ] File upload validation (MIME, size)
 - [ ] CSRF mitigation (Origin header check or csurf)
 - [ ] Input sanitization audit
 - [ ] Missing index audit
 - [ ] 404 and error page polish
+- [ ] Upstash Redis setup (REDIS_URL env var)
+- [ ] Swap rate limiters to Redis store (`rate-limit-redis`)
+- [ ] Swap session store to Redis (`connect-redis`)
+- [ ] Add Redis cache for location + category endpoints
+- [ ] Swap EventEmitter for BullMQ (persistent job queue)
 - [ ] Environment variable documentation
 
 ### Phase 6 — Deployment
@@ -870,22 +884,184 @@ Admin can add/deactivate categories at any time. Users subscribe to categories f
 
 ---
 
-## 10. Scalability Notes
+## 10. Event-Driven Architecture
 
-These patterns are designed-in from day one so they can be activated when needed:
+### 10.1 Why Event-Driven
 
-| Current (free tier) | Future (paid/scaled) |
-|---|---|
-| In-memory rate limit | Swap to `rate-limit-redis` with Redis |
-| Synchronous notification fan-out | Move to a job queue (BullMQ + Redis) |
-| Session in PostgreSQL | Move to Redis session store |
-| Single Render instance | Multiple instances (sessions in Redis, not in-process) |
-| Supabase Storage (1GB) | Supabase paid plan or migrate to AWS S3 |
-| No caching layer | Add Redis for location/category data (near-static) |
+Without events, controllers have mixed responsibilities:
+```js
+// Without events — controller does too much
+async function createPost(req, res) {
+    const post = await db.query(...)       // core responsibility
+    await notifyUsers(post)                // side-effect
+    await sendEmailDigest(post)            // side-effect
+    res.json(post)
+}
+```
+
+With events, the controller only does its job. Side-effects are decoupled:
+```js
+// With events — clean separation
+async function createPost(req, res) {
+    const post = await db.query(...)
+    emitter.emit('post.created', post)     // fire and forget
+    res.json(post)
+}
+// Handlers run independently, don't block the response
+```
+
+### 10.2 Implementation: Node EventEmitter (v2)
+
+```js
+// src/events/emitter.js
+const EventEmitter = require('events')
+const emitter = new EventEmitter()
+module.exports = emitter
+```
+
+```js
+// src/events/handlers/notification.handler.js
+const emitter = require('../emitter')
+const notificationService = require('../../services/notification.service')
+
+emitter.on('post.created', async (post) => {
+    await notificationService.fanOut(post)
+})
+```
+
+```js
+// src/index.js — register all handlers on startup
+require('./events/handlers/notification.handler')
+require('./events/handlers/email.handler')
+```
+
+**Events emitted in v2:**
+
+| Event | Emitted by | Handled by |
+|---|---|---|
+| `post.created` | posts.controller | notification.handler |
+| `user.registered` | auth.controller | email.handler (sends verify email) |
+| `password.reset.requested` | auth.controller | email.handler (sends reset email) |
+
+### 10.3 Upgrade Path: BullMQ + Redis (v2.1+)
+
+When the app needs reliability (retries on failure, persistence across restarts), swap `EventEmitter` for BullMQ. **Only `emitter.js` changes** — handlers and controllers stay the same:
+
+```js
+// src/events/emitter.js — upgraded version
+const { Queue } = require('bullmq')
+const connection = { host: UPSTASH_HOST, port: UPSTASH_PORT, password: UPSTASH_PASSWORD }
+
+const queues = {
+    notifications: new Queue('notifications', { connection }),
+    emails:        new Queue('emails', { connection }),
+}
+
+// Same interface as EventEmitter
+const emitter = {
+    emit(event, data) {
+        if (event === 'post.created')           queues.notifications.add(event, data)
+        if (event === 'user.registered')        queues.emails.add(event, data)
+        if (event === 'password.reset.requested') queues.emails.add(event, data)
+    }
+}
+
+module.exports = emitter
+```
+
+Benefits gained:
+- Jobs survive server restarts (persisted in Redis)
+- Automatic retry on failure (with backoff)
+- Job dashboard (Bull Board UI)
+- Delayed jobs (e.g. send reminder 24h after post closes)
 
 ---
 
-## 11. Decisions Log
+## 11. Redis Strategy
+
+**Provider:** Upstash (serverless Redis, free tier: 10k commands/day, 256MB)
+
+### 11.1 What Redis Unlocks (in order of priority)
+
+**1. Rate limiting across restarts (Phase 5)**
+```js
+// rateLimiter.js
+const RedisStore = require('rate-limit-redis')
+const loginLimiter = rateLimit({
+    store: new RedisStore({ client: redisClient }),
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+})
+```
+Currently in-memory — lost on restart. Redis persists it.
+
+**2. Caching near-static data (Phase 5)**
+
+Divisions, districts, upazilas, and categories rarely change. Cache them in Redis:
+```js
+// Location endpoint
+const cached = await redis.get('divisions')
+if (cached) return JSON.parse(cached)
+const rows = await db.query('SELECT * FROM divisions')
+await redis.setex('divisions', 86400, JSON.stringify(rows))  // TTL: 24h
+return rows
+```
+Eliminates DB hit on every location dropdown render.
+
+**3. Session store (Phase 5)**
+```js
+// app.js
+const RedisStore = require('connect-redis').default
+app.use(session({
+    store: new RedisStore({ client: redisClient }),
+    ...
+}))
+```
+Faster than PostgreSQL session store. Required for horizontal scaling.
+
+**4. BullMQ job queues (Phase 5+)**
+Once Redis is in, BullMQ uses it as the job backend automatically.
+
+### 11.2 Redis Client Setup
+
+```js
+// src/config/redis.js
+const { createClient } = require('redis')
+
+const client = createClient({
+    url: process.env.REDIS_URL   // Upstash Redis URL (rediss://...)
+})
+
+client.on('error', (err) => console.error('Redis error:', err))
+await client.connect()
+
+module.exports = client
+```
+
+Add to `.env.example`:
+```
+REDIS_URL=rediss://:password@host.upstash.io:6380
+```
+
+---
+
+## 12. Scalability Notes
+
+These patterns are designed-in from day one so they can be activated when needed:
+
+| Current (v2 launch) | Phase 5 upgrade | Future (horizontal scale) |
+|---|---|---|
+| EventEmitter (in-process) | BullMQ + Redis (persistent jobs) | BullMQ workers on separate instances |
+| In-memory rate limit | `rate-limit-redis` (Upstash) | Same, shared across instances |
+| Session in PostgreSQL | Redis session store (Upstash) | Same, shared across instances |
+| No cache | Redis cache for locations/categories | Same |
+| Single Render instance | Single instance (free tier) | Multiple instances via Redis pub/sub |
+| Supabase Storage (1GB) | Supabase paid plan | Migrate to AWS S3 |
+| postRooms Map (in-memory WS) | postRooms Map (still fine) | Redis pub/sub for WS broadcast |
+
+---
+
+## 13. Decisions Log
 
 | Decision | Chosen | Rejected | Reason |
 |---|---|---|---|
@@ -899,3 +1075,5 @@ These patterns are designed-in from day one so they can be activated when needed
 | Comments | Deferred to v2.1 | Included in v2 | Adds moderation complexity; bid message covers core need |
 | Messaging | Out of scope | Included | Platform goal is bid visibility only; contact happens off-platform |
 | Real-time bids | WebSockets (`ws`) | Polling, Supabase Realtime | Learning opportunity; Render is awake by the time WS connects |
+| Event system | Node EventEmitter → BullMQ | Inline async calls | Decouples side-effects; same interface, swappable transport |
+| Redis | Upstash (Phase 5) | From day one | Earn it when needed; free tier (10k cmd/day) is sufficient |
