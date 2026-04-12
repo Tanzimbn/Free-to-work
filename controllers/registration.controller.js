@@ -27,10 +27,10 @@ exports.reg_submit = async (req, res, next) => {
         });
 
         const record = await new_user.save();
-        const verifyUrl = `${config.backend.url}/verify/${record._id}`;
+        const verifyUrl = `${config.backend.url}/api/v1/verify/${record._id}`;
 
         await emailService.sendVerificationEmail(req.body.email, verifyUrl);
-        res.json({ success: true, message: 'Check your email to verify your account.' });
+        res.json({ success: true, message: 'Verification email sent! Please check your inbox.' });
     } catch (err) {
         next(err);
     }

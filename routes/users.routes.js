@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 const requireAuth = require('../middleware/requireAuth');
+const requireNotDemo = require('../middleware/requireNotDemo');
 const crypto = require('crypto');
 const multer = require('multer');
 const { find_user, find_user_data } = require('../controllers/user_info');
@@ -34,11 +35,11 @@ router.get('/profile/:id',  show_profile);
 router.get('/list',         show_list);
 
 router.post('/list_filter',                        list_filter);
-router.post('/edit_user',     upload.single('testImage'), load_image);
-router.post('/edit_user_info',upload.single('testImage'), edit_user_info);
-router.post('/edit_cover',    upload.single('testImage'), load_coverimage);
-router.post('/review',        review);
-router.post('/report',        submit_report);
+router.post('/edit_user',     requireNotDemo, upload.single('testImage'), load_image);
+router.post('/edit_user_info',requireNotDemo, upload.single('testImage'), edit_user_info);
+router.post('/edit_cover',    requireNotDemo, upload.single('testImage'), load_coverimage);
+router.post('/review',        requireNotDemo, review);
+router.post('/report',        requireNotDemo, submit_report);
 router.post('/update_mood',   update_mood);
 router.post('/feedback',      feedback);
 

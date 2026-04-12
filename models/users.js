@@ -15,7 +15,8 @@ const baseUserFields = {
     img: { data: Buffer, contentType: String },
     rating: { type: String, default: 0 },
     bio: { type: String, default: "" },
-    mood: { type: Boolean, default: true }
+    mood: { type: Boolean, default: true },
+    isDemo: { type: Boolean, default: false },
 };
 
 const userSchema = new mongoose.Schema({ ...baseUserFields }, { timestamps: true });

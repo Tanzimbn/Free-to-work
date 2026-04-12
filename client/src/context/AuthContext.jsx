@@ -18,6 +18,7 @@ export function AuthProvider({ children }) {
     const [hasUnseenNotifications, setHasUnseenNotifications] = useState(false);
     const [loading, setLoading] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
+    const [isDemo, setIsDemo] = useState(false);
 
     // Fetches minimal identity data — user doc + unseen boolean.
     // No posts, no full notification list.
@@ -52,11 +53,13 @@ export function AuthProvider({ children }) {
                         setIsAdmin(true);
                         setUser({ email: 'admin@free2work.com', role: 'admin' });
                     } else {
+                        setIsDemo(res.data.isDemo || false);
                         await fetchUserData();
                     }
                 } else {
                     setUser(null);
                     setIsAdmin(false);
+                    setIsDemo(false);
                 }
             } catch (error) {
                 console.error('Auth check failed:', error);
@@ -84,10 +87,21 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const demoLogin = async () => {
+        const res = await api.post('/demo-login');
+        if (res.data.message === 'correct') {
+            setIsDemo(true);
+            await fetchUserData();
+            return { success: true };
+        }
+        return { success: false, message: res.data.error };
+    };
+
     const logout = async () => {
         await api.get('/logout');
         setUser(null);
         setIsAdmin(false);
+        setIsDemo(false);
         setNotifications([]);
         setHasUnseenNotifications(false);
     };
@@ -105,10 +119,12 @@ export function AuthProvider({ children }) {
     const value = {
         user,
         isAdmin,
+        isDemo,
         loading,
         notifications,
         hasUnseenNotifications,
         login,
+        demoLogin,
         logout,
         updateUser,
         fetchNotifications,
