@@ -41,6 +41,20 @@ exports.verify_login = async (req, res, next) => {
     }
 };
 
+exports.demo_login = async (req, res, next) => {
+    try {
+        const demo = await userModel.findOne({ isDemo: true });
+        if (!demo) {
+            return res.status(404).json({ success: false, error: 'Demo account not set up yet.' });
+        }
+        req.session.user_id = demo._id;
+        req.session.isDemo = true;
+        res.json({ message: 'correct', userdata: demo });
+    } catch (err) {
+        next(err);
+    }
+};
+
 exports.logout = (req, res) => {
     delete req.session.user_id;
     res.json({ message: 'Logged out successfully' });

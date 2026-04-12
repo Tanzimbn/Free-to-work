@@ -6,7 +6,7 @@ import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
 export default function AuthNavbar() {
-    const { user, logout, notifications, hasUnseenNotifications, updateUser, fetchNotifications } = useAuth();
+    const { user, isDemo, logout, notifications, hasUnseenNotifications, updateUser, fetchNotifications } = useAuth();
     const [menuActive, setMenuActive] = useState(false);
     const [notiActive, setNotiActive] = useState(false);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -81,6 +81,13 @@ export default function AuthNavbar() {
 
     return (
         <header className="sticky top-0 z-40 border-b border-slate-800/60 bg-slate-950/95 backdrop-blur">
+            {isDemo && (
+                <div className="flex items-center justify-center gap-2 bg-sky-500/15 px-4 py-1.5 text-[11px] font-medium text-sky-300 border-b border-sky-500/20">
+                    <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                    You are browsing in demo mode — some actions are disabled.
+                    <Link to="/register" className="ml-1 underline underline-offset-2 hover:text-sky-200">Create a free account</Link>
+                </div>
+            )}
             <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
 
                 {/* Left: Logo + Nav */}

@@ -2,6 +2,7 @@
 
 const router = require('express').Router();
 const requireAuth = require('../middleware/requireAuth');
+const requireNotDemo = require('../middleware/requireNotDemo');
 const { showallpost } = require('../controllers/allpost.controller');
 const { post, post_detail, add_comment, get_comments } = require('../controllers/post.controller');
 const { post_filter } = require('../controllers/filter');
@@ -14,9 +15,9 @@ router.post('/get_comments', get_comments);
 
 // ── Protected ─────────────────────────────────────────────────────────────────
 router.use(requireAuth);
-router.post('/post',        post);
+router.post('/post',        requireNotDemo, post);
 router.post('/post_detail', post_detail);
 router.post('/add_comment', add_comment);
-router.post('/delete_post', delete_post);
+router.post('/delete_post', requireNotDemo, delete_post);
 
 module.exports = router;

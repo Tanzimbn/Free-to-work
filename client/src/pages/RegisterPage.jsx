@@ -22,6 +22,7 @@ function RegisterPage() {
     tc: false,
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -108,6 +109,7 @@ function RegisterPage() {
       return;
     }
 
+    setSubmitting(true);
     try {
       const payload = {
         fname: formData.fname,
@@ -125,16 +127,18 @@ function RegisterPage() {
       const response = await api.post('/register', payload);
       const data = response.data;
 
-      if (data.message === 'Successfull') {
-        toast.success('Registration successful! Please confirm your email.');
+      if (data.success === true) {
+        toast.success(data.message || 'Registration successful! Please check your email to verify your account.');
         setTimeout(() => {
           navigate('/login');
-        }, 3000);
+        }, 4000);
       } else {
         toast.error(data.message || 'Registration failed');
+        setSubmitting(false);
       }
     } catch (error) {
       toast.error('Registration failed.');
+      setSubmitting(false);
     }
   };
 
@@ -443,16 +447,18 @@ function RegisterPage() {
                   <div className="mt-6 flex w-full justify-between gap-4">
                     <button
                       type="button"
-                      className="w-1/2 rounded-full bg-slate-800 px-4 py-2.5 text-sm font-medium text-slate-100 hover:bg-slate-700"
+                      disabled={submitting}
+                      className="w-1/2 rounded-full bg-slate-800 px-4 py-2.5 text-sm font-medium text-slate-100 hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
                       onClick={() => setStage(2)}
                     >
                       Previous
                     </button>
                     <button
                       type="submit"
-                      className="w-1/2 rounded-full bg-[#d11f0c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#b91a09]"
+                      disabled={submitting}
+                      className="w-1/2 rounded-full bg-[#d11f0c] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#b91a09] disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      Submit
+                      {submitting ? 'Submitting...' : 'Submit'}
                     </button>
                   </div>
                 </form>

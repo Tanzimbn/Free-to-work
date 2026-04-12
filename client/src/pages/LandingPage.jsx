@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
 
 const testimonials = [
   {
@@ -24,6 +26,25 @@ const testimonials = [
 
 function LandingPage() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [demoLoading, setDemoLoading] = useState(false);
+  const { demoLogin } = useAuth();
+  const navigate = useNavigate();
+
+  const handleDemoLogin = async () => {
+    setDemoLoading(true);
+    try {
+      const result = await demoLogin();
+      if (result.success) {
+        navigate('/newsfeed');
+      } else {
+        toast.error(result.message || 'Demo unavailable. Try again later.');
+      }
+    } catch {
+      toast.error('Demo unavailable. Try again later.');
+    } finally {
+      setDemoLoading(false);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -105,6 +126,14 @@ function LandingPage() {
                 >
                   I am hiring
                 </Link>
+                <button
+                  type="button"
+                  onClick={handleDemoLogin}
+                  disabled={demoLoading}
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-5 py-2.5 text-sm font-medium text-sky-300 hover:border-sky-400/60 hover:bg-sky-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {demoLoading ? 'Loading...' : '▶ Try demo'}
+                </button>
               </div>
               <dl className="grid max-w-md grid-cols-3 gap-4 pt-4 text-xs text-slate-100/80 sm:text-sm mx-auto">
                 <div>
