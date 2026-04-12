@@ -1,38 +1,132 @@
-![alt tag](https://raw.githubusercontent.com/Tanzimbn/Free-to-work/master/FreeToWork.png)
+![Free To Work](https://raw.githubusercontent.com/Tanzimbn/Free-to-work/master/FreeToWork.png)
+
 # Free To Work
 
-Our Job Marketplace website connects users with workers or helpers for various tasks. Users can post jobs, receive bids from potential workers, and select the best offer. Detailed profiles and a filtering system make it easy to find the right person for the job.
+A job marketplace web app where users post jobs, receive competitive bids from workers, and manage their profiles. Built as a decoupled full-stack application with a React frontend and an Express/MongoDB backend (migrated from Express/Handlebars to React + Vite in Feb 2026).
 
-## Feature
+## Features
 
-### Registration
-- **National ID Verification**: New users must provide a national ID number during registration, and only one account can be created using a single NID.
-- **Email Verification**: The provided email ID will be verified by sending a confirmation email. New users cannot log in before verifying their email.
+- **Authentication** — Session-based auth with email verification (Gmail/Nodemailer) and password management
+- **Job posts** — Create, browse, filter, and comment on job posts; cover images stored in MongoDB
+- **Competitive bidding** — Workers bid on posts; the lowest bid wins and is tracked on the post
+- **Profiles & reviews** — User profiles with post history, reviews, and reporting
+- **Notifications** — Category-subscribed users get notified of matching new posts
+- **Admin panel** — Admin-only endpoints for moderation (users, posts, reports)
+- **Location hierarchy** — Division / district / station dropdowns for Bangladesh
+- **Demo mode** — Restricted actions for a demo user
 
-### Job Posting
-Users can post jobs they need help with, providing details about the task, estimated budget, location and requirements.
+## Tech Stack
 
-### Bidding System
-Other users can bid on posted jobs, offering their services at competitive rates. The best bidder will be highlighted, along with their bidding amount.
+**Backend:** Node.js, Express 4, Mongoose 7 (MongoDB), express-session, Multer, Nodemailer, bcrypt
+**Frontend:** React 19, Vite 7, React Router 7, Axios, RSuite, Tailwind CSS 4, Swiper, React Toastify
 
-### Profile Section
-Users can create and view detailed profiles, showcasing their skills, experience, and ratings from previous tasks.
+## Project Structure
 
-### Post Filtering
-Users can search posts by heading, price limit, category, location, and sort them accordingly.
+```
+.
+├── index.js                  # Express entry
+├── config/                   # Env loader & validation
+├── routes/                   # Split route files, mounted at /api/v1
+├── controllers/              # Business logic per feature
+├── middleware/               # requireAuth, requireAdmin, errorHandler
+├── models/                   # Mongoose schemas
+├── services/                 # email, notification services
+├── db/conn.js                # MongoDB connection
+├── uploads/                  # Multer static uploads
+└── client/                   # React + Vite frontend
+    └── src/
+        ├── pages/            # LandingPage, LoginPage, NewsfeedPage, ProfilePage, AdminPage, ...
+        ├── components/       # PostCard, Modals, FilterSidebar, AuthNavbar, ...
+        ├── context/          # AuthContext (global auth state)
+        ├── layouts/          # MainLayout, AuthLayout
+        ├── services/api.js   # Axios instance (withCredentials)
+        └── utils/            # locationData.js
+```
 
-### User Filtering
-The User List section allows users to filter and search for specific types of workers or helpers, making it easier to find the right person for the job. Users can filter the user list by location, name, occupation, and more.
+## Getting Started
 
-### Active/Inactive Status
-Users can set their status as active or inactive. When inactive, users won’t be notified of new posts. Active users will receive notifications for posts related to their occupation.
+### Prerequisites
+- Node.js 18+
+- MongoDB (local or Atlas)
+- A Gmail account with an app password (for verification emails)
 
-### Notifications
-Users will receive notifications in the notification section for relevant activities.
+### 1. Install dependencies
+```bash
+npm install
+cd client && npm install
+```
 
-### Profile Management
-Users can edit their profiles to keep their information up-to-date.
+### 2. Configure environment
+Copy [.env.example](.env.example) to `.env` at the repo root and fill in values:
 
-### Reviews and Reporting
-Users can give reviews to others, report any issues or inappropriate behavior to the admin, and delete their posts if needed.
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE` | ✓ | MongoDB connection string |
+| `SESSION_SECRET` | ✓ | Long random string for express-session |
+| `EMAIL_USER` | ✓ | Gmail address (Nodemailer sender) |
+| `EMAIL_PASS` | ✓ | Gmail app password |
+| `PORT` | | Backend port (default `3000`) |
+| `CORS_ORIGINS` | | Comma-separated allowed origins (default `http://localhost:5173,http://localhost:5174`) |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | | Hardcoded admin credentials |
+| `CLIENT_URL` / `BACKEND_URL` | | Used in outgoing email links |
 
+### 3. Run in development
+Two terminals:
+```bash
+# Terminal 1 — backend (http://localhost:3000)
+npm run dev
+
+# Terminal 2 — frontend (http://localhost:5174)
+cd client && npm run dev
+```
+
+The frontend can override the API base via `VITE_API_URL` (defaults to `http://localhost:3000/api/v1`).
+
+## Scripts
+
+**Root (backend):**
+- `npm run dev` — nodemon
+- `npm start` — node
+
+**`client/`:**
+- `npm run dev` — Vite dev server
+- `npm run build` — production build to `client/dist/`
+- `npm run lint` — ESLint
+- `npm run preview` — preview the production build
+
+## API
+
+All routes are mounted at `/api/v1`, grouped into:
+- [auth.routes.js](routes/auth.routes.js) — login, logout, register, password change
+- [posts.routes.js](routes/posts.routes.js) — post CRUD, comments, filtering
+- [users.routes.js](routes/users.routes.js) — profile, reviews
+- [notifications.routes.js](routes/notifications.routes.js) — user notifications
+- [bids.routes.js](routes/bids.routes.js) — bidding
+- [admin.routes.js](routes/admin.routes.js) — admin-only endpoints
+
+## Key Patterns
+
+- **Auth** — express-session; frontend checks `GET /api/v1/login` on mount and sends `withCredentials: true` on every request
+- **Images** — Uploaded cover images are stored as `Buffer` in MongoDB and returned as Base64 strings to the client
+- **Bidding** — `POST /api/v1/update_bid` updates `max_bid` / `max_bid_user` on the post if the new bid is lower (lowest-wins)
+- **Notifications** — Users with `mood: true` are fanned out to when a post matches their subscribed categories
+
+## Production Build
+
+1. Set `CORS_ORIGINS` in `.env` to include your production domain.
+2. Build the frontend:
+   ```bash
+   cd client && npm run build
+   ```
+3. In [index.js](index.js), uncomment the block that serves `client/dist` so Express serves the SPA:
+   ```js
+   app.use(express.static(path.join(__dirname, "client/dist")));
+   app.get("*", (req, res) => {
+       res.sendFile(path.join(__dirname, "client/dist/index.html"));
+   });
+   ```
+4. Start with `npm start`.
+
+## License
+
+ISC
